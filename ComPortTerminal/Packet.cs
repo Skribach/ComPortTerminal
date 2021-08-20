@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace ComPortTerminal
 {
     public class Packet
@@ -14,11 +15,12 @@ namespace ComPortTerminal
             qadcopter = qadcopt;
         }
 
-        public string AngleInfo()
+        public string SetAngle()
         {
-
-            return "chlapa";
+            throw new NotImplementedException();
         }
+
+        
 
         //CRC16-MODBUS
         public UInt16 GenerateCRC16(byte[] buf)
@@ -43,5 +45,11 @@ namespace ComPortTerminal
             }
             return crc;
         }
+
+        //Converts int to 2-byte
+        public byte[] To2Byte(int num) => new byte[] { (byte)(num % 256), (byte)(num / 256) };
+
+        public byte[] To2Byte(string line) => new byte[] { (byte)(line[0]), (byte)(line[1]) };
+        
     }
 }

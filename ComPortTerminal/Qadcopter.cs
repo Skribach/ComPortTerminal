@@ -9,20 +9,24 @@ namespace ComPortTerminal
     
     public class Qadcopter<T>
     {
-        public Qadcopter(T minValue, T maxValue, T step)
+        public Qadcopter(T leftTop, T rightTop, T leftBot, T rightBot,  T minValue, T maxValue)
         {
+            LeftBot = leftBot;
+            RightTop = rightTop;
+            LeftBot = leftBot;
+            RightBot = rightBot;
+
             MinValue = minValue;
             MaxValue = maxValue;
-            Step = step;
         }
 
         public T MinValue { get; }
         public T MaxValue { get; }
         public T Step { get; }
 
-        public T leftTop;
-        public T righTop;
-        public T leftBot;
-        public T rightBot;
+        public T LeftTop;
+        public T RightTop;
+        public T LeftBot;
+        public T RightBot;
     }
 }

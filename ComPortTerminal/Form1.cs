@@ -17,16 +17,21 @@ namespace ComPortTerminal
     {
         Connection conn;
         private string connName;
-        Qadcopter<int> angles;
+        Qadcopter<int> qadcopter;
+        Packet packet;
+
+        private int initialAngle = 1;
+        private int MaxAngle = 10;
+        private int MinAngle = 0;
 
         public Form1()
         {
-            angles = new Qadcopter<int>(0, 10, 1);
+            qadcopter = new Qadcopter<int>(
+                initialAngle, initialAngle, initialAngle, initialAngle,
+                MinAngle, MaxAngle);
             conn = new Connection();
             InitializeComponent();
         }
-
-        
 
         #region Displaying dropdown list
         private void portsComboBox_MouseDown(object sender, MouseEventArgs e)
@@ -42,27 +47,65 @@ namespace ComPortTerminal
             Status.ForeColor = Color.Black;
         }
         #endregion
-        
-        #region Inputs
+
+        #region Angle Inputs
         //Left Top Angle Inputs
-        private void leftTopTrackBar_Scroll(object sender, EventArgs e) => angles.leftTop = ScrollAngle(leftTopTextBox, leftTopTrackBar);
+        private void leftTopTrackBar_Scroll(object sender, EventArgs e) => qadcopter.LeftTop = ScrollAngle(leftTopTextBox, leftTopTrackBar);
         private void leftTopTextBox_KeyPress(object sender, KeyPressEventArgs e) => NumValidation(sender, e);
-        private void leftTopTextBox_KeyUp(object sender, KeyEventArgs e) => angles.leftTop = EnterAngle(leftTopTextBox, leftTopTrackBar);
+        private void leftTopTextBox_KeyUp(object sender, KeyEventArgs e) => qadcopter.LeftTop = EnterAngle(leftTopTextBox, leftTopTrackBar);
 
         //Right Top Angle Inputs
-        private void rightTopTrackBar_Scroll(object sender, EventArgs e) => angles.righTop = ScrollAngle(rightTopTextBox, rightTopTrackBar);
+        private void rightTopTrackBar_Scroll(object sender, EventArgs e) => qadcopter.RightTop = ScrollAngle(rightTopTextBox, rightTopTrackBar);
         private void rightTopTextBox_KeyPress(object sender, KeyPressEventArgs e) => NumValidation(sender, e);
-        private void rightTopTextBox_KeyUp(object sender, KeyEventArgs e) => angles.righTop = EnterAngle(rightTopTextBox, rightTopTrackBar);
+        private void rightTopTextBox_KeyUp(object sender, KeyEventArgs e) => qadcopter.RightTop = EnterAngle(rightTopTextBox, rightTopTrackBar);
 
         //Left Bottom Angle Inputs
-        private void leftBotTrackBar_Scroll(object sender, EventArgs e) => angles.leftBot = ScrollAngle(leftBotTextBox, leftBotTrackBar);
+        private void leftBotTrackBar_Scroll(object sender, EventArgs e) => qadcopter.LeftBot = ScrollAngle(leftBotTextBox, leftBotTrackBar);
         private void leftBotTextBox_KeyPress(object sender, KeyPressEventArgs e) => NumValidation(sender, e);
-        private void leftBotTextBox_KeyUp(object sender, KeyEventArgs e) => angles.leftBot = EnterAngle(leftBotTextBox, leftBotTrackBar);
+        private void leftBotTextBox_KeyUp(object sender, KeyEventArgs e) => qadcopter.LeftBot = EnterAngle(leftBotTextBox, leftBotTrackBar);
 
         //Right Bottom Angle Inputs
-        private void rightBotTrackBar_Scroll(object sender, EventArgs e) => angles.rightBot = ScrollAngle(rightBotTextBox, rightBotTrackBar);
+        private void rightBotTrackBar_Scroll(object sender, EventArgs e) => qadcopter.RightBot = ScrollAngle(rightBotTextBox, rightBotTrackBar);
         private void rightBotTextBox_KeyPress(object sender, KeyPressEventArgs e) => NumValidation(sender, e);
-        private void rightBotTextBox_KeyUp(object sender, KeyEventArgs e) => angles.rightBot = EnterAngle(rightBotTextBox, rightBotTrackBar);
+        private void rightBotTextBox_KeyUp(object sender, KeyEventArgs e) => qadcopter.RightBot = EnterAngle(rightBotTextBox, rightBotTrackBar);
+
+        #region Support functions
+        private void NumValidation(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number))
+            {
+                e.Handled = true;
+            }
+        }
+        private int ScrollAngle(TextBox textBox, TrackBar trackBar)
+        {
+            textBox.Text = trackBar.Value.ToString();
+            return trackBar.Value;
+        }
+        private int EnterAngle(TextBox textBox, TrackBar trackBar)
+        {
+            int num = int.Parse(textBox.Text);
+            if (num < qadcopter.MinValue)
+            {
+                trackBar.Value = qadcopter.MaxValue;
+                textBox.Text = qadcopter.MaxValue.ToString();
+                return qadcopter.MaxValue;
+            }
+            else if (num > qadcopter.MaxValue)
+            {
+                trackBar.Value = qadcopter.MaxValue;
+                textBox.Text = qadcopter.MaxValue.ToString();
+                return qadcopter.MaxValue;
+            }
+            else
+            {
+                trackBar.Value = num;
+                return num;
+            }
+        }
+        #endregion
+
         #endregion
 
         private void testButton_Click(object sender, EventArgs e)
@@ -92,41 +135,7 @@ namespace ComPortTerminal
                 Status.ForeColor = Color.Green;
                 isException = true;
             }
-        }
-
-        private void NumValidation(object sender, KeyPressEventArgs e)
-        {
-            char number = e.KeyChar;
-            if (!Char.IsDigit(number))
-            {
-                e.Handled = true;
-            }
-        }
-        private int ScrollAngle(TextBox textBox, TrackBar trackBar)
-        {
-            textBox.Text = trackBar.Value.ToString();
-            return trackBar.Value;
-        }
-        private int EnterAngle(TextBox textBox, TrackBar trackBar)
-        {
-            int num = int.Parse(textBox.Text);
-            if(num < angles.MinValue)
-            {
-                trackBar.Value = angles.MaxValue;
-                textBox.Text = angles.MaxValue.ToString();
-                return angles.MaxValue;
-            }
-            else if (num > angles.MaxValue)
-            {
-                trackBar.Value = angles.MaxValue;
-                textBox.Text = angles.MaxValue.ToString();
-                return angles.MaxValue;
-            }
-            else
-            {
-                trackBar.Value = num;
-                return num;
-            }
+            conn.Disconnect();
         }
     }
 }

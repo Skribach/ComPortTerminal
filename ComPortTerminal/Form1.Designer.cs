@@ -21,8 +21,8 @@ namespace ComPortTerminal
                 components.Dispose();
             }
             base.Dispose(disposing);
-            if (conn.port.IsOpen)
-                conn.port.Close();
+            if (conn.IsConnected)
+                conn.Disconnect();
         }
 
         #region Код, автоматически созданный конструктором форм Windows

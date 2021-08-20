@@ -12,20 +12,21 @@ namespace ComPortTerminal
         public Connection()
         {
             port = new SerialPort();
-            ports = SerialPort.GetPortNames();
-            portNum = null;
+            AvailableConnections = SerialPort.GetPortNames();
         }
 
-        public string[] ports;
-        public int? portNum;
-        public SerialPort port;
+        public string[] AvailableConnections { get; private set; }   
+        public string Name { get; private set; }
+        public bool IsConnected { get; private set; }
 
-        public void Open()
+        private SerialPort port;
+
+        public void Connect(string Port)
         {
             if (port.IsOpen)
                 port.Close();
 
-            port.PortName = ports[(int)portNum];
+            port.PortName = Port;
             port.BaudRate = 9600;
             port.DataBits = 8;
             port.Parity = System.IO.Ports.Parity.Odd;
@@ -34,7 +35,17 @@ namespace ComPortTerminal
             port.ReadTimeout = 1000;
             port.WriteTimeout = 1000;
             port.Open();
+
+            Name = Port;
+            IsConnected = port.IsOpen;
         }
+
+        public void Disconnect() => port.Close();
+
+        public void UpdateAvailableConnections()
+        {
+            AvailableConnections = SerialPort.GetPortNames();
+        }        
 
         public void Write(string message)
         {

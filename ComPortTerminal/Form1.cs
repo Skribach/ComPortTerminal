@@ -85,8 +85,15 @@ namespace ComPortTerminal
         }
         private int EnterAngle(TextBox textBox, TrackBar trackBar)
         {
-            int num = int.Parse(textBox.Text);
-            if (num < qadcopter.MinValue)
+            int num;
+            bool isParsible = int.TryParse(textBox.Text, out num);
+            if(!isParsible)
+            {
+                trackBar.Value = qadcopter.MaxValue;
+                textBox.Text = qadcopter.MaxValue.ToString();
+                return qadcopter.MaxValue;
+            }
+            else if (num < qadcopter.MinValue)
             {
                 trackBar.Value = qadcopter.MaxValue;
                 textBox.Text = qadcopter.MaxValue.ToString();

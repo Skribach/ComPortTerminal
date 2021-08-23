@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ComPortTerminal.Connection;
 
 namespace ComPortTerminal
 {
@@ -32,34 +33,9 @@ namespace ComPortTerminal
 
         private Connection _conn;
 
-        public Connect.Response Connect()
-        {            
-            if (_conn.Name == null)
-            {
-                return new Connect.Response
-                {
-                    Message = "COM-port need to be selected;",
-                    isError = true
-                };
-            }
-            try
-            {
-                _conn.Connect();
-                _conn.Write("Hello world");
-            }
-            catch (Exception ex)
-            {
-                return new Connect.Response
-                {
-                    Message = "ERROR: Another instance connected to " + _conn.Name,
-                    isError = true
-                };
-            }
-            return new Connect.Response
-            {
-                Message = "Connection test successfull to " + _conn.Name,
-                isError = false
-            };
+        public ConnectResponse Connect()
+        {
+            return _conn.Connect();
         }
 
         #region Set methods

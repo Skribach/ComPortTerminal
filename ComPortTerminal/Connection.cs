@@ -21,22 +21,52 @@ namespace ComPortTerminal
 
         private SerialPort port;
 
-        public void Connect()
+        public ConnectResponse Connect()
         {
             if (!port.IsOpen)
             {
-                port.PortName = Name;
-                port.BaudRate = 9600;
-                port.DataBits = 8;
-                port.Parity = System.IO.Ports.Parity.Odd;
-                port.StopBits = System.IO.Ports.StopBits.One;
-                port.Handshake = System.IO.Ports.Handshake.None;
-                port.ReadTimeout = 1000;
-                port.WriteTimeout = 1000;
-                port.Open();
+                if (Name == null)
+                {
+                    return new ConnectResponse
+                    {
+                        Message = "COM-port need to be selected;",
+                        isError = true
+                    };
+                }
+                try
+                {
+                    port.PortName = Name;
+                    port.BaudRate = 9600;
+                    port.DataBits = 8;
+                    port.Parity = System.IO.Ports.Parity.Odd;
+                    port.StopBits = System.IO.Ports.StopBits.One;
+                    port.Handshake = System.IO.Ports.Handshake.None;
+                    port.ReadTimeout = 1000;
+                    port.WriteTimeout = 1000;
+                    port.Open();
 
-                IsConnected = port.IsOpen;
+                    IsConnected = port.IsOpen;
+                    Write("Hello world");
+                }
+                catch (Exception ex)
+                {
+                    return new ConnectResponse
+                    {
+                        Message = "ERROR: Another instance connected to " + Name,
+                        isError = true
+                    };
+                }
+                return new ConnectResponse
+                {
+                    Message = "Connection test successfull to " + Name,
+                    isError = false
+                };
             }
+            return new ConnectResponse
+            {
+                Message = "Connection is already established to " + Name,
+                isError = false
+            };
         }
 
         public void Disconnect() => port.Close();

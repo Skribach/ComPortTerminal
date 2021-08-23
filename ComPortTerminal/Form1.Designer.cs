@@ -55,6 +55,7 @@ namespace ComPortTerminal
             this.button1 = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.Status = new System.Windows.Forms.ToolStripStatusLabel();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.leftTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftBotTrackBar)).BeginInit();
@@ -76,9 +77,9 @@ namespace ComPortTerminal
             // 
             this.startButton.Location = new System.Drawing.Point(220, 238);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(200, 23);
+            this.startButton.Size = new System.Drawing.Size(136, 23);
             this.startButton.TabIndex = 1;
-            this.startButton.Text = "Start";
+            this.startButton.Text = "Set Angles";
             this.startButton.UseVisualStyleBackColor = true;
             // 
             // leftTopTrackBar
@@ -163,7 +164,7 @@ namespace ComPortTerminal
             this.testButton.Name = "testButton";
             this.testButton.Size = new System.Drawing.Size(60, 23);
             this.testButton.TabIndex = 13;
-            this.testButton.Text = "Test";
+            this.testButton.Text = "Connect";
             this.testButton.UseVisualStyleBackColor = true;
             this.testButton.Click += new System.EventHandler(this.testButton_Click);
             // 
@@ -258,11 +259,22 @@ namespace ComPortTerminal
             this.Status.Size = new System.Drawing.Size(39, 17);
             this.Status.Text = "Status";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(362, 242);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(57, 17);
+            this.checkBox1.TabIndex = 25;
+            this.checkBox1.Text = "on-line";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(642, 295);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
@@ -320,6 +332,7 @@ namespace ComPortTerminal
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel Status;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 

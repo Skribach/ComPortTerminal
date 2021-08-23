@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\Connect.Response.cs" />
     <Compile Include="Packet.cs" />
     <Compile Include="Qadcopter.cs" />
     <Compile Include="Connection.cs" />

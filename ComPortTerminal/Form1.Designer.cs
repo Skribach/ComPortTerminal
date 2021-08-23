@@ -44,7 +44,7 @@ namespace ComPortTerminal
             this.leftBotTrackBar = new System.Windows.Forms.TrackBar();
             this.rightBotTextBox = new System.Windows.Forms.TextBox();
             this.rightBotTrackBar = new System.Windows.Forms.TrackBar();
-            this.testButton = new System.Windows.Forms.Button();
+            this.connectButton = new System.Windows.Forms.Button();
             this.portsComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -158,15 +158,15 @@ namespace ComPortTerminal
             this.rightBotTrackBar.Value = 1;
             this.rightBotTrackBar.Scroll += new System.EventHandler(this.rightBotTrackBar_Scroll);
             // 
-            // testButton
+            // connectButton
             // 
-            this.testButton.Location = new System.Drawing.Point(154, 239);
-            this.testButton.Name = "testButton";
-            this.testButton.Size = new System.Drawing.Size(60, 23);
-            this.testButton.TabIndex = 13;
-            this.testButton.Text = "Connect";
-            this.testButton.UseVisualStyleBackColor = true;
-            this.testButton.Click += new System.EventHandler(this.testButton_Click);
+            this.connectButton.Location = new System.Drawing.Point(154, 239);
+            this.connectButton.Name = "connectButton";
+            this.connectButton.Size = new System.Drawing.Size(60, 23);
+            this.connectButton.TabIndex = 13;
+            this.connectButton.Text = "Connect";
+            this.connectButton.UseVisualStyleBackColor = true;
+            this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
             // portsComboBox
             // 
@@ -283,7 +283,7 @@ namespace ComPortTerminal
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.portsComboBox);
-            this.Controls.Add(this.testButton);
+            this.Controls.Add(this.connectButton);
             this.Controls.Add(this.rightBotTextBox);
             this.Controls.Add(this.rightBotTrackBar);
             this.Controls.Add(this.leftBotTextBox);
@@ -321,7 +321,7 @@ namespace ComPortTerminal
         private System.Windows.Forms.TrackBar leftBotTrackBar;
         private System.Windows.Forms.TextBox rightBotTextBox;
         private System.Windows.Forms.TrackBar rightBotTrackBar;
-        private System.Windows.Forms.Button testButton;
+        private System.Windows.Forms.Button connectButton;
         private System.Windows.Forms.ComboBox portsComboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

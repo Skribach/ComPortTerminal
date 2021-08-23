@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace ComPortTerminal
 {
     public class Packet
-    {
-        private Qadcopter<int> qadcopter;
-        public Packet(Qadcopter<int> qadcopt)
+    {        
+        private Qadcopter qadcopter;
+        public Packet(Qadcopter qadcopt)
         {
             qadcopter = qadcopt;
         }
@@ -19,8 +19,6 @@ namespace ComPortTerminal
         {
             throw new NotImplementedException();
         }
-
-        
 
         //CRC16-MODBUS
         public UInt16 GenerateCRC16(byte[] buf)

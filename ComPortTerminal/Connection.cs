@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ComPortTerminal
 {
-    class Connection
+    public class Connection
     {
         public Connection()
         {
@@ -16,28 +16,27 @@ namespace ComPortTerminal
         }
 
         public string[] AvailableConnections { get; private set; }   
-        public string Name { get; private set; }
+        public string Name { get; set; }
         public bool IsConnected { get; private set; }
 
         private SerialPort port;
 
-        public void Connect(string Port)
+        public void Connect()
         {
-            if (port.IsOpen)
-                port.Close();
+            if (!port.IsOpen)
+            {
+                port.PortName = Name;
+                port.BaudRate = 9600;
+                port.DataBits = 8;
+                port.Parity = System.IO.Ports.Parity.Odd;
+                port.StopBits = System.IO.Ports.StopBits.One;
+                port.Handshake = System.IO.Ports.Handshake.None;
+                port.ReadTimeout = 1000;
+                port.WriteTimeout = 1000;
+                port.Open();
 
-            port.PortName = Port;
-            port.BaudRate = 9600;
-            port.DataBits = 8;
-            port.Parity = System.IO.Ports.Parity.Odd;
-            port.StopBits = System.IO.Ports.StopBits.One;
-            port.Handshake = System.IO.Ports.Handshake.None;
-            port.ReadTimeout = 1000;
-            port.WriteTimeout = 1000;
-            port.Open();
-
-            Name = Port;
-            IsConnected = port.IsOpen;
+                IsConnected = port.IsOpen;
+            }
         }
 
         public void Disconnect() => port.Close();
@@ -50,6 +49,12 @@ namespace ComPortTerminal
         public void Write(string message)
         {
             port.Write(message);
+        }
+
+        public class ConnectResponse
+        {
+            public string Message { get; set; }
+            public bool isError { get; set; }
         }
     }
 }

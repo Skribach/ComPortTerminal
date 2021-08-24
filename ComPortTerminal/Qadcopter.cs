@@ -12,7 +12,7 @@ namespace ComPortTerminal
     
     public class Qadcopter
     {
-        private Packet _packet;
+        private Protocol _protocol;
         public Qadcopter(int leftTop, int rightTop, int leftBot, int rightBot,  int minValue, int maxValue, Connection conn)
         {
             LeftTop = leftTop;
@@ -23,7 +23,7 @@ namespace ComPortTerminal
             MinValue = minValue;
             MaxValue = maxValue;
             _conn = conn;
-            _packet = new Packet();
+            _protocol = new Protocol();
         }
         public int LeftTop { get; private set; }
         public int RightTop { get; private set; }
@@ -40,7 +40,7 @@ namespace ComPortTerminal
         {
             var conn_resp = _conn.Connect();
             _conn.SetRecieveHandler(Reciever);
-            var request = _packet.ConnectionRequest(33);
+            var request = _protocol.CreateConnectionRequest(33);
 
             //For Test
             Console.WriteLine("Output packet:");

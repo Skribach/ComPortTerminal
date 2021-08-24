@@ -7,19 +7,23 @@ using System.Threading.Tasks;
 
 namespace ComPortTerminal
 {
-    public class Packet
-    {     
-        public Packet()
+    public class Protocol
+    {
+        Queue<string> fifo;
+        public Protocol()
         {
-            
+            fifo = new Queue<string>();
         }
 
-        public byte[] ConnectionRequest(int number)
+        public byte[] CreateConnectionRequest(int number)
         {
             return CreateRequest(Global.Message.Type.conn_request, BitConverter.GetBytes(number).Take(1).ToArray());
         }
 
+        public void Parser(string input)
+        {
 
+        }
 
         private byte[] CreateRequest(byte type, byte[] data)
         {

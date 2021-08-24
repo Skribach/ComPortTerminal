@@ -39,8 +39,8 @@ namespace ComPortTerminal
         {
             var conn_resp = _conn.Connect();
             var line = _packet.ConnectionRequest(33);
-            foreach(byte b in line)
-                Console.WriteLine(b);
+            foreach(byte b in line)                                 //For Test
+                Console.WriteLine(String.Format("0x{0:X}", b));
             _conn.Write(line);
             return conn_resp;
         }

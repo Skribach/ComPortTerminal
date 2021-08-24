@@ -16,7 +16,7 @@ namespace ComPortTerminal
 
         public byte[] ConnectionRequest(int number)
         {
-            return CreateRequest(Global.Message.Type.conn_request, new byte[] { 49, 50, 51 });
+            return CreateRequest(Global.Message.Type.conn_request, BitConverter.GetBytes(number).Take(1).ToArray());
         }
 
         private byte[] CreateRequest(byte type, byte[] data)
@@ -42,9 +42,10 @@ namespace ComPortTerminal
                 load[Global.Message.start.Length + 1 + i] = data[i];
 
             //CRC
-            var crc = GenerateCRC16(load.Skip(2).Take(2).ToArray());
-            load[Global.Message.start.Length + 1 + data.Length] = crc[0];
-            load[Global.Message.start.Length + 2 + data.Length] = crc[1];
+            var crco = new Crc16();
+            var crc = crco.ComputeChecksumBytes(load.Skip(2).Take(2).ToArray());
+            load[Global.Message.start.Length + 1 + data.Length] = crc[1];
+            load[Global.Message.start.Length + 2 + data.Length] = crc[0];
 
             //footer
             for (int i = Global.Message.start.Length + 3 + data.Length;
@@ -54,30 +55,53 @@ namespace ComPortTerminal
 
             return load;
         }
+    }
+    //CRC16-ARC
+    public class Crc16
+    {
+        const ushort polynomial = 0xA001;
+        ushort[] table = new ushort[256];
 
-        //CRC16-MODBUS
-        //NOT WORK
-        public byte[] GenerateCRC16(byte[] buf)
+        public ushort ComputeChecksum(byte[] bytes)
         {
-            int len = buf.Length;
-            UInt16 crc = 0xFFFF;
-
-            for (int pos = 0; pos < len; pos++)
+            ushort crc = 0;
+            for (int i = 0; i < bytes.Length; ++i)
             {
-                crc ^= (UInt16)buf[pos];
+                byte index = (byte)(crc ^ bytes[i]);
+                crc = (ushort)((crc >> 8) ^ table[index]);
+            }
+            return crc;
+        }
 
-                for (int i = 8; i != 0; i--)
+        public byte[] ComputeChecksumBytes(byte[] bytes)
+        {
+            ushort crc = ComputeChecksum(bytes);
+            return BitConverter.GetBytes(crc);
+        }
+
+        public Crc16()
+        {
+            ushort value;
+            ushort temp;
+            for (ushort i = 0; i < table.Length; ++i)
+            {
+                value = 0;
+                temp = i;
+                for (byte j = 0; j < 8; ++j)
                 {
-                    if ((crc & 0x0001) != 0)
+                    if (((value ^ temp) & 0x0001) != 0)
                     {
-                        crc >>= 1;
-                        crc ^= 0xA001;
+                        value = (ushort)((value >> 1) ^ polynomial);
                     }
                     else
-                        crc >>= 1;
+                    {
+                        value >>= 1;
+                    }
+                    temp >>= 1;
                 }
+                table[i] = value;
             }
-            return BitConverter.GetBytes(crc);
         }
     }
 }
+

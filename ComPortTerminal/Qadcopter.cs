@@ -48,18 +48,14 @@ namespace ComPortTerminal
                 Console.Write(String.Format(" 0x{0:X}", b));
             Console.WriteLine();
 
-
             _conn.Write(request);
 
             return conn_resp;
         }
 
-        void Reciever(object sender, SerialDataReceivedEventArgs e)
+        void Reciever(string input)
         {
-            Console.WriteLine("Input packet:");
-            SerialPort sp = (SerialPort)sender;
-            string indata = sp.ReadExisting();
-            Console.WriteLine(indata);
+            Console.WriteLine("Input packet: " + input);            
         }
 
         #region Set methods

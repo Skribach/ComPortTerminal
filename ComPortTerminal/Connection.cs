@@ -21,6 +21,9 @@ namespace ComPortTerminal
 
         private SerialPort port;
 
+        public delegate void Handler(string indata);
+
+        private Handler _recieverHandler;
         public ConnectResponse Connect()
         {
             if (!port.IsOpen)
@@ -47,6 +50,7 @@ namespace ComPortTerminal
 
                     IsConnected = port.IsOpen;
                     Write("Connection complete" + (char)13);
+
                 }
                 catch (Exception ex)
                 {
@@ -85,11 +89,17 @@ namespace ComPortTerminal
         {
             port.Write(message, 0, message.Length);
         }
-
-        public delegate void RecieverHandler(object sender, SerialDataReceivedEventArgs e);
-        public void SetRecieveHandler(RecieverHandler recieverHandler)
+                
+        public void SetRecieveHandler(Handler handler)
         {
-            port.DataReceived += new SerialDataReceivedEventHandler(recieverHandler);
+            port.DataReceived += new SerialDataReceivedEventHandler(InternalReciever);
+            _recieverHandler += handler;
+        }
+        void InternalReciever(object sender, SerialDataReceivedEventArgs e)
+        {            
+            SerialPort sp = (SerialPort)sender;
+            string indata = sp.ReadExisting();
+            _recieverHandler(indata);
         }
         public class ConnectResponse
         {

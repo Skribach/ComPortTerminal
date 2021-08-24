@@ -19,6 +19,8 @@ namespace ComPortTerminal
             return CreateRequest(Global.Message.Type.conn_request, BitConverter.GetBytes(number).Take(1).ToArray());
         }
 
+
+
         private byte[] CreateRequest(byte type, byte[] data)
         {
             int count =

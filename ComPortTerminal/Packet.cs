@@ -16,36 +16,48 @@ namespace ComPortTerminal
 
         public byte[] ConnectionRequest(int number)
         {
-            byte[] load = new byte[8];
+            return CreateRequest(Global.Message.Type.conn_request, new byte[] { 49, 50, 51 });
+        }
+
+        private byte[] CreateRequest(byte type, byte[] data)
+        {
+            int count =
+                Global.Message.start.Length +
+                1 +             //Type command
+                data.Length +
+                2 +             //CRC
+                Global.Message.end.Length;
+
+            byte[] load = new byte[count];
 
             //header
-            for(int i = 0; i < Global.Message.start.Length; i++)
-            {
+            for (int i = 0; i < Global.Message.start.Length; i++)
                 load[i] = Global.Message.start[i];
-            }
+
             //command
-            load[2] = Global.Message.Type.conn_request;
-            //number of request
-            load[3] = byte.Parse(number.ToString());
-            
+            load[Global.Message.start.Length] = type;
+
+            //data
+            for (int i = 0; i < data.Length; i++)
+                load[Global.Message.start.Length + 1 + i] = data[i];
+
             //CRC
             var crc = GenerateCRC16(load.Skip(2).Take(2).ToArray());
-            byte[] crcb = BitConverter.GetBytes(crc);
-            load[4] = crcb[0];
-            load[5] = crcb[1];
-            
+            load[Global.Message.start.Length + 1 + data.Length] = crc[0];
+            load[Global.Message.start.Length + 2 + data.Length] = crc[1];
+
             //footer
-            for (int i = 6; i < Global.Message.end.Length + 6; i++)
-            {
-                load[i] = Global.Message.end[i-6];
-            }
+            for (int i = Global.Message.start.Length + 3 + data.Length;
+                i < Global.Message.end.Length + Global.Message.start.Length + 3 + data.Length;
+                i++)
+                load[i] = Global.Message.end[i - (Global.Message.start.Length + 3 + data.Length)];
 
             return load;
         }
 
         //CRC16-MODBUS
         //NOT WORK
-        public UInt16 GenerateCRC16(byte[] buf)
+        public byte[] GenerateCRC16(byte[] buf)
         {
             int len = buf.Length;
             UInt16 crc = 0xFFFF;
@@ -65,19 +77,7 @@ namespace ComPortTerminal
                         crc >>= 1;
                 }
             }
-            return crc;
+            return BitConverter.GetBytes(crc);
         }
-
-        //Converts int to 2-byte
-        public byte[] To2Byte(int num) => new byte[] { (byte)(num % 256), (byte)(num / 256) };
-        
-        public byte[] ToByte(string line)
-        {
-            byte[] output = new byte[line.Length];
-            for (int i = 0; i < line.Length; i++)
-                output[i] = (byte)(line[i]);
-            return output;
-        }
-        
     }
 }

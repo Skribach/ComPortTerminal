@@ -15,7 +15,7 @@ namespace ComPortTerminal
             AvailableConnections = SerialPort.GetPortNames();
         }
 
-        public string[] AvailableConnections { get; private set; }   
+        public string[] AvailableConnections { get; private set; }
         public string Name { get; set; }
         public bool IsConnected { get; private set; }
 
@@ -74,7 +74,7 @@ namespace ComPortTerminal
         public void UpdateAvailableConnections()
         {
             AvailableConnections = SerialPort.GetPortNames();
-        }        
+        }
 
         public void Write(string message)
         {
@@ -86,6 +86,11 @@ namespace ComPortTerminal
             port.Write(message, 0, message.Length);
         }
 
+        public delegate void RecieverHandler(object sender, SerialDataReceivedEventArgs e);
+        public void SetRecieveHandler(RecieverHandler recieverHandler)
+        {
+            port.DataReceived += new SerialDataReceivedEventHandler(recieverHandler);
+        }
         public class ConnectResponse
         {
             public string Message { get; set; }

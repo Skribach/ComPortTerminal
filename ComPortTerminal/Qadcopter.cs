@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,11 +39,27 @@ namespace ComPortTerminal
         public ConnectResponse Connect()
         {
             var conn_resp = _conn.Connect();
-            var line = _packet.ConnectionRequest(33);
-            foreach(byte b in line)                                 //For Test
-                Console.WriteLine(String.Format("0x{0:X}", b));
-            _conn.Write(line);
+            _conn.SetRecieveHandler(Reciever);
+            var request = _packet.ConnectionRequest(33);
+
+            //For Test
+            Console.WriteLine("Output packet:");
+            foreach (byte b in request)                                 
+                Console.Write(String.Format(" 0x{0:X}", b));
+            Console.WriteLine();
+
+
+            _conn.Write(request);
+
             return conn_resp;
+        }
+
+        void Reciever(object sender, SerialDataReceivedEventArgs e)
+        {
+            Console.WriteLine("Input packet:");
+            SerialPort sp = (SerialPort)sender;
+            string indata = sp.ReadExisting();
+            Console.WriteLine(indata);
         }
 
         #region Set methods

@@ -104,7 +104,7 @@ namespace ComPortTerminal
 
         private void connectButton_Click(object sender, EventArgs e)
         {
-            Status.Text = qadcopter.Connect().Message; 
+            Status.Text = qadcopter.Connect().Message;
         }
     }
 }

@@ -1,16 +1,17 @@
-﻿using ComPortTerminal.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static ComPortTerminal.Connection;
 
+
 namespace ComPortTerminal
 {
     
     public class Qadcopter
     {
+        private Packet _packet;
         public Qadcopter(int leftTop, int rightTop, int leftBot, int rightBot,  int minValue, int maxValue, Connection conn)
         {
             LeftTop = leftTop;
@@ -21,6 +22,7 @@ namespace ComPortTerminal
             MinValue = minValue;
             MaxValue = maxValue;
             _conn = conn;
+            _packet = new Packet();
         }
         public int LeftTop { get; private set; }
         public int RightTop { get; private set; }
@@ -35,7 +37,12 @@ namespace ComPortTerminal
 
         public ConnectResponse Connect()
         {
-            return _conn.Connect();
+            var conn_resp = _conn.Connect();
+            var line = _packet.ConnectionRequest(33);
+            foreach(byte b in line)
+                Console.WriteLine(b);
+            _conn.Write(line);
+            return conn_resp;
         }
 
         #region Set methods
@@ -93,6 +100,14 @@ namespace ComPortTerminal
                 xy = val;
                 return val;
             }
+        }
+
+        private byte[] ToByte(string line)
+        {
+            byte[] output = new byte[line.Length];
+            for (int i = 0; i < line.Length; i++)
+                output[i] = (byte)(line[i]);
+            return output;
         }
         #endregion
     }

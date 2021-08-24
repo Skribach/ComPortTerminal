@@ -16,10 +16,8 @@ namespace ComPortTerminal
     public partial class Form1 : Form
     {
         Connection conn;
-        private string connName;
 
         Qadcopter qadcopter;
-        //Packet packet;
 
         private int initialAngle = 1;
         private int MaxAngle = 10;

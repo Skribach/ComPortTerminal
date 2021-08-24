@@ -8,19 +8,43 @@ using System.Threading.Tasks;
 namespace ComPortTerminal
 {
     public class Packet
-    {        
-        private Qadcopter qadcopter;
-        public Packet(Qadcopter qadcopt)
+    {     
+        public Packet()
         {
-            qadcopter = qadcopt;
+            
         }
 
-        public string SetAngle()
+        public byte[] ConnectionRequest(int number)
         {
-            throw new NotImplementedException();
+            byte[] load = new byte[8];
+
+            //header
+            for(int i = 0; i < Global.Message.start.Length; i++)
+            {
+                load[i] = Global.Message.start[i];
+            }
+            //command
+            load[2] = Global.Message.Type.conn_request;
+            //number of request
+            load[3] = byte.Parse(number.ToString());
+            
+            //CRC
+            var crc = GenerateCRC16(load.Skip(2).Take(2).ToArray());
+            byte[] crcb = BitConverter.GetBytes(crc);
+            load[4] = crcb[0];
+            load[5] = crcb[1];
+            
+            //footer
+            for (int i = 6; i < Global.Message.end.Length + 6; i++)
+            {
+                load[i] = Global.Message.end[i-6];
+            }
+
+            return load;
         }
 
         //CRC16-MODBUS
+        //NOT WORK
         public UInt16 GenerateCRC16(byte[] buf)
         {
             int len = buf.Length;
@@ -46,8 +70,14 @@ namespace ComPortTerminal
 
         //Converts int to 2-byte
         public byte[] To2Byte(int num) => new byte[] { (byte)(num % 256), (byte)(num / 256) };
-
-        public byte[] To2Byte(string line) => new byte[] { (byte)(line[0]), (byte)(line[1]) };
+        
+        public byte[] ToByte(string line)
+        {
+            byte[] output = new byte[line.Length];
+            for (int i = 0; i < line.Length; i++)
+                output[i] = (byte)(line[i]);
+            return output;
+        }
         
     }
 }

@@ -46,7 +46,7 @@ namespace ComPortTerminal
                     port.Open();
 
                     IsConnected = port.IsOpen;
-                    Write("Hello world");
+                    Write("Connection complete" + (char)13);
                 }
                 catch (Exception ex)
                 {
@@ -79,6 +79,11 @@ namespace ComPortTerminal
         public void Write(string message)
         {
             port.Write(message);
+        }
+
+        public void Write(byte[] message)
+        {
+            port.Write(message, 0, message.Length);
         }
 
         public class ConnectResponse

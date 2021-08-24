@@ -29,6 +29,7 @@ namespace ComPortTerminal
         {
             int count =
                 Global.Message.start.Length +
+                1 +             //Length
                 1 +             //Type command
                 data.Length +
                 2 +             //CRC
@@ -40,24 +41,27 @@ namespace ComPortTerminal
             for (int i = 0; i < Global.Message.start.Length; i++)
                 load[i] = Global.Message.start[i];
 
+            //length
+            load[Global.Message.start.Length] = BitConverter.GetBytes(count)[0];
+
             //command
-            load[Global.Message.start.Length] = type;
+            load[Global.Message.start.Length + 1] = type;
 
             //data
             for (int i = 0; i < data.Length; i++)
-                load[Global.Message.start.Length + 1 + i] = data[i];
+                load[Global.Message.start.Length + 2 + i] = data[i];
 
             //CRC
-            var crco = new Crc16();
-            var crc = crco.ComputeChecksumBytes(load.Skip(2).Take(2).ToArray());
-            load[Global.Message.start.Length + 1 + data.Length] = crc[1];
-            load[Global.Message.start.Length + 2 + data.Length] = crc[0];
+            var crc16 = new Crc16();
+            var crc = crc16.ComputeChecksumBytes(load.Skip(2).Take(2 + data.Length).ToArray());
+            load[Global.Message.start.Length + 2 + data.Length] = crc[1];
+            load[Global.Message.start.Length + 3 + data.Length] = crc[0];
 
             //footer
-            for (int i = Global.Message.start.Length + 3 + data.Length;
-                i < Global.Message.end.Length + Global.Message.start.Length + 3 + data.Length;
+            for (int i = Global.Message.start.Length + 4 + data.Length;
+                i < Global.Message.end.Length + Global.Message.start.Length + 4 + data.Length;
                 i++)
-                load[i] = Global.Message.end[i - (Global.Message.start.Length + 3 + data.Length)];
+                load[i] = Global.Message.end[i - (Global.Message.start.Length + 4 + data.Length)];
 
             return load;
         }

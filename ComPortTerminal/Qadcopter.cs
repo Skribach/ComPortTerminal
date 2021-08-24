@@ -40,7 +40,7 @@ namespace ComPortTerminal
         {
             var conn_resp = _conn.Connect();
             _conn.SetRecieveHandler(Reciever);
-            var request = _protocol.CreateConnectionRequest(33);
+            var request = _protocol.CreateConnectionRequest(65);
 
             //For Test
             Console.WriteLine("Output packet:");

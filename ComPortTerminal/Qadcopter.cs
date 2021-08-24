@@ -55,7 +55,7 @@ namespace ComPortTerminal
 
         void Reciever(string input)
         {
-            Console.WriteLine("Input packet: " + input);            
+            _protocol.Parser(input);
         }
 
         #region Set methods

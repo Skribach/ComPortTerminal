@@ -9,10 +9,11 @@ namespace ComPortTerminal
 {
     public class Protocol
     {
-        Queue<string> fifo;
+        public Packet LastPacket { get; private set; }
+        private string _buffer;
         public Protocol()
         {
-            fifo = new Queue<string>();
+            _buffer = "";
         }
 
         public byte[] CreateConnectionRequest(int number)
@@ -22,7 +23,8 @@ namespace ComPortTerminal
 
         public void Parser(string input)
         {
-
+            _buffer += input;
+            Console.WriteLine("Input: " + _buffer);
         }
 
         private byte[] CreateRequest(byte type, byte[] data)
@@ -65,6 +67,14 @@ namespace ComPortTerminal
 
             return load;
         }
+    }
+
+    public class Packet
+    {
+        public byte Type { get; set; }
+        int Length { get; set; }
+        byte[] Data { get; set; }
+        ushort CRC { get; set; }
     }
     //CRC16-ARC
     public class Crc16
@@ -114,4 +124,3 @@ namespace ComPortTerminal
         }
     }
 }
-

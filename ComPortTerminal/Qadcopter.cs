@@ -9,11 +9,11 @@ using static ComPortTerminal.Connection;
 
 namespace ComPortTerminal
 {
-    
+
     public class Qadcopter
     {
         private Protocol _protocol;
-        public Qadcopter(int leftTop, int rightTop, int leftBot, int rightBot,  int minValue, int maxValue, Connection conn)
+        public Qadcopter(int leftTop, int rightTop, int leftBot, int rightBot, int minValue, int maxValue, Connection conn)
         {
             LeftTop = leftTop;
             RightTop = rightTop;
@@ -44,7 +44,7 @@ namespace ComPortTerminal
 
             //For Test
             Console.WriteLine("Output packet:");
-            foreach (byte b in request)                                 
+            foreach (byte b in request)
                 Console.Write(String.Format(" 0x{0:X}", b));
             Console.WriteLine();
 
@@ -55,7 +55,7 @@ namespace ComPortTerminal
 
         void Reciever(string input)
         {
-            _protocol.Parser(input);
+            _protocol.PacketParser(input);
         }
 
         #region Set methods

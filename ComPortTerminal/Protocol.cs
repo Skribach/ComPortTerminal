@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace ComPortTerminal
 {
     public class Protocol
@@ -16,66 +15,104 @@ namespace ComPortTerminal
             _buffer = "";
         }
 
-        public byte[] CreateConnectionRequest(int number)
-        {
-            return CreateRequest(Global.Message.Type.conn_request, BitConverter.GetBytes(number).Take(1).ToArray());
-        }
-
-        public void Parser(string input)
+        public void PacketParser(string input)
         {
             _buffer += input;
             Console.WriteLine("Input: " + _buffer);
+            //If buffer contains start and end delimeters
+            if (_buffer.Contains(StringDelimiters[Delimiters.start])
+                && _buffer.Contains(StringDelimiters[Delimiters.end]))
+            {
+                int startInd = _buffer.IndexOf(StringDelimiters[Delimiters.start]);
+                int endInd = _buffer.IndexOf(StringDelimiters[Delimiters.end]);
+                //if start combination earlier than end
+                if (startInd < endInd)
+                {
+                    string packet = _buffer.Substring(StringDelimiters[Delimiters.start].Length + startInd, endInd-StringDelimiters[Delimiters.start].Length + startInd);
+                    _buffer = "";
+                    Console.WriteLine(" Packet Parsed: " + packet);
+                }
+            }
         }
 
-        private byte[] CreateRequest(byte type, byte[] data)
+        public byte[] CreateConnectionRequest(int number)
+        {
+            return CreateRequest(Packet.Types.connRequest, BitConverter.GetBytes(number).Take(1).ToArray());
+        }
+
+        private byte[] CreateRequest(Packet.Types type, byte[] data)
         {
             int count =
-                Global.Message.start.Length +
+                ByteDelimiters[Delimiters.end].Length +
                 1 +             //Length
                 1 +             //Type command
                 data.Length +
                 2 +             //CRC
-                Global.Message.end.Length;
+                ByteDelimiters[Delimiters.start].Length;
 
             byte[] load = new byte[count];
 
             //header
-            for (int i = 0; i < Global.Message.start.Length; i++)
-                load[i] = Global.Message.start[i];
+            for (int i = 0; i < ByteDelimiters[Delimiters.end].Length; i++)
+                load[i] = ByteDelimiters[Delimiters.end][i];
 
             //length
-            load[Global.Message.start.Length] = BitConverter.GetBytes(count)[0];
+            load[ByteDelimiters[Delimiters.end].Length] = BitConverter.GetBytes(count)[0];
 
             //command
-            load[Global.Message.start.Length + 1] = type;
+            load[ByteDelimiters[Delimiters.end].Length + 1] = ByteTypes[type];
 
             //data
             for (int i = 0; i < data.Length; i++)
-                load[Global.Message.start.Length + 2 + i] = data[i];
+                load[ByteDelimiters[Delimiters.end].Length + 2 + i] = data[i];
 
             //CRC
             var crc16 = new Crc16();
             var crc = crc16.ComputeChecksumBytes(load.Skip(2).Take(2 + data.Length).ToArray());
-            load[Global.Message.start.Length + 2 + data.Length] = crc[1];
-            load[Global.Message.start.Length + 3 + data.Length] = crc[0];
+            load[ByteDelimiters[Delimiters.end].Length + 2 + data.Length] = crc[1];
+            load[ByteDelimiters[Delimiters.end].Length + 3 + data.Length] = crc[0];
 
             //footer
-            for (int i = Global.Message.start.Length + 4 + data.Length;
-                i < Global.Message.end.Length + Global.Message.start.Length + 4 + data.Length;
+            for (int i = ByteDelimiters[Delimiters.end].Length + 4 + data.Length;
+                i < ByteDelimiters[Delimiters.start].Length + ByteDelimiters[Delimiters.end].Length + 4 + data.Length;
                 i++)
-                load[i] = Global.Message.end[i - (Global.Message.start.Length + 4 + data.Length)];
+                load[i] = ByteDelimiters[Delimiters.start][i - (ByteDelimiters[Delimiters.end].Length + 4 + data.Length)];
 
             return load;
         }
+
+
+        //Start/stop types
+        public enum Delimiters
+        {
+            start, end
+        }
+
+        //Start/stop string
+        public static Dictionary<Delimiters, string> StringDelimiters = new Dictionary<Delimiters, string>()
+        {
+            [Delimiters.start] = "st",
+            [Delimiters.end] = "ed"
+        };
+
+        //Start/stop bytes
+        public Dictionary<Delimiters, byte[]> ByteDelimiters = new Dictionary<Delimiters, byte[]>()
+        {
+            [Delimiters.start] = Encoding.ASCII.GetBytes(StringDelimiters[Delimiters.start]),
+            [Delimiters.end] = Encoding.ASCII.GetBytes("ed")
+        };
+
+        //Commands/Data types            
+        public static Dictionary<Packet.Types, byte> ByteTypes = new Dictionary<Packet.Types, byte>()
+        {
+            [Packet.Types.connRequest] = (byte)'a',
+            [Packet.Types.connResponse] = (byte)'b',
+            [Packet.Types.angleRequest] = (byte)'c',
+            [Packet.Types.angleResponse] = (byte)'d',
+            [Packet.Types.rpm] = (byte)'e',
+        };
     }
 
-    public class Packet
-    {
-        public byte Type { get; set; }
-        int Length { get; set; }
-        byte[] Data { get; set; }
-        ushort CRC { get; set; }
-    }
     //CRC16-ARC
     public class Crc16
     {

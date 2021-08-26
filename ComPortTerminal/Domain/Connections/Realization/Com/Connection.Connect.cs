@@ -5,23 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ComPortTerminal
+namespace ComPortTerminal.Domain.Connections.Realization.Com
 {
-    public class Connection
+    public partial class Connection
     {
-        public Connection()
-        {
-            port = new SerialPort();
-            AvailableConnections = SerialPort.GetPortNames();
-        }
-
-        public string[] AvailableConnections { get; private set; }
-        public string Name { get; set; }
-        public bool IsConnected { get; private set; }
-
-        private SerialPort port;
-
-        
         public ConnectResponse Connect()
         {
             if (!port.IsOpen)
@@ -77,38 +64,6 @@ namespace ComPortTerminal
         public void UpdateAvailableConnections()
         {
             AvailableConnections = SerialPort.GetPortNames();
-        }
-
-        public void Write(string message)
-        {
-            port.Write(message);
-        }
-
-        public void Write(byte[] message)
-        {
-            port.Write(message, 0, message.Length);
-        }
-
-        //Delegates to be used as handler for read 
-        public delegate void ReadString(string indata);
-        public delegate void ReadBytes(byte[] indata);
-        public delegate void ReadByte(byte indata);
-
-        private ReadByte _recieverHandler;
-        public void SetRecieveHandler(ReadByte handler)
-        {
-            port.DataReceived += new SerialDataReceivedEventHandler(InternalReciever);
-            _recieverHandler += handler;
-        }
-        void InternalReciever(object sender, SerialDataReceivedEventArgs e)
-        {            
-            SerialPort sp = (SerialPort)sender;
-            _recieverHandler((byte)sp.ReadByte());
-        }
-        public class ConnectResponse
-        {
-            public string Message { get; set; }
-            public bool isError { get; set; }
         }
     }
 }

@@ -1,12 +1,14 @@
-﻿using System;
+﻿using ComPortTerminal.Domain.Connections.Realization.Com;
+using ComPortTerminal.Domain.Protocols.Realization.v1;
+using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static ComPortTerminal.Connection;
 
-namespace ComPortTerminal
+
+namespace ComPortTerminal.Domain.Qadcopters.Realization.v1
 {
     public class Qadcopter
     {
@@ -34,7 +36,7 @@ namespace ComPortTerminal
         public int MaxValue { get; }
         public int Step { get; }
 
-        public ConnectResponse Connect()
+        public Connection.ConnectResponse Connect()
         {
             var conn_resp = _conn.Connect();
             _conn.SetRecieveHandler(Reciever);

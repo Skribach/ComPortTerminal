@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+using ComPortTerminal.Domain.Connections.Realization.Com;
+using ComPortTerminal.Domain.Qadcopters.Realization.v1;
 #endregion
 
 namespace ComPortTerminal

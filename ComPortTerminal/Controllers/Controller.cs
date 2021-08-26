@@ -24,10 +24,11 @@ namespace ComPortTerminal.Controllers
         /// </summary>
         /// <param name="connection">Link ID</param>
         /// <returns>ResponseConnect</returns>
-        public ResponseConnect Connect(string connection)
-        {
-            return new ResponseConnect {
-            
+        public Response Connect(string connection)
+        {            
+            return new Response {
+            Message = "Fake Connection to Fake Connection is ready",
+            isError = false
             };
         }
 
@@ -107,10 +108,7 @@ namespace ComPortTerminal.Controllers
         {
             public string[] Connections { get; set; }
         }
-        public class ResponseConnect : Response
-        {
-            public string Connection { get; set; }
-        }
+        
         public class RequestSetAngles
         {
             public int LTAngle;

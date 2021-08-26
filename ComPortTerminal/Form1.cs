@@ -21,9 +21,9 @@ namespace ComPortTerminal
 
         Qadcopter qadcopter;
 
-        private int initialAngle = 1;
-        private int MaxAngle = 10;
-        private int MinAngle = 0;
+        public int initialAngle = 90;
+        public int MaxAngle = 180;
+        public int MinAngle = 0;
 
         public Form1()
         {
@@ -52,61 +52,27 @@ namespace ComPortTerminal
 
         #region Angle Inputs
         //Left Top Angle Inputs
-        private void leftTopTrackBar_Scroll(object sender, EventArgs e) => leftTopTextBox.Text = qadcopter.SetLeftTop(leftTopTrackBar.Value).ToString();
-        private void leftTopTextBox_KeyPress(object sender, KeyPressEventArgs e) => NumValidation(sender, e);
-        private void leftTopTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            int value = qadcopter.SetLeftTop(leftTopTextBox.Text);
-            leftTopTrackBar.Value = value;
-            leftTopTextBox.Text = value.ToString();
-        }
+        private void leftTopTrackBar_Scroll(object sender, EventArgs e) => LTNumericUpDown.Value = leftTopTrackBar.Value;
+        private void LTNumericUpDown_ValueChanged(object sender, EventArgs e) => leftTopTrackBar.Value = (int)LTNumericUpDown.Value;
 
         //Right Top Angle Inputs
-        private void rightTopTrackBar_Scroll(object sender, EventArgs e) => rightTopTextBox.Text = qadcopter.SetRightTop(rightTopTrackBar.Value).ToString();
-        private void rightTopTextBox_KeyPress(object sender, KeyPressEventArgs e) => NumValidation(sender, e);
-        private void rightTopTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            int value = qadcopter.SetRightTop(rightTopTextBox.Text);
-            rightTopTrackBar.Value = value;
-            rightTopTextBox.Text = value.ToString();
-        }
+        private void rightTopTrackBar_Scroll(object sender, EventArgs e) => RTNumericUpDown.Value = rightTopTrackBar.Value;
+        private void RTNumericUpDown_ValueChanged(object sender, EventArgs e) => rightTopTrackBar.Value = (int)RTNumericUpDown.Value;
 
         //Left Bottom Angle Inputs
-        private void leftBotTrackBar_Scroll(object sender, EventArgs e) => leftBotTextBox.Text = qadcopter.SetLeftBot(leftBotTrackBar.Value).ToString();
-        private void leftBotTextBox_KeyPress(object sender, KeyPressEventArgs e) => NumValidation(sender, e);
-        private void leftBotTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            int value = qadcopter.SetLeftBot(leftTopTextBox.Text);
-            leftBotTrackBar.Value = value;
-            leftBotTextBox.Text = value.ToString();
-        }
+        private void leftBotTrackBar_Scroll(object sender, EventArgs e) => LBNumericUpDown.Value = leftBotTrackBar.Value;
+        private void LBNumericUpDown_ValueChanged(object sender, EventArgs e) => leftBotTrackBar.Value = (int)LBNumericUpDown.Value;
 
         //Right Bottom Angle Inputs
-        private void rightBotTrackBar_Scroll(object sender, EventArgs e) => rightBotTextBox.Text = qadcopter.SetRightBot(rightBotTrackBar.Value).ToString();
-        private void rightBotTextBox_KeyPress(object sender, KeyPressEventArgs e) => NumValidation(sender, e);
-        private void rightBotTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            int value = qadcopter.SetRightBot(rightTopTextBox.Text);
-            rightBotTrackBar.Value = value;
-            rightBotTextBox.Text = value.ToString();
-        }
-
-        #region Support functions
-        private void NumValidation(object sender, KeyPressEventArgs e)
-        {
-            char number = e.KeyChar;
-            if (!Char.IsDigit(number))
-            {
-                e.Handled = true;
-            }
-        }        
-        #endregion
+        private void rightBotTrackBar_Scroll(object sender, EventArgs e) => RBNumericUpDown.Value = rightBotTrackBar.Value;
+        private void RBNumericUpDown_ValueChanged(object sender, EventArgs e) => rightBotTrackBar.Value = (int)RBNumericUpDown.Value;
 
         #endregion
-
         private void connectButton_Click(object sender, EventArgs e)
         {
             Status.Text = qadcopter.Connect().Message;
         }
+
+        
     }
 }

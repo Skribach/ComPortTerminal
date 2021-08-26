@@ -40,7 +40,7 @@ namespace ComPortTerminal
         {
             var conn_resp = _conn.Connect();
             _conn.SetRecieveHandler(Reciever);
-            var request = _protocol.CreateConnectionRequest(65);
+            var request = _protocol.Packet.CreateConnectionRequest(65);//
 
             //For Test
             Console.WriteLine("Output packet:");
@@ -53,9 +53,9 @@ namespace ComPortTerminal
             return conn_resp;
         }
 
-        void Reciever(string input)
+        void Reciever(byte input)
         {
-            _protocol.PacketParser(input);
+            _protocol.RecieveHandler(input);
         }
 
         #region Set methods

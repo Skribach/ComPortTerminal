@@ -21,9 +21,7 @@ namespace ComPortTerminal
 
         private SerialPort port;
 
-        public delegate void Handler(string indata);
-
-        private Handler _recieverHandler;
+        
         public ConnectResponse Connect()
         {
             if (!port.IsOpen)
@@ -46,6 +44,7 @@ namespace ComPortTerminal
                     port.Handshake = System.IO.Ports.Handshake.None;
                     port.ReadTimeout = 1000;
                     port.WriteTimeout = 1000;
+                    port.ReceivedBytesThreshold = 1;
                     port.Open();
 
                     IsConnected = port.IsOpen;
@@ -62,7 +61,7 @@ namespace ComPortTerminal
                 }
                 return new ConnectResponse
                 {
-                    Message = "Connection test successfull to " + Name,
+                    Message = "Connection successfull to " + Name,
                     isError = false
                 };
             }
@@ -89,8 +88,14 @@ namespace ComPortTerminal
         {
             port.Write(message, 0, message.Length);
         }
-                
-        public void SetRecieveHandler(Handler handler)
+
+        //Delegates to be used as handler for read 
+        public delegate void ReadString(string indata);
+        public delegate void ReadBytes(byte[] indata);
+        public delegate void ReadByte(byte indata);
+
+        private ReadByte _recieverHandler;
+        public void SetRecieveHandler(ReadByte handler)
         {
             port.DataReceived += new SerialDataReceivedEventHandler(InternalReciever);
             _recieverHandler += handler;
@@ -98,8 +103,7 @@ namespace ComPortTerminal
         void InternalReciever(object sender, SerialDataReceivedEventArgs e)
         {            
             SerialPort sp = (SerialPort)sender;
-            string indata = sp.ReadExisting();
-            _recieverHandler(indata);
+            _recieverHandler((byte)sp.ReadByte());
         }
         public class ConnectResponse
         {

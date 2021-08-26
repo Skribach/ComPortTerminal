@@ -9,13 +9,13 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
 {
     public partial class Connection
     {
-        public ConnectResponse Connect()
+        public Response Connect()
         {
             if (!port.IsOpen)
             {
                 if (Name == null)
                 {
-                    return new ConnectResponse
+                    return new Response
                     {
                         Message = "COM-port need to be selected;",
                         isError = true
@@ -40,19 +40,19 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
                 }
                 catch (Exception ex)
                 {
-                    return new ConnectResponse
+                    return new Response
                     {
                         Message = "ERROR: Another instance connected to " + Name,
                         isError = true
                     };
                 }
-                return new ConnectResponse
+                return new Response
                 {
                     Message = "Connection successfull to " + Name,
                     isError = false
                 };
             }
-            return new ConnectResponse
+            return new Response
             {
                 Message = "Connection is already established to " + Name,
                 isError = false

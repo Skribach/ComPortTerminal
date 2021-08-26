@@ -44,6 +44,7 @@ namespace ComPortTerminal
         }
         private void portsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            connectButton.Enabled = true;
             conn.Name = conn.AvailableConnections[portsComboBox.SelectedIndex];
             Status.Text = conn.Name + " is selected to connection...";
             Status.ForeColor = Color.Black;
@@ -68,11 +69,37 @@ namespace ComPortTerminal
         private void RBNumericUpDown_ValueChanged(object sender, EventArgs e) => rightBotTrackBar.Value = (int)RBNumericUpDown.Value;
 
         #endregion
+
         private void connectButton_Click(object sender, EventArgs e)
         {
             Status.Text = qadcopter.Connect().Message;
         }
 
-        
+        private void onlineCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if(onlineCheckBox.CheckState == CheckState.Checked)
+                startButton.Enabled = false;
+            else
+                startButton.Enabled = true;
+        }
+
+        private void startLogCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (startLogCheckBox.CheckState == CheckState.Checked)
+                startLogButton.Enabled = false;
+            else
+                startLogButton.Enabled = true;
+        }
+
+        private void selectLogFolderbutton_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog dialog = logFolderBrowserDialog)
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    Status.Text = dialog.SelectedPath;
+                }
+            }
+        }
     }
 }

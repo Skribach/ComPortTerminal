@@ -9,7 +9,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
     {
-        public Packet Packet { get; private set; }
+        public  Packet Packet { get; private set; }
         private byte[] _buffer;
         private int _pointer;
         //Max Message Length = _bufferLength/2

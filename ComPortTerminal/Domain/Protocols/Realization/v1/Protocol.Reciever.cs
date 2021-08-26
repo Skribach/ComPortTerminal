@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ComPortTerminal.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
-    {        
+    {
         public void RecieveHandler(byte input)
         {
             if (_pointer == _bufferLength)

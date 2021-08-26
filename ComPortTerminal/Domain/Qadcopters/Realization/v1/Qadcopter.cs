@@ -36,7 +36,7 @@ namespace ComPortTerminal.Domain.Qadcopters.Realization.v1
         public int MaxValue { get; }
         public int Step { get; }
 
-        public Connection.ConnectResponse Connect()
+        public Connection.Response Connect()
         {
             var conn_resp = _conn.Connect();
             _conn.SetRecieveHandler(Reciever);

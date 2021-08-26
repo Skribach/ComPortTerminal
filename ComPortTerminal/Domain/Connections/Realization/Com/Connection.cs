@@ -21,7 +21,7 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
 
         private SerialPort port;
                 
-        public class ConnectResponse
+        public class Response
         {
             public string Message { get; set; }
             public bool isError { get; set; }

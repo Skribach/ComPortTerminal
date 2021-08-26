@@ -13,9 +13,23 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
         {
             port.Write(data);
         }
-        public void Write(byte[] data)
+        public Response Write(byte[] data)
         {
-            port.Write(data, 0, data.Length);
+            if (port.IsOpen)
+            {
+                port.Write(data, 0, data.Length);
+                return new Response
+                {
+                    Message = "Connect request was transmitt",
+                    isError = false
+                };
+            }
+            else
+                return new Response
+                {
+                    Message = "No connected link",
+                    isError = true
+                };
         }
     }
 }

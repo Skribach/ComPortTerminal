@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ComPortTerminal.Domain.Connections.Realization.Com;
+using ComPortTerminal.Domain.Protocols.Realization.v1;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,13 +10,13 @@ namespace ComPortTerminal.Controller
 {
     public class Controller
     {
-        /// <summary>
-        /// Returns Available Connections
-        /// </summary>
-        /// <returns>ResponseAvailableConnections</returns>
-        public ResponseAvailableConnections DisplayAvailableConnections()
+        private Connection _conn;
+        private Protocol _protocol;
+
+        public Controller()
         {
-            return new ResponseAvailableConnections { };
+            _conn = new Connection();
+            _protocol = new Protocol();
         }
 
         /// <summary>
@@ -25,6 +27,20 @@ namespace ComPortTerminal.Controller
         public ResponseConnect Connect(string connection)
         {
             return new ResponseConnect { };
+        }
+
+        /// <summary>
+        /// Returns Available Connections
+        /// </summary>
+        /// <returns>ResponseAvailableConnections</returns>
+        public ResponseAvailableConnections DisplayAvailableConnections()
+        {            
+            return new ResponseAvailableConnections
+            {
+                Connections = _conn.AvailableConnections,
+                isError = false,
+                Message = null
+            };
         }
 
         /// <summary>

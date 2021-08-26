@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\Controller.cs" />
+    <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Domain\Connections\Realization\Com\Connection.Connect.cs" />
     <Compile Include="Domain\Connections\Realization\Com\Connection.Read.cs" />
     <Compile Include="Domain\Connections\Realization\Com\Connection.Write.cs" />

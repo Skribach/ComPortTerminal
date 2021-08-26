@@ -11,12 +11,15 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using ComPortTerminal.Domain.Connections.Realization.Com;
 using ComPortTerminal.Domain.Qadcopters.Realization.v1;
+using ComPortTerminal.Controllers;
 #endregion
 
 namespace ComPortTerminal
 {
     public partial class Form1 : Form
     {
+        Controller _controller;
+
         Connection conn;
 
         Qadcopter qadcopter;
@@ -25,8 +28,11 @@ namespace ComPortTerminal
         public int MaxAngle = 180;
         public int MinAngle = 0;
 
+        private string _connName;
+
         public Form1()
         {
+            _controller = new Controller();
             conn = new Connection();
             qadcopter = new Qadcopter(
                 initialAngle, initialAngle, initialAngle, initialAngle,
@@ -35,18 +41,18 @@ namespace ComPortTerminal
             InitializeComponent();
         }
 
-        #region Dropdown list
+        #region Dropdown list with available links
         private void portsComboBox_MouseDown(object sender, MouseEventArgs e)
         {
             portsComboBox.Items.Clear();
-            foreach (string port in conn.AvailableConnections)
-                portsComboBox.Items.Add(port);
+            foreach (string conns in _controller.DisplayAvailableConnections().Connections)
+                portsComboBox.Items.Add(conns);
         }
         private void portsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             connectButton.Enabled = true;
-            conn.Name = conn.AvailableConnections[portsComboBox.SelectedIndex];
-            Status.Text = conn.Name + " is selected to connection...";
+            _connName = _controller.DisplayAvailableConnections().Connections[portsComboBox.SelectedIndex];
+            Status.Text = _connName + " is selected to connection...";
             Status.ForeColor = Color.Black;
         }
         #endregion
@@ -72,7 +78,12 @@ namespace ComPortTerminal
 
         private void connectButton_Click(object sender, EventArgs e)
         {
-            Status.Text = qadcopter.Connect().Message;
+            var response = _controller.Connect(_connName);
+            if(!response.isError)
+                Status.ForeColor = Color.Green;
+            else
+                Status.ForeColor = Color.Red;
+            Status.Text = response.Message;
         }
 
         private void onlineCheckBox_CheckedChanged(object sender, EventArgs e)

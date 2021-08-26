@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ComPortTerminal.Controller
+namespace ComPortTerminal.Controllers
 {
     public class Controller
     {
@@ -26,7 +26,9 @@ namespace ComPortTerminal.Controller
         /// <returns>ResponseConnect</returns>
         public ResponseConnect Connect(string connection)
         {
-            return new ResponseConnect { };
+            return new ResponseConnect {
+            
+            };
         }
 
         /// <summary>

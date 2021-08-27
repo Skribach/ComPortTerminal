@@ -7,26 +7,44 @@ using System.Threading.Tasks;
 namespace ComPortTerminal.Domain.Packets.Realization.v1
 {
     public partial class Packet
-    {
+    { 
+        //Max Message Length = _bufferLength/2
+        private static int _bufferLength = 64;
+
+        private byte[] _buffer = new byte[_bufferLength];
+        private int _pointer = _bufferLength/2;
+
         /// <summary>
         /// Parses array of byte. If packet is found, return true and rewrite itself Type, Data vars
         /// </summary>
         /// <param name="input">input byte[]</param>
         /// <returns></returns>
-        public bool Parser(byte[] input)
+        public bool Parser(byte input)
         {
+            //Writing to buffer
+            if (_pointer == _bufferLength)
+            {
+                for (int i = 0; i < _bufferLength / 2; i++)
+                {
+                    _buffer[i] = _buffer[_bufferLength / 2 + i];
+                    _buffer[_bufferLength / 2 + i] = 0;
+                }
+                _pointer = _bufferLength / 2;
+            }
+            _buffer[_pointer++] = input;
+
             Console.WriteLine("\n********RUN PACKET PARSER*********\n");
             //ONLY FOR TEST
             Console.WriteLine("\tInput Packet:");
-            foreach (byte e in input)
+            foreach (byte e in _buffer)
                 Console.Write("0x{0:X} ", e);
             Console.WriteLine();
 
             //Check on ST and ED Delimeters existence in right order
-            int enIndex = Find2Bytes(ByteDelimiters[Delimiters.end], input, 0);
+            int enIndex = Find2Bytes(ByteDelimiters[Delimiters.end], _buffer, 0);
             if (enIndex == -1)
                 return false;
-            int stIndex = Find2Bytes(ByteDelimiters[Delimiters.start], input, 0);
+            int stIndex = Find2Bytes(ByteDelimiters[Delimiters.start], _buffer, 0);
             if (stIndex == -1)
                 return false;
             if (stIndex > enIndex)
@@ -36,14 +54,14 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
             int a = stIndex;
             while (a != -1)
             {
-                a = Find2Bytes(ByteDelimiters[Delimiters.start], input, a + 1);
+                a = Find2Bytes(ByteDelimiters[Delimiters.start], _buffer, a + 1);
                 if (a != -1)
                     stIndex = a;
             }
 
             //Length check
             int length = 2 + enIndex - stIndex;
-            if (length == input[stIndex + 2])
+            if (length == _buffer[stIndex + 2])
             {
                 Console.WriteLine("\nOK...Length matches: " + length);
             }
@@ -56,7 +74,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
             //CRC checking
             byte[] crcData = new byte[length - 6];
             for (int i = 0; i < (length - 6); i++)
-                crcData[i] = input[stIndex + i + 2];
+                crcData[i] = _buffer[stIndex + i + 2];
 
             Console.Write("\n\tCutted packet for CRC: ");
             foreach (byte b in crcData)
@@ -65,7 +83,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
 
             var crcCalc = _hash.ComputeChecksumBytes(crcData);
             Console.WriteLine("\n\tComputed CRC: {1:X} {0:X}", crcCalc[0], crcCalc[1]);
-            var crcPack = new byte[] { input[length + 1], input[length] };
+            var crcPack = new byte[] { _buffer[length + 1], _buffer[length] };
             Console.WriteLine("\n\tPacket CRC: {1:X} {0:X}", crcPack[0], crcPack[1]);
 
             if ((crcCalc[0] == crcPack[0]) && (crcCalc[1] == crcPack[1]))
@@ -82,7 +100,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
             Types tempType = Types.unknown;
             foreach (KeyValuePair<Types, Byte> keyValue in ByteTypes)
             {
-                if (keyValue.Value == input[3 + stIndex])
+                if (keyValue.Value == _buffer[3 + stIndex])
                 {
                     tempType = keyValue.Key;
                     Console.WriteLine("\nOK...Packet command: " + Enum.GetName(typeof(Types), tempType));
@@ -99,13 +117,19 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
 
             Data = new byte[length - 8];
             for (int i = 0; i < (length - 8); i++)
-                Data[i] = input[(stIndex + i + 4)];
+                Data[i] = _buffer[(stIndex + i + 4)];
 
             Console.Write("\n\tRecieved Data: ");
             foreach (byte b in Data)
                 Console.Write("0X{0:X} ", b);
 
             Console.WriteLine("\n\n\n----------PARSING SUCCESSFULL----------\n");
+
+            Console.WriteLine("Begin");
+            foreach (byte b in _buffer)
+                Console.Write(b + " ");
+            Console.WriteLine("\nEnd");
+
             return false;
         }
 

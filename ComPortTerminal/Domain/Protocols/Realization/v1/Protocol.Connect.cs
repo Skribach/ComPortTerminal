@@ -50,8 +50,8 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                     };
                 }
                 _connectionNum = i;
-                _conn.Write(_packet.CreateConnectionRequest(_connectionNum));
-                await Task.Run(() => Thread.Sleep(300));
+                _conn.Write(_packet.CreateConnectionRequest(_connectionNum));                
+                await Task.Run(() => Thread.Sleep(30000));
             }
             _connectionNum = 0;
             _status = Statuses.notConnected;

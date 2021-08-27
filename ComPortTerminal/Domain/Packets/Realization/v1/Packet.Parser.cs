@@ -7,30 +7,130 @@ using System.Threading.Tasks;
 namespace ComPortTerminal.Domain.Packets.Realization.v1
 {
     public partial class Packet
-    { 
-        //Max Message Length = _bufferLength/2
-        private static int _bufferLength = 64;
-
-        private byte[] _buffer = new byte[_bufferLength];
-        private int _pointer = _bufferLength/2;
+    {
+        private int _pointer = 0;
+        private byte[] buffer = new byte[256];
 
         /// <summary>
         /// Parses array of byte. If packet is found, return true and rewrite itself Type, Data vars
         /// </summary>
-        /// <param name="input">input byte[]</param>
+        /// <param name="input">input byte</param>
         /// <returns></returns>
         public bool Parser(byte input)
         {
+            byte[] crcData;
+            //Delimiters Checking
+            switch (_pointer)
+            {
+                case (0):
+                    if (input == ByteDelimiters[Delimiters.start][0])
+                    {
+                        _pointer++;
+                        return false;
+                    }
+                    break;
+                case (1):
+                    if (input == ByteDelimiters[Delimiters.start][1])
+                    {
+                        _pointer++;
+                        return false;
+                    }
+                    else
+                    {
+                        _pointer = 0;
+                        return false;
+                    }
+                case (2):
+                    _length = (int)input;                    
+                    _pointer++;
+                    break;
+            }
+
+            crcData = new byte[_length - 6];
+
+            //Type checking
+            if (_pointer == 3)
+            {                
+                Types tempType = Types.unknown;
+                foreach (KeyValuePair<Types, Byte> keyValue in ByteTypes)
+                {
+                    if (keyValue.Value == input)
+                    {
+                        tempType = keyValue.Key;
+                        
+                        _pointer++;
+                        Console.WriteLine("\nOK...Packet command: " + Enum.GetName(typeof(Types), tempType));
+                    }
+                }
+                if (tempType == Types.unknown)
+                {
+                    Console.WriteLine("\nBAD...Command in packet doesn't match with command in enums");
+                    _pointer = 0;
+                    return false;
+                }
+                crcData[_pointer - 3] = input;
+                return false;
+            }
+
+            //Data reading
+            else if ((_pointer >= 4) && (_pointer < _length - 4))
+            {
+                if (_pointer == 4)
+                    Data = new byte[_length - 8];
+
+                Data[_pointer - 4] = input;
+                crcData[_pointer - 4] = input;
+                _pointer++;
+                return false;
+            }
+
+            //CRC checking
+            byte[] crcPack = new byte[2];
+            if (_pointer == _length - 4)
+            {                
+                crcPack[0] = input;
+                _pointer++;
+                return false;
+            }
+            else if (_pointer == _length - 3)
+            {                
+                crcPack[1] = input;
+                _pointer++;
+                return false;
+            }
+            var crcCalc = _hash.ComputeChecksumBytes(crcData);
+            Console.WriteLine("\n\tComputed CRC: {1:X} {0:X}", crcCalc[0], crcCalc[1]);
+            var crcPack = new byte[] { _buffer[length + 1], _buffer[length] };
+            Console.WriteLine("\n\tPacket CRC: {1:X} {0:X}", crcPack[0], crcPack[1]);
+
+            if ((crcCalc[0] == crcPack[0]) && (crcCalc[1] == crcPack[1]))
+            {
+                Console.WriteLine("\nOK...CRC matches");
+            }
+            else
+            {
+                Console.WriteLine("\nBAD...CRC doesn't match");
+                return false;
+            }
+
+
+
+
+
+
+
+
+
             //Writing to buffer
             if (_pointer == _bufferLength)
-            {
-                for (int i = 0; i < _bufferLength / 2; i++)
                 {
-                    _buffer[i] = _buffer[_bufferLength / 2 + i];
-                    _buffer[_bufferLength / 2 + i] = 0;
+                    for (int i = 0; i < _bufferLength / 2; i++)
+                    {
+                        _buffer[i] = _buffer[_bufferLength / 2 + i];
+                        _buffer[_bufferLength / 2 + i] = 0;
+                    }
+                    _pointer = _bufferLength / 2;
                 }
-                _pointer = _bufferLength / 2;
-            }
             _buffer[_pointer++] = input;
 
             Console.WriteLine("\n********RUN PACKET PARSER*********\n");
@@ -72,7 +172,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
             }
 
             //CRC checking
-            byte[] crcData = new byte[length - 6];
+            //byte[] crcData = new byte[length - 6];
             for (int i = 0; i < (length - 6); i++)
                 crcData[i] = _buffer[stIndex + i + 2];
 
@@ -96,21 +196,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
                 return false;
             }
 
-            //Type checking
-            Types tempType = Types.unknown;
-            foreach (KeyValuePair<Types, Byte> keyValue in ByteTypes)
-            {
-                if (keyValue.Value == _buffer[3 + stIndex])
-                {
-                    tempType = keyValue.Key;
-                    Console.WriteLine("\nOK...Packet command: " + Enum.GetName(typeof(Types), tempType));
-                }
-            }
-            if (tempType == Types.unknown)
-            {
-                Console.WriteLine("\nBAD...Command in packet doesn't match with command in enums");
-                return false;
-            }
+
 
             _crc = crcData;
             _length = length;

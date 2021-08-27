@@ -8,6 +8,11 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
 {
     public partial class Packet
     {
+        public Packet()
+        {
+            
+        }
+
         public Types Type { get; private set; }
         public byte[] Data { get; private set; }
 
@@ -53,5 +58,5 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
             [Types.angleResponse] = (byte)'d',
             [Types.parameters] = (byte)'e',
         };
-    }    
+    }
 }

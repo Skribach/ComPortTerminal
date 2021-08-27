@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ComPortTerminal.Global;
 
 namespace ComPortTerminal.Controllers
 {
@@ -16,7 +17,7 @@ namespace ComPortTerminal.Controllers
         public Controller()
         {
             _conn = new Connection();
-            _protocol = new Protocol();
+            _protocol = new Protocol(_conn);
         }
 
         /// <summary>
@@ -24,12 +25,10 @@ namespace ComPortTerminal.Controllers
         /// </summary>
         /// <param name="connection">Link ID</param>
         /// <returns>ResponseConnect</returns>
-        public Response Connect(string connection)
-        {            
-            return new Response {
-            Message = "Fake Connection to Fake Connection is ready",
-            isError = false
-            };
+        public async Task<Response> Connect(string connection)
+        {
+            //Connection to COM-port
+            return await _protocol.ConnectAsync(connection);
         }
 
         /// <summary>
@@ -37,7 +36,8 @@ namespace ComPortTerminal.Controllers
         /// </summary>
         /// <returns>ResponseAvailableConnections</returns>
         public ResponseAvailableConnections DisplayAvailableConnections()
-        {            
+        {
+            _conn.UpdateAvailableConnections();
             return new ResponseAvailableConnections
             {
                 Connections = _conn.AvailableConnections,
@@ -69,7 +69,7 @@ namespace ComPortTerminal.Controllers
         /// Delegate to handle input parameters
         /// </summary>
         public delegate void NewParametersHandler();
-        
+
         /// <summary>
         /// Sets ParametersHandler when data recieved
         /// </summary>
@@ -77,7 +77,7 @@ namespace ComPortTerminal.Controllers
         /// <returns></returns>
         public Response SetParametersHandler(NewParametersHandler handler)
         {
-            return new Response{ };
+            return new Response { };
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace ComPortTerminal.Controllers
         /// <returns>Response</returns>
         public Response StartLog(string path)
         {
-            return new Response{ };
+            return new Response { };
         }
 
         /// <summary>
@@ -98,17 +98,12 @@ namespace ComPortTerminal.Controllers
         {
             return new Response { };
         }
-
-        public class Response
-        {
-            public string Message { get; set; }
-            public bool isError { get; set; }
-        }
+        
         public class ResponseAvailableConnections : Response
         {
             public string[] Connections { get; set; }
         }
-        
+
         public class RequestSetAngles
         {
             public int LTAngle;

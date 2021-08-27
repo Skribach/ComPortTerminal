@@ -25,7 +25,7 @@ namespace ComPortTerminal.Domain.Qadcopters.Realization.v1
             MinValue = minValue;
             MaxValue = maxValue;
             _conn = conn;
-            _protocol = new Protocol();
+            _protocol = new Protocol(_conn);
         }
         public int LeftTop { get; private set; }
         public int RightTop { get; private set; }
@@ -38,7 +38,7 @@ namespace ComPortTerminal.Domain.Qadcopters.Realization.v1
 
         public Connection.Response Connect()
         {
-            var conn_resp = _conn.Connect();
+            /*var conn_resp = _conn.Connect();
             _conn.SetRecieveHandler(Reciever);
             var request = _protocol.Packet.CreateConnectionRequest(65);//
 
@@ -49,8 +49,8 @@ namespace ComPortTerminal.Domain.Qadcopters.Realization.v1
             Console.WriteLine();
 
             _conn.Write(request);
-
-            return conn_resp;
+            */
+            return new Connection.Response { };
         }
 
         void Reciever(byte input)

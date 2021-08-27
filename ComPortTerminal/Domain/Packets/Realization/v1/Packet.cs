@@ -20,7 +20,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
         {
             connRequest, connResponse,
             angleRequest, angleResponse,
-            rpm, unknown
+            parameters, unknown
         }
 
         //Start/stop types
@@ -51,7 +51,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
             [Types.connResponse] = (byte)'b',
             [Types.angleRequest] = (byte)'c',
             [Types.angleResponse] = (byte)'d',
-            [Types.rpm] = (byte)'e',
+            [Types.parameters] = (byte)'e',
         };
     }    
 }

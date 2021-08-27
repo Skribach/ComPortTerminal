@@ -9,21 +9,13 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
 {
     public partial class Connection
     {
-        public Response Connect()
+        public Response Connect(string connection)
         {
             if (!port.IsOpen)
-            {
-                if (Name == null)
-                {
-                    return new Response
-                    {
-                        Message = "COM-port need to be selected;",
-                        isError = true
-                    };
-                }
+            {                
                 try
                 {
-                    port.PortName = Name;
+                    port.PortName = connection;
                     port.BaudRate = 9600;
                     port.DataBits = 8;
                     port.Parity = System.IO.Ports.Parity.Odd;
@@ -35,14 +27,14 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
                     port.Open();
 
                     IsConnected = port.IsOpen;
-                    Write("Connection complete" + (char)13);
-
+                    Name = connection;
+                    Console.WriteLine("Connection to COM-port complete" + (char)13);
                 }
                 catch (Exception ex)
                 {
                     return new Response
                     {
-                        Message = "ERROR: Another instance connected to " + Name,
+                        Message = "ERROR: Another instance connected to " + Name,                       
                         isError = true
                     };
                 }
@@ -63,6 +55,7 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
 
         public void UpdateAvailableConnections()
         {
+            //TODO i want to return response with isError
             AvailableConnections = SerialPort.GetPortNames();
         }
     }

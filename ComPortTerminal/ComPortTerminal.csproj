@@ -55,6 +55,7 @@
     <Compile Include="Domain\Packets\Realization\v1\Packet.cs" />
     <Compile Include="Domain\Packets\Realization\v1\Packet.Creator.cs" />
     <Compile Include="Domain\Packets\Realization\v1\Packet.Parser.cs" />
+    <Compile Include="Domain\Protocols\Realization\v1\Protocol.Connect.cs" />
     <Compile Include="Domain\Protocols\Realization\v1\Protocol.Reciever.cs" />
     <Compile Include="Domain\Protocols\Realization\v1\Protocol.cs" />
     <Compile Include="Domain\Qadcopters\Realization\v1\Qadcopter.cs" />

@@ -26,8 +26,8 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
             byte[] load = new byte[count];
 
             //header
-            for (int i = 0; i < ByteDelimiters[Delimiters.end].Length; i++)
-                load[i] = ByteDelimiters[Delimiters.end][i];
+            for (int i = 0; i < ByteDelimiters[Delimiters.start].Length; i++)
+                load[i] = ByteDelimiters[Delimiters.start][i];
 
             //length
             load[ByteDelimiters[Delimiters.end].Length] = BitConverter.GetBytes(count)[0];
@@ -48,7 +48,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
             for (int i = ByteDelimiters[Delimiters.end].Length + 4 + data.Length;
                 i < ByteDelimiters[Delimiters.start].Length + ByteDelimiters[Delimiters.end].Length + 4 + data.Length;
                 i++)
-                load[i] = ByteDelimiters[Delimiters.start][i - (ByteDelimiters[Delimiters.end].Length + 4 + data.Length)];
+                load[i] = ByteDelimiters[Delimiters.end][i - (ByteDelimiters[Delimiters.end].Length + 4 + data.Length)];
 
             return load;
         }        

@@ -12,6 +12,14 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
     {
+        /// <summary>
+        /// Time in ms between two requests
+        /// </summary>
+        private const int ReplyTimeRequest = 500;
+        /// <summary>
+        /// Number of connection requests to quadcopter
+        /// </summary>
+        private const int NumOfReply = 10000;
         public async Task<Response> ConnectAsync(string connection)
         {
             //Connection to COM-port
@@ -28,7 +36,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             //When 1-byte recieved, RecieveHandler runs
             _conn.SetRecieveHandler(RecieveHandler);
 
-            _status = Statuses.waitingConnectionResponse;
+            Status = Statuses.waitingConnectionResponse;
             //Sending request to connect
             return await CreateConnectionRequests();
         }
@@ -38,9 +46,10 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         /// <returns></returns>
         private async Task<Response> CreateConnectionRequests()
         {
-            for (int i = 0; i < 8; i++)
+            Status = Statuses.waitingConnectionResponse;
+            for (int i = 0; i < NumOfReply; i++)
             {
-                if (_status == Statuses.connected)
+                if (Status == Statuses.connected)
                 {
                     _connectionNum = 0;
                     return new Response
@@ -49,12 +58,13 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         isError = false
                     };
                 }
-                _connectionNum = i;
+                _connectionNum = 0;
+                //_connectionNum = i;
                 _conn.Write(_packet.CreateConnectionRequest(_connectionNum));                
-                await Task.Run(() => Thread.Sleep(30000));
+                await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }
             _connectionNum = 0;
-            _status = Statuses.notConnected;
+            Status = Statuses.notConnected;
             return new Response
             {
                 Message = "ERROR: Qadcopter connection fail",

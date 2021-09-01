@@ -79,7 +79,7 @@ namespace ComPortTerminal
         private async void connectButton_Click(object sender, EventArgs e)
         {
             Status.Text = "Connecting to quadcopter...";
-            Status.ForeColor = Color.Black;
+            Status.ForeColor = Color.Green;
             var response = await _controller.Connect(_connName);
             if(!response.isError)
                 Status.ForeColor = Color.Green;

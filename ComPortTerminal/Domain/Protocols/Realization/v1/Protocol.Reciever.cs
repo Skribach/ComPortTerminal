@@ -17,10 +17,10 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                 switch (_packet.Type)
                 {
                     case (Packet.Types.connResponse):
-                        if(_status == Statuses.waitingConnectionResponse)
+                        if(Status == Statuses.waitingConnectionResponse)
                         {
                             if(_packet.Data[0] == (byte)_connectionNum)
-                            _status = Statuses.connected;
+                            Status = Statuses.connected;
                         }
                         Console.WriteLine("Connection response arrived");
                         break;

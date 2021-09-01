@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ComPortTerminal.Domain.Protocols.Realization.v1.Protocol;
 using static ComPortTerminal.Global;
 
 namespace ComPortTerminal.Controllers
@@ -27,8 +28,14 @@ namespace ComPortTerminal.Controllers
         /// <returns>ResponseConnect</returns>
         public async Task<Response> Connect(string connection)
         {
-            //Connection to COM-port
-            return await _protocol.ConnectAsync(connection);
+            if(_protocol.Status == Statuses.notConnected)
+                return await _protocol.ConnectAsync(connection);
+
+            return new Response
+            {
+                Message = "Connection to quadcopter...",
+                isError = false
+            };
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
     {
         private Packet _packet;
         private Connection _conn;
-        private Statuses _status;
+        public Statuses Status { get; private set; }
 
         public bool IsConnected { get; private set; }
         private int _connectionNum;
@@ -23,7 +23,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         {
             _packet = new Packet();
             _conn = conn;
-            _status = Statuses.notConnected;
+            Status = Statuses.notConnected;
             _connectionNum = 0;
         }
 

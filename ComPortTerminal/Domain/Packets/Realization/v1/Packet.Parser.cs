@@ -48,10 +48,11 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
                     _pointer++;
                     return false;
             }
-            _tempType = Types.unknown;
+            
             //Type checking
             if (_pointer == 3)
             {
+                _tempType = Types.unknown;
                 _crcData = new byte[_length - 6];
                 foreach (KeyValuePair<Types, Byte> keyValue in ByteTypes)
                 {
@@ -98,7 +99,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
 
                 var _crcCalc = _hash.ComputeChecksumBytes(_crcData);
 
-                if ((_crcCalc[0] == _crcPack[1]) && (_crcCalc[1] == _crcPack[0]))
+                if ((_crcCalc[0] == _crcPack[0]) && (_crcCalc[1] == _crcPack[1]))
                 {
                     _pointer++;
                     return false;

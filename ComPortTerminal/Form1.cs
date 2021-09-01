@@ -18,15 +18,9 @@ namespace ComPortTerminal
 {
     public partial class Form1 : Form
     {
-        Controller _controller;
+        private Controller _controller;
 
         Connection conn;
-
-        Qadcopter qadcopter;
-
-        public int initialAngle = 90;
-        public int MaxAngle = 180;
-        public int MinAngle = 0;
 
         private string _connName;
 
@@ -34,10 +28,7 @@ namespace ComPortTerminal
         {
             _controller = new Controller();
             conn = new Connection();
-            qadcopter = new Qadcopter(
-                initialAngle, initialAngle, initialAngle, initialAngle,
-                MinAngle, MaxAngle,
-                conn);
+            
             InitializeComponent();
         }
 
@@ -130,27 +121,36 @@ namespace ComPortTerminal
             }
         }
 
+        //Button "Set angles"
+        private async void setAnglesButton_Click(object sender, EventArgs e)
+        {
+            await displayStatusAndSendAnglesAsync();
+        }
+
         #region Supporting methods
         private async Task displayStatusAndSendAnglesAsync()
         {
             Status.ForeColor = Color.Black;
             Status.Text = "Sending angle values...";
-            var resp = await _controller.SetAngles(new Controller.RequestSetAngles
+            var response = await _controller.SetAngles(new Controller.RequestSetAngles
             {
                 LTAngle = leftTopTrackBar.Value,
                 RTAngle = rightTopTrackBar.Value,
                 LBAngle = leftBotTrackBar.Value,
                 RBAngle = rightBotTrackBar.Value
             });
-            if (resp.isError)
+            if (!response.isCanceled)
             {
-                Status.ForeColor = Color.Red;
+                if (response.isError)
+                {
+                    Status.ForeColor = Color.Red;
+                }
+                else if (!response.isError)
+                {
+                    Status.ForeColor = Color.Green;
+                }
+                Status.Text = response.Message;
             }
-            else if (!resp.isError)
-            {
-                Status.ForeColor = Color.Green;
-            }
-            Status.Text = resp.Message;
         }
         #endregion
 
@@ -159,24 +159,33 @@ namespace ComPortTerminal
         private async void connectButton_Click(object sender, EventArgs e)
         {
             Status.Text = "Connecting to quadcopter...";
-            Status.ForeColor = Color.Green;
+            Status.ForeColor = Color.Black;
             var response = await _controller.Connect(_connName);
-            if (!response.isError)
+            if(!response.isCanceled)
             {
-                Status.ForeColor = Color.Green;
-                setAnglesButton.Enabled = true;
-            }
-            else
-                Status.ForeColor = Color.Red;
-            Status.Text = response.Message;
+                if (!response.isError)
+                {
+                    Status.ForeColor = Color.Green;
+                    setAnglesButton.Enabled = true;
+                }
+                else
+                    Status.ForeColor = Color.Red;
+                Status.Text = response.Message;
+            }            
         }
 
-        private void onlineCheckBox_CheckedChanged(object sender, EventArgs e)
+        private async void onlineCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (onlineCheckBox.CheckState == CheckState.Checked)
+            {
                 setAnglesButton.Enabled = false;
+                await displayStatusAndSendAnglesAsync();
+            }
             else
+            {
                 setAnglesButton.Enabled = true;
+            }
+
         }
 
         private void startLogCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -197,25 +206,5 @@ namespace ComPortTerminal
                 }
             }
         }
-
-        private async void setAnglesButton_Click(object sender, EventArgs e)
-        {
-            Status.ForeColor = Color.Green;
-            Status.Text = "Sending angles";
-            var resp = await _controller.SetAngles(new Controller.RequestSetAngles
-            {
-                LTAngle = leftTopTrackBar.Value,
-                RTAngle = rightTopTrackBar.Value,
-                LBAngle = leftBotTrackBar.Value,
-                RBAngle = rightBotTrackBar.Value
-            });
-            if (resp.isError)
-                Status.ForeColor = Color.Red;
-            else if (!resp.isError)
-                Status.ForeColor = Color.Green;
-            Status.Text = resp.Message;
-        }
-
-       
     }
 }

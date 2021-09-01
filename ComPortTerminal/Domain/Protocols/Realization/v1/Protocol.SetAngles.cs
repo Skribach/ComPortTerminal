@@ -24,7 +24,8 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                 return new Response
                 {
                     Message = "Setting angle in progress...",
-                    isError = false
+                    isError = false,
+                    isCanceled = true
                 };
 
             //If no established connection
@@ -32,7 +33,8 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                 return new Response
                 {
                     Message = "ERROR: No established connection. Please connect to link",
-                    isError = true
+                    isError = true,
+                    isCanceled = false
                 };
 
             Status = Statuses.waitingSetAngleResponse;
@@ -44,7 +46,8 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                     return new Response
                     {
                         Message = "Angles successfully installed",
-                        isError = false
+                        isError = false,
+                        isCanceled = false
                     };
                 }
                 _conn.Write(_packet.CreateAngleRequest(_a, _b, _c, _d));

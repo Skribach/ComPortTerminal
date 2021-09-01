@@ -12,6 +12,7 @@ namespace ComPortTerminal
         {
             public string Message { get; set; }
             public bool isError { get; set; }
+            public bool isCanceled { get; set; }
         }
     }
 }

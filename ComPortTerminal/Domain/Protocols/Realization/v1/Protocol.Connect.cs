@@ -46,11 +46,12 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         private async Task<Response> CreateConnectionRequests()
         {
             //If connect button was pushed more than one time
-            if(Status == Statuses.waitingConnectionResponse)
+            if (Status == Statuses.waitingConnectionResponse)
                 return new Response
                 {
                     Message = "Connection to quadcopter...",
-                    isError = false
+                    isError = false,
+                    isCanceled = true
                 };
 
             Status = Statuses.waitingConnectionResponse;
@@ -62,7 +63,8 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                     return new Response
                     {
                         Message = "Quadcopter connection successfull",
-                        isError = false
+                        isError = false,
+                        isCanceled = false
                     };
                 }
                 //_connectionNum = i;
@@ -75,7 +77,8 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             return new Response
             {
                 Message = "ERROR: Qadcopter connection fail",
-                isError = true
+                isError = true,
+                isCanceled = false
             };
         }
     }

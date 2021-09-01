@@ -20,7 +20,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
         /// </summary>
         /// <param name="input">input byte</param>
         /// <returns></returns>
-        public bool Parser(byte input)
+        public bool TryParse(byte input)
         {
             //Start delimiter Checking, read length
             switch (_pointer)

@@ -58,6 +58,7 @@
     <Compile Include="Domain\Protocols\Realization\v1\Protocol.Connect.cs" />
     <Compile Include="Domain\Protocols\Realization\v1\Protocol.Reciever.cs" />
     <Compile Include="Domain\Protocols\Realization\v1\Protocol.cs" />
+    <Compile Include="Domain\Protocols\Realization\v1\Protocol.SetAngles.cs" />
     <Compile Include="Domain\Qadcopters\Realization\v1\Qadcopter.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

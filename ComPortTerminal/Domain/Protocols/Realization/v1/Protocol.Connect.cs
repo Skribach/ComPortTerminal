@@ -36,7 +36,6 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             //When 1-byte recieved, RecieveHandler runs
             _conn.SetRecieveHandler(RecieveHandler);
 
-            Status = Statuses.waitingConnectionResponse;
             //Sending request to connect
             return await CreateConnectionRequests();
         }
@@ -46,6 +45,14 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         /// <returns></returns>
         private async Task<Response> CreateConnectionRequests()
         {
+            //If connect button was pushed more than one time
+            if(Status == Statuses.waitingConnectionResponse)
+                return new Response
+                {
+                    Message = "Connection to quadcopter...",
+                    isError = false
+                };
+
             Status = Statuses.waitingConnectionResponse;
             for (int i = 0; i < NumOfReply; i++)
             {
@@ -58,8 +65,8 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         isError = false
                     };
                 }
-                _connectionNum = 0;
                 //_connectionNum = i;
+                _connectionNum = 0;                
                 _conn.Write(_packet.CreateConnectionRequest(_connectionNum));                
                 await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }

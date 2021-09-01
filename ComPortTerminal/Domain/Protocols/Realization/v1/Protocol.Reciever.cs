@@ -12,7 +12,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         public void RecieveHandler(byte input)
         {
             //If packet arrived
-            if (_packet.Parser(input))
+            if (_packet.TryParse(input))
             {
                 switch (_packet.Type)
                 {
@@ -25,6 +25,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         Console.WriteLine("Connection response arrived");
                         break;
                     case (Packet.Types.angleResponse):
+                        Status = Statuses.connected;
                         Console.WriteLine("Angle response arrived");
                         break;
                     case (Packet.Types.parameters):

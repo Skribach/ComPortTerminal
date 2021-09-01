@@ -35,7 +35,7 @@ namespace ComPortTerminal
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.zLabel = new System.Windows.Forms.Label();
-            this.startButton = new System.Windows.Forms.Button();
+            this.setAnglesButton = new System.Windows.Forms.Button();
             this.leftTopTrackBar = new System.Windows.Forms.TrackBar();
             this.rightTopTrackBar = new System.Windows.Forms.TrackBar();
             this.leftBotTrackBar = new System.Windows.Forms.TrackBar();
@@ -87,15 +87,16 @@ namespace ComPortTerminal
             this.zLabel.TabIndex = 0;
             this.zLabel.Text = "Z:";
             // 
-            // startButton
+            // setAnglesButton
             // 
-            this.startButton.Enabled = false;
-            this.startButton.Location = new System.Drawing.Point(223, 248);
-            this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(135, 23);
-            this.startButton.TabIndex = 7;
-            this.startButton.Text = "Set Angles";
-            this.startButton.UseVisualStyleBackColor = true;
+            this.setAnglesButton.Enabled = false;
+            this.setAnglesButton.Location = new System.Drawing.Point(223, 248);
+            this.setAnglesButton.Name = "setAnglesButton";
+            this.setAnglesButton.Size = new System.Drawing.Size(135, 23);
+            this.setAnglesButton.TabIndex = 7;
+            this.setAnglesButton.Text = "Set Angles";
+            this.setAnglesButton.UseVisualStyleBackColor = true;
+            this.setAnglesButton.Click += new System.EventHandler(this.setAnglesButton_Click);
             // 
             // leftTopTrackBar
             // 
@@ -460,7 +461,7 @@ namespace ComPortTerminal
             this.Controls.Add(this.leftBotTrackBar);
             this.Controls.Add(this.rightTopTrackBar);
             this.Controls.Add(this.leftTopTrackBar);
-            this.Controls.Add(this.startButton);
+            this.Controls.Add(this.setAnglesButton);
             this.Controls.Add(this.zLabel);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
@@ -484,7 +485,7 @@ namespace ComPortTerminal
         #endregion
 
         private System.Windows.Forms.Label zLabel;
-        private System.Windows.Forms.Button startButton;
+        private System.Windows.Forms.Button setAnglesButton;
         private System.Windows.Forms.TrackBar leftTopTrackBar;
         private System.Windows.Forms.TrackBar rightTopTrackBar;
         private System.Windows.Forms.TrackBar leftBotTrackBar;

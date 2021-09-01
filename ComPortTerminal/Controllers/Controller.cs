@@ -28,14 +28,7 @@ namespace ComPortTerminal.Controllers
         /// <returns>ResponseConnect</returns>
         public async Task<Response> Connect(string connection)
         {
-            if(_protocol.Status == Statuses.notConnected)
-                return await _protocol.ConnectAsync(connection);
-
-            return new Response
-            {
-                Message = "Connection to quadcopter...",
-                isError = false
-            };
+            return await _protocol.ConnectAsync(connection);
         }
 
         /// <summary>
@@ -67,9 +60,11 @@ namespace ComPortTerminal.Controllers
         /// </summary>
         /// <param name="ang">RequestSetAngles</param>
         /// <returns></returns>
-        public Response TransferAngles(RequestSetAngles ang)
+        public async Task<Response> SetAngles(RequestSetAngles ang)
         {
-            return new Response { };
+            return await _protocol.SetAnglesAsync(
+                ang.LTAngle, ang.RTAngle,
+                ang.LBAngle, ang.RBAngle);
         }
 
         /// <summary>
@@ -105,7 +100,7 @@ namespace ComPortTerminal.Controllers
         {
             return new Response { };
         }
-        
+
         public class ResponseAvailableConnections : Response
         {
             public string[] Connections { get; set; }

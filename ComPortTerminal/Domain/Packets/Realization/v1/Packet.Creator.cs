@@ -13,6 +13,16 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
             return CreateRequest(Packet.Types.connRequest, BitConverter.GetBytes(number).Take(1).ToArray());
         }
 
+        public byte[] CreateAngleRequest(int a, int b, int c, int d)
+        {
+            return CreateRequest(Packet.Types.angleRequest, new byte[] {
+                Convert.ToByte(a),
+                Convert.ToByte(b),
+                Convert.ToByte(c),
+                Convert.ToByte(d)
+                });
+        }
+
         private byte[] CreateRequest(Packet.Types type, byte[] data)
         {
             int count =

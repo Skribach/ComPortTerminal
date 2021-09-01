@@ -59,20 +59,100 @@ namespace ComPortTerminal
 
         #region Angle Inputs
         //Left Top Angle Inputs
-        private void leftTopTrackBar_Scroll(object sender, EventArgs e) => LTNumericUpDown.Value = leftTopTrackBar.Value;
-        private void LTNumericUpDown_ValueChanged(object sender, EventArgs e) => leftTopTrackBar.Value = (int)LTNumericUpDown.Value;
+        private async void leftTopTrackBar_Scroll(object sender, EventArgs e)
+        {
+            LTNumericUpDown.Value = leftTopTrackBar.Value;
+            if (onlineCheckBox.Checked)
+            {
+                await displayStatusAndSendAnglesAsync();
+            }
+        }
+        private async void LTNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            leftTopTrackBar.Value = (int)LTNumericUpDown.Value;
+            if (onlineCheckBox.Checked)
+            {
+                await displayStatusAndSendAnglesAsync();
+            }
+        }
 
         //Right Top Angle Inputs
-        private void rightTopTrackBar_Scroll(object sender, EventArgs e) => RTNumericUpDown.Value = rightTopTrackBar.Value;
-        private void RTNumericUpDown_ValueChanged(object sender, EventArgs e) => rightTopTrackBar.Value = (int)RTNumericUpDown.Value;
+        private async void rightTopTrackBar_Scroll(object sender, EventArgs e)
+        {
+            RTNumericUpDown.Value = rightTopTrackBar.Value;
+            if (onlineCheckBox.Checked)
+            {
+                await displayStatusAndSendAnglesAsync();
+            }
+        }
+        private async void RTNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            rightTopTrackBar.Value = (int)RTNumericUpDown.Value;
+            if (onlineCheckBox.Checked)
+            {
+                await displayStatusAndSendAnglesAsync();
+            }
+        }
 
         //Left Bottom Angle Inputs
-        private void leftBotTrackBar_Scroll(object sender, EventArgs e) => LBNumericUpDown.Value = leftBotTrackBar.Value;
-        private void LBNumericUpDown_ValueChanged(object sender, EventArgs e) => leftBotTrackBar.Value = (int)LBNumericUpDown.Value;
+        private async void leftBotTrackBar_Scroll(object sender, EventArgs e)
+        {
+            LBNumericUpDown.Value = leftBotTrackBar.Value;
+            if (onlineCheckBox.Checked)
+            {
+                await displayStatusAndSendAnglesAsync();
+            }
+        }
+        private async void LBNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            leftBotTrackBar.Value = (int)LBNumericUpDown.Value;
+            if (onlineCheckBox.Checked)
+            {
+                await displayStatusAndSendAnglesAsync();
+            }
+        }
 
         //Right Bottom Angle Inputs
-        private void rightBotTrackBar_Scroll(object sender, EventArgs e) => RBNumericUpDown.Value = rightBotTrackBar.Value;
-        private void RBNumericUpDown_ValueChanged(object sender, EventArgs e) => rightBotTrackBar.Value = (int)RBNumericUpDown.Value;
+        private async void rightBotTrackBar_Scroll(object sender, EventArgs e)
+        {
+            RBNumericUpDown.Value = rightBotTrackBar.Value;
+            if (onlineCheckBox.Checked)
+            {
+                await displayStatusAndSendAnglesAsync();
+            }
+        }
+        private async void RBNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            rightBotTrackBar.Value = (int)RBNumericUpDown.Value;
+            if (onlineCheckBox.Checked)
+            {
+                await displayStatusAndSendAnglesAsync();
+            }
+        }
+
+        #region Supporting methods
+        private async Task displayStatusAndSendAnglesAsync()
+        {
+            Status.ForeColor = Color.Black;
+            Status.Text = "Sending angle values...";
+            var resp = await _controller.SetAngles(new Controller.RequestSetAngles
+            {
+                LTAngle = leftTopTrackBar.Value,
+                RTAngle = rightTopTrackBar.Value,
+                LBAngle = leftBotTrackBar.Value,
+                RBAngle = rightBotTrackBar.Value
+            });
+            if (resp.isError)
+            {
+                Status.ForeColor = Color.Red;
+            }
+            else if (!resp.isError)
+            {
+                Status.ForeColor = Color.Green;
+            }
+            Status.Text = resp.Message;
+        }
+        #endregion
 
         #endregion
 
@@ -81,8 +161,11 @@ namespace ComPortTerminal
             Status.Text = "Connecting to quadcopter...";
             Status.ForeColor = Color.Green;
             var response = await _controller.Connect(_connName);
-            if(!response.isError)
+            if (!response.isError)
+            {
                 Status.ForeColor = Color.Green;
+                setAnglesButton.Enabled = true;
+            }
             else
                 Status.ForeColor = Color.Red;
             Status.Text = response.Message;
@@ -90,10 +173,10 @@ namespace ComPortTerminal
 
         private void onlineCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if(onlineCheckBox.CheckState == CheckState.Checked)
-                startButton.Enabled = false;
+            if (onlineCheckBox.CheckState == CheckState.Checked)
+                setAnglesButton.Enabled = false;
             else
-                startButton.Enabled = true;
+                setAnglesButton.Enabled = true;
         }
 
         private void startLogCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -114,5 +197,25 @@ namespace ComPortTerminal
                 }
             }
         }
+
+        private async void setAnglesButton_Click(object sender, EventArgs e)
+        {
+            Status.ForeColor = Color.Green;
+            Status.Text = "Sending angles";
+            var resp = await _controller.SetAngles(new Controller.RequestSetAngles
+            {
+                LTAngle = leftTopTrackBar.Value,
+                RTAngle = rightTopTrackBar.Value,
+                LBAngle = leftBotTrackBar.Value,
+                RBAngle = rightBotTrackBar.Value
+            });
+            if (resp.isError)
+                Status.ForeColor = Color.Red;
+            else if (!resp.isError)
+                Status.ForeColor = Color.Green;
+            Status.Text = resp.Message;
+        }
+
+       
     }
 }

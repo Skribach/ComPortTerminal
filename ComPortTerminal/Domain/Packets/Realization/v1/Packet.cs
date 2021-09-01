@@ -18,7 +18,6 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
 
         private int _length;
         private Crc16 _hash = new Crc16();
-        private byte[] _crc;
 
         //Command of Packet
         public enum Types

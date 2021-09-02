@@ -20,9 +20,7 @@ namespace ComPortTerminal
             {
                 components.Dispose();
             }
-            base.Dispose(disposing);
-            if (conn.IsConnected)
-                conn.Disconnect();
+            base.Dispose(disposing);            
         }
 
         #region Код, автоматически созданный конструктором форм Windows
@@ -51,13 +49,13 @@ namespace ComPortTerminal
             this.selectLogFolderbutton = new System.Windows.Forms.Button();
             this.startLogButton = new System.Windows.Forms.Button();
             this.startLogCheckBox = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.yTextBox = new System.Windows.Forms.TextBox();
             this.yLabel = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.rpmTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.xLabel = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.xTextBox = new System.Windows.Forms.TextBox();
+            this.zTextBox = new System.Windows.Forms.TextBox();
             this.LTNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.RTNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.LBNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -251,6 +249,7 @@ namespace ComPortTerminal
             this.startLogButton.TabIndex = 10;
             this.startLogButton.Text = "Start Log";
             this.startLogButton.UseVisualStyleBackColor = true;
+            this.startLogButton.Click += new System.EventHandler(this.startLogButton_Click);
             // 
             // startLogCheckBox
             // 
@@ -263,15 +262,15 @@ namespace ComPortTerminal
             this.startLogCheckBox.UseVisualStyleBackColor = true;
             this.startLogCheckBox.CheckedChanged += new System.EventHandler(this.startLogCheckBox_CheckedChanged);
             // 
-            // textBox1
+            // yTextBox
             // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(469, 280);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(59, 20);
-            this.textBox1.TabIndex = 30;
-            this.textBox1.TabStop = false;
-            this.textBox1.Text = "123";
+            this.yTextBox.Enabled = false;
+            this.yTextBox.Location = new System.Drawing.Point(469, 280);
+            this.yTextBox.Name = "yTextBox";
+            this.yTextBox.Size = new System.Drawing.Size(59, 20);
+            this.yTextBox.TabIndex = 30;
+            this.yTextBox.TabStop = false;
+            this.yTextBox.Text = "123";
             // 
             // yLabel
             // 
@@ -282,15 +281,15 @@ namespace ComPortTerminal
             this.yLabel.TabIndex = 29;
             this.yLabel.Text = "Y:";
             // 
-            // textBox2
+            // rpmTextBox
             // 
-            this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(470, 249);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(59, 20);
-            this.textBox2.TabIndex = 34;
-            this.textBox2.TabStop = false;
-            this.textBox2.Text = "123";
+            this.rpmTextBox.Enabled = false;
+            this.rpmTextBox.Location = new System.Drawing.Point(470, 249);
+            this.rpmTextBox.Name = "rpmTextBox";
+            this.rpmTextBox.Size = new System.Drawing.Size(59, 20);
+            this.rpmTextBox.TabIndex = 34;
+            this.rpmTextBox.TabStop = false;
+            this.rpmTextBox.Text = "123";
             // 
             // label6
             // 
@@ -310,25 +309,25 @@ namespace ComPortTerminal
             this.xLabel.TabIndex = 31;
             this.xLabel.Text = "X:";
             // 
-            // textBox3
+            // xTextBox
             // 
-            this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(571, 248);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(59, 20);
-            this.textBox3.TabIndex = 36;
-            this.textBox3.TabStop = false;
-            this.textBox3.Text = "123";
+            this.xTextBox.Enabled = false;
+            this.xTextBox.Location = new System.Drawing.Point(571, 248);
+            this.xTextBox.Name = "xTextBox";
+            this.xTextBox.Size = new System.Drawing.Size(59, 20);
+            this.xTextBox.TabIndex = 36;
+            this.xTextBox.TabStop = false;
+            this.xTextBox.Text = "123";
             // 
-            // textBox4
+            // zTextBox
             // 
-            this.textBox4.Enabled = false;
-            this.textBox4.Location = new System.Drawing.Point(570, 279);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(59, 20);
-            this.textBox4.TabIndex = 35;
-            this.textBox4.TabStop = false;
-            this.textBox4.Text = "123";
+            this.zTextBox.Enabled = false;
+            this.zTextBox.Location = new System.Drawing.Point(570, 279);
+            this.zTextBox.Name = "zTextBox";
+            this.zTextBox.Size = new System.Drawing.Size(59, 20);
+            this.zTextBox.TabIndex = 35;
+            this.zTextBox.TabStop = false;
+            this.zTextBox.Text = "123";
             // 
             // LTNumericUpDown
             // 
@@ -440,12 +439,12 @@ namespace ComPortTerminal
             this.Controls.Add(this.LBNumericUpDown);
             this.Controls.Add(this.RTNumericUpDown);
             this.Controls.Add(this.LTNumericUpDown);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.xTextBox);
+            this.Controls.Add(this.zTextBox);
+            this.Controls.Add(this.rpmTextBox);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.xLabel);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.yTextBox);
             this.Controls.Add(this.yLabel);
             this.Controls.Add(this.startLogCheckBox);
             this.Controls.Add(this.startLogButton);
@@ -501,13 +500,13 @@ namespace ComPortTerminal
         private System.Windows.Forms.Button selectLogFolderbutton;
         private System.Windows.Forms.Button startLogButton;
         private System.Windows.Forms.CheckBox startLogCheckBox;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox yTextBox;
         private System.Windows.Forms.Label yLabel;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox rpmTextBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label xLabel;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox xTextBox;
+        private System.Windows.Forms.TextBox zTextBox;
         private System.Windows.Forms.NumericUpDown LTNumericUpDown;
         private System.Windows.Forms.NumericUpDown RTNumericUpDown;
         private System.Windows.Forms.NumericUpDown LBNumericUpDown;

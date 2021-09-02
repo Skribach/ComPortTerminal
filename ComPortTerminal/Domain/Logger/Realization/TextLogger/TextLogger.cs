@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ComPortTerminal.Global;
 
 namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
 {
@@ -26,14 +27,26 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
             _stopwatch = new Stopwatch();
         }
 
-        public void Start()
+        public Response Start()
         {
             if (_stopwatch.IsRunning)
             {
-                throw new Exception("Logger already runs");
+                return new Response
+                {
+                    Message = "Textlogger is Already runing",
+                    isError = false,
+                    isCanceled = true
+                };
             }
+
             _start = DateTime.Now;
             _stopwatch.Start();
+            return new Response
+            {
+                Message = "Logger Successfully started",
+                isError = false,
+                isCanceled = false
+            };
         }
 
         public void Log(Data data)
@@ -74,8 +87,8 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
         public int angleC { get; set; }
         public int angleD { get; set; }
 
-        public float angleX { get; set; }
-        public float angleY { get; set; }
-        public float angleZ { get; set; }
+        public double angleX { get; set; }
+        public double angleY { get; set; }
+        public double angleZ { get; set; }
     }
 }

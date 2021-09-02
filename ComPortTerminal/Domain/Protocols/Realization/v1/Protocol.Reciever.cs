@@ -11,6 +11,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
     {
         public void RecieveHandler(byte input)
         {
+            Random r = new Random();
             //If packet arrived
             if (_packet.TryParse(input))
             {
@@ -30,10 +31,21 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         break;
                     case (Packet.Types.parameters):
                         Console.WriteLine("Parameters arrived");
+                        _recievedParametersHandler.Invoke(r.Next(), r.NextDouble(), r.NextDouble(), r.NextDouble());
                         break;
                 }
             }
         }
+
+        public delegate void RecievedParametersHandler(int rpm, double x, double y, double z);
+        private RecievedParametersHandler _recievedParametersHandler;
+        public void SetRecievedParametersHandler(RecievedParametersHandler handler)
+        {
+            _recievedParametersHandler += handler;
+        }
+        
+
+
 
     }
 }

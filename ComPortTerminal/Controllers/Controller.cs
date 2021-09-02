@@ -1,4 +1,5 @@
 ﻿using ComPortTerminal.Domain.Connections.Realization.Com;
+using ComPortTerminal.Domain.Logger.Realization.TextLogger;
 using ComPortTerminal.Domain.Protocols.Realization.v1;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,16 @@ using static ComPortTerminal.Global;
 namespace ComPortTerminal.Controllers
 {
     public class Controller
-    {
+    {        
         private Connection _conn;
         private Protocol _protocol;
+        private TextLogger _logger;
+        private Angles _angles;
 
-        public Controller()
+        public Controller(Form1 form)
         {
             _conn = new Connection();
-            _protocol = new Protocol(_conn);
+            _protocol = new Protocol(_conn);            
         }
 
         /// <summary>
@@ -52,7 +55,7 @@ namespace ComPortTerminal.Controllers
         /// <returns></returns>
         public Response Disconnect()
         {
-            return new Response { };
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -60,26 +63,34 @@ namespace ComPortTerminal.Controllers
         /// </summary>
         /// <param name="ang">RequestSetAngles</param>
         /// <returns></returns>
-        public async Task<Response> SetAngles(RequestSetAngles ang)
+        public async Task<Response> SetAngles(Angles ang)
         {
-            return await _protocol.SetAnglesAsync(
+            var resp = await _protocol.SetAnglesAsync(
                 ang.LTAngle, ang.RTAngle,
                 ang.LBAngle, ang.RBAngle);
+            if(!resp.isError)
+            {
+                _angles.LBAngle = ang.LBAngle;
+                _angles.RBAngle = ang.RBAngle;
+                _angles.LTAngle = ang.LTAngle;
+                _angles.RTAngle = ang.RTAngle;
+            }
+            return resp;
         }
-
-        /// <summary>
-        /// Delegate to handle input parameters
-        /// </summary>
-        public delegate void NewParametersHandler();
-
+                        
         /// <summary>
         /// Sets ParametersHandler when data recieved
         /// </summary>
         /// <param name="handler"></param>
         /// <returns></returns>
-        public Response SetParametersHandler(NewParametersHandler handler)
+        public void SetParametersHandler(RecievedParametersHandler handler)
         {
-            return new Response { };
+            _protocol.SetRecievedParametersHandler(handler);
+        }
+
+        public void SelectLogPath(string path)
+        {
+            _logger = new TextLogger(path);
         }
 
         /// <summary>
@@ -87,9 +98,23 @@ namespace ComPortTerminal.Controllers
         /// </summary>
         /// <param name="path">Path where log will be save</param>
         /// <returns>Response</returns>
-        public Response StartLog(string path)
+        public Response StartLog()
+        {            
+            return _logger.Start();
+        }
+
+        public void Log(int rpm, double x, double y, double z)
         {
-            return new Response { };
+            _logger.Log(new Data
+            {
+                angleA = _angles.LTAngle,
+                angleB = _angles.RTAngle,
+                angleC = _angles.LBAngle,
+                angleD = _angles.RBAngle,
+                angleX = x,
+                angleY = y,
+                angleZ = z
+            });
         }
 
         /// <summary>
@@ -106,7 +131,7 @@ namespace ComPortTerminal.Controllers
             public string[] Connections { get; set; }
         }
 
-        public class RequestSetAngles
+        public class Angles
         {
             public int LTAngle;
             public int RTAngle;

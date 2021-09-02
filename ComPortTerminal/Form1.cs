@@ -12,6 +12,7 @@ using System.IO.Ports;
 using ComPortTerminal.Domain.Connections.Realization.Com;
 using ComPortTerminal.Domain.Qadcopters.Realization.v1;
 using ComPortTerminal.Controllers;
+using static ComPortTerminal.Domain.Protocols.Realization.v1.Protocol;
 #endregion
 
 namespace ComPortTerminal
@@ -19,17 +20,29 @@ namespace ComPortTerminal
     public partial class Form1 : Form
     {
         private Controller _controller;
-
-        Connection conn;
-
         private string _connName;
+
+        private bool _isLogPathSelected = false;
+        private bool _isLogging = false;
 
         public Form1()
         {
-            _controller = new Controller();
-            conn = new Connection();
+            _controller = new Controller(this);
+            _controller.SetParametersHandler(_recievedParametersHandler);
             
             InitializeComponent();
+        }
+
+        private void _recievedParametersHandler(int rpm, double x, double y, double z)
+        {
+            rpmTextBox.Text = rpm.ToString();
+            xTextBox.Text = x.ToString();
+            yTextBox.Text = y.ToString();
+            zTextBox.Text = z.ToString();
+            if(_isLogging)
+            {
+                _controller.Log(rpm, x, y, z);
+            }
         }
 
         #region Dropdown list with available links
@@ -132,7 +145,7 @@ namespace ComPortTerminal
         {
             Status.ForeColor = Color.Black;
             Status.Text = "Sending angle values...";
-            var response = await _controller.SetAngles(new Controller.RequestSetAngles
+            var response = await _controller.SetAngles(new Controller.Angles
             {
                 LTAngle = leftTopTrackBar.Value,
                 RTAngle = rightTopTrackBar.Value,
@@ -163,15 +176,13 @@ namespace ComPortTerminal
             var response = await _controller.Connect(_connName);
             if(!response.isCanceled)
             {
-                if (!response.isError)
-                {
-                    Status.ForeColor = Color.Green;
-                    setAnglesButton.Enabled = true;
-                }
-                else
-                    Status.ForeColor = Color.Red;
-                Status.Text = response.Message;
-            }            
+                ShowResponse(response);
+                setAnglesButton.Enabled = !response.isError;
+            }
+            if(_isLogPathSelected)
+            {
+                startLogButton.Enabled = true;
+            }
         }
 
         private async void onlineCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -202,9 +213,33 @@ namespace ComPortTerminal
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    Status.Text = dialog.SelectedPath;
+                    _controller.SelectLogPath(dialog.SelectedPath);
+                    _isLogPathSelected = true;
+                    if (setAnglesButton.Enabled)
+                    {
+                        startLogButton.Enabled = true;
+                    }
                 }
             }
+        }
+
+        private void startLogButton_Click(object sender, EventArgs e)
+        {
+            var resp = _controller.StartLog();
+            ShowResponse(resp);            
+        }
+
+        private void ShowResponse(Global.Response resp)
+        {
+            if (resp.isError)
+            {
+                Status.ForeColor = Color.Red;
+            }
+            else if (!resp.isError)
+            {
+                Status.ForeColor = Color.Green;
+            }
+            Status.Text = resp.Message;
         }
     }
 }

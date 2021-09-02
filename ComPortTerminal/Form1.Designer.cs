@@ -31,6 +31,7 @@ namespace ComPortTerminal
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.zLabel = new System.Windows.Forms.Label();
             this.setAnglesButton = new System.Windows.Forms.Button();
@@ -64,6 +65,7 @@ namespace ComPortTerminal
             this.label3 = new System.Windows.Forms.Label();
             this.helpButton = new System.Windows.Forms.Button();
             this.logFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.displayTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.leftTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftBotTrackBar)).BeginInit();
@@ -428,6 +430,12 @@ namespace ComPortTerminal
             this.helpButton.Text = "Help";
             this.helpButton.UseVisualStyleBackColor = true;
             // 
+            // displayTimer
+            // 
+            this.displayTimer.Enabled = true;
+            this.displayTimer.Interval = 200;
+            this.displayTimer.Tick += new System.EventHandler(this.displayTimer_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -515,6 +523,7 @@ namespace ComPortTerminal
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button helpButton;
         private System.Windows.Forms.FolderBrowserDialog logFolderBrowserDialog;
+        private System.Windows.Forms.Timer displayTimer;
     }
 }
 

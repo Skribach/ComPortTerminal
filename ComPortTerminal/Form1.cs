@@ -13,6 +13,7 @@ using ComPortTerminal.Domain.Connections.Realization.Com;
 using ComPortTerminal.Domain.Qadcopters.Realization.v1;
 using ComPortTerminal.Controllers;
 using static ComPortTerminal.Domain.Protocols.Realization.v1.Protocol;
+using static ComPortTerminal.Global;
 #endregion
 
 namespace ComPortTerminal
@@ -27,23 +28,10 @@ namespace ComPortTerminal
 
         public Form1()
         {
-            _controller = new Controller(this);
-            _controller.SetParametersHandler(_recievedParametersHandler);
+            _controller = new Controller();            
             
             InitializeComponent();
-        }
-
-        private void _recievedParametersHandler(int rpm, double x, double y, double z)
-        {
-            rpmTextBox.Text = rpm.ToString();
-            xTextBox.Text = x.ToString();
-            yTextBox.Text = y.ToString();
-            zTextBox.Text = z.ToString();
-            if(_isLogging)
-            {
-                _controller.Log(rpm, x, y, z);
-            }
-        }
+        }       
 
         #region Dropdown list with available links
         private void portsComboBox_MouseDown(object sender, MouseEventArgs e)
@@ -145,7 +133,7 @@ namespace ComPortTerminal
         {
             Status.ForeColor = Color.Black;
             Status.Text = "Sending angle values...";
-            var response = await _controller.SetAngles(new Controller.Angles
+            var response = await _controller.SetAngles(new Angles
             {
                 LTAngle = leftTopTrackBar.Value,
                 RTAngle = rightTopTrackBar.Value,
@@ -240,6 +228,14 @@ namespace ComPortTerminal
                 Status.ForeColor = Color.Green;
             }
             Status.Text = resp.Message;
+        }
+
+        private void displayTimer_Tick(object sender, EventArgs e)
+        {
+            rpmTextBox.Text = _controller.parameters.rpm.ToString();
+            xTextBox.Text = _controller.parameters.x.ToString();
+            yTextBox.Text = _controller.parameters.y.ToString();
+            zTextBox.Text = _controller.parameters.z.ToString();
         }
     }
 }

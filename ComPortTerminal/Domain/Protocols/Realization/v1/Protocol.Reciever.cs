@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ComPortTerminal.Global;
 
 namespace ComPortTerminal.Domain.Protocols.Realization.v1
 {
@@ -31,13 +32,14 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         break;
                     case (Packet.Types.parameters):
                         Console.WriteLine("Parameters arrived");
-                        _recievedParametersHandler.Invoke(r.Next(), r.NextDouble(), r.NextDouble(), r.NextDouble());
+                        Parameters param = _packet.ParseParams();
+                        _recievedParametersHandler(param);
                         break;
                 }
             }
         }
 
-        public delegate void RecievedParametersHandler(int rpm, double x, double y, double z);
+        public delegate void RecievedParametersHandler(Parameters p);
         private RecievedParametersHandler _recievedParametersHandler;
         public void SetRecievedParametersHandler(RecievedParametersHandler handler)
         {

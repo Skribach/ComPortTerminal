@@ -18,10 +18,32 @@ namespace ComPortTerminal.Controllers
         private TextLogger _logger;
         private Angles _angles;
 
-        public Controller(Form1 form)
+        public Parameters parameters;
+
+        public Controller()
         {
+            
             _conn = new Connection();
-            _protocol = new Protocol(_conn);            
+            _protocol = new Protocol(_conn);
+            _protocol.SetRecievedParametersHandler(_recievedParametersHandler);
+            parameters = new Parameters();
+        }
+
+        private void _recievedParametersHandler(Parameters param)
+        {
+            parameters = param;
+            /*_logger.Log(new Data
+            {
+                angleA = _angles.LBAngle,
+                angleB = _angles.RBAngle,
+                angleC = _angles.LTAngle,
+                angleD = _angles.RTAngle,
+
+                angleX = parameters.x,
+                angleY = parameters.y,
+                angleZ = parameters.z,
+                rpm = parameters.rpm
+            });*/
         }
 
         /// <summary>
@@ -65,6 +87,7 @@ namespace ComPortTerminal.Controllers
         /// <returns></returns>
         public async Task<Response> SetAngles(Angles ang)
         {
+            _angles = ang;
             var resp = await _protocol.SetAnglesAsync(
                 ang.LTAngle, ang.RTAngle,
                 ang.LBAngle, ang.RBAngle);
@@ -82,11 +105,7 @@ namespace ComPortTerminal.Controllers
         /// Sets ParametersHandler when data recieved
         /// </summary>
         /// <param name="handler"></param>
-        /// <returns></returns>
-        public void SetParametersHandler(RecievedParametersHandler handler)
-        {
-            _protocol.SetRecievedParametersHandler(handler);
-        }
+        /// <returns></returns>        
 
         public void SelectLogPath(string path)
         {
@@ -129,14 +148,6 @@ namespace ComPortTerminal.Controllers
         public class ResponseAvailableConnections : Response
         {
             public string[] Connections { get; set; }
-        }
-
-        public class Angles
-        {
-            public int LTAngle;
-            public int RTAngle;
-            public int LBAngle;
-            public int RBAngle;
         }
     }
 }

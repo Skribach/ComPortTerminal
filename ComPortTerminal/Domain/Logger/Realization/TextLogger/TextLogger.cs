@@ -90,5 +90,7 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
         public double angleX { get; set; }
         public double angleY { get; set; }
         public double angleZ { get; set; }
+
+        public double rpm { get; set; }
     }
 }

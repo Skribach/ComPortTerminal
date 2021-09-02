@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ComPortTerminal.Global;
 
 namespace ComPortTerminal.Domain.Packets.Realization.v1
 {
@@ -13,6 +14,8 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
         private byte[] _crcPack = new byte[2];
         private Types _tempType;
         private byte[] _tempData;
+
+        const int AngleRange = 1000;
 
 
         /// <summary>
@@ -139,6 +142,21 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
             }
             _pointer = 0;
             return false;
+        }
+
+        public Parameters ParseParams()
+        {
+            int rpm = BitConverter.ToInt16(Data.Take(2).ToArray(), 0);
+            double x = ((double)BitConverter.ToInt16(Data.Take(2).ToArray(), 2) / 32767) * AngleRange;
+            double y = (BitConverter.ToInt16(Data.Take(2).ToArray(), 4) / 32767) * AngleRange;
+            double z = (BitConverter.ToInt16(Data.Take(2).ToArray(), 6) / 32767) * AngleRange;
+
+            return new Parameters {
+                rpm = BitConverter.ToInt32(Data.Take(2).ToArray(), 0),
+                x = BitConverter.ToDouble(Data.Take(2).ToArray(), 2),
+                y = BitConverter.ToDouble(Data.Take(2).ToArray(), 4),
+                z = BitConverter.ToDouble(Data.Take(2).ToArray(), 6)                
+            };
         }
     }
 }

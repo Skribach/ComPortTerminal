@@ -256,6 +256,7 @@ namespace ComPortTerminal
             // startLogCheckBox
             // 
             this.startLogCheckBox.AutoSize = true;
+            this.startLogCheckBox.Enabled = false;
             this.startLogCheckBox.Location = new System.Drawing.Point(298, 282);
             this.startLogCheckBox.Name = "startLogCheckBox";
             this.startLogCheckBox.Size = new System.Drawing.Size(136, 17);

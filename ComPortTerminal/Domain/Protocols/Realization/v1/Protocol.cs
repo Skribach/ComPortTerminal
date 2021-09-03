@@ -16,12 +16,6 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         private Connection _conn;
         public Statuses Status { get; private set; }
 
-        //Angles
-        private int _a = 90;
-        private int _b = 90;
-        private int _c = 90;
-        private int _d = 90;
-
         public bool IsConnected { get; private set; }
         private int _connectionNum;
 

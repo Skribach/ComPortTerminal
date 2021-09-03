@@ -16,7 +16,7 @@ namespace ComPortTerminal.Controllers
         private Connection _conn;
         private Protocol _protocol;
         private TextLogger _logger;
-        private Angles _angles;
+        private BladeAngles _angles;
 
         public Parameters parameters;
 
@@ -34,8 +34,11 @@ namespace ComPortTerminal.Controllers
 
         private void _recievedParametersHandler(Parameters param)
         {
-            //var resp = _protocol.
-            _logger.Log(parameters);
+            parameters = param;
+            if (_logger.isRunning)
+            {
+                _logger.Log(parameters);
+            }
         }
 
         /// <summary>
@@ -77,7 +80,7 @@ namespace ComPortTerminal.Controllers
         /// </summary>
         /// <param name="ang">RequestSetAngles</param>
         /// <returns></returns>
-        public async Task<Response> SetAngles(Angles ang)
+        public async Task<Response> SetAngles(BladeAngles ang)
         {
             _angles = ang;
             var resp = await _protocol.SetAnglesAsync(

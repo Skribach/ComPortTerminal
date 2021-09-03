@@ -45,9 +45,5 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         {
             _recievedParametersHandler += handler;
         }
-        
-
-
-
     }
 }

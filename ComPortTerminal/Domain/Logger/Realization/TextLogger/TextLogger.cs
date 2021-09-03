@@ -17,10 +17,13 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
         private Stopwatch _stopwatch;
         private List<Data> _data;
 
+        public bool isRunning { private set; get; }
+
         public TextLogger()
         {
             _start = new DateTime();
             _stopwatch = new Stopwatch();
+            isRunning = false;
         }
 
         public Response Start()
@@ -32,6 +35,7 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
             _data = new List<Data>();
             _start = DateTime.Now;
             _stopwatch.Start();
+            isRunning = true;
             return new Response
             {
                 Message = "Logger Successfully started",
@@ -42,7 +46,7 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
 
         public void Log(Parameters param)
         {
-            if (_stopwatch.IsRunning)
+            if (!_stopwatch.IsRunning)
             {
                 throw new Exception("Logger doesn't run");
             }
@@ -76,6 +80,7 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
                 writer.Flush();
             }
             _stopwatch.Reset();
+            isRunning = false;
         }
     }
     public class Data

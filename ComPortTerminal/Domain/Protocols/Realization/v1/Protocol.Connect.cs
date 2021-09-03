@@ -29,7 +29,8 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                 return new Response
                 {
                     Message = resp.Message,
-                    isError = true
+                    isError = true,
+                    isCanceled = false
                 };
             }
 
@@ -59,13 +60,14 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             {
                 if (Status == Statuses.connected)
                 {
-                    _connectionNum = 0;
-                    return new Response
+                    var resp = new Response
                     {
-                        Message = "Quadcopter connection successfull",
+                        Message = "Quadcopter connection successfull on " + _connectionNum + " packet",
                         isError = false,
                         isCanceled = false
                     };
+                    _connectionNum = 0;
+                    return resp;
                 }
                 //_connectionNum = i;
                 _connectionNum = 0;                

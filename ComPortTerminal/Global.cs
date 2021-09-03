@@ -15,7 +15,7 @@ namespace ComPortTerminal
             public bool isCanceled { get; set; }
         }
 
-        public class Angles
+        public class BladeAngles
         {
             public int A = 90;
             public int B = 90;
@@ -32,7 +32,7 @@ namespace ComPortTerminal
 
         public class Parameters
         {
-            public Angles angles = new Angles();
+            public BladeAngles angles = new BladeAngles();
             public Gyro gyro = new Gyro();
             public int rpm = 0;            
         }

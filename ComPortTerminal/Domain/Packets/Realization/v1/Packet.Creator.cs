@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ComPortTerminal.Global;
 
 namespace ComPortTerminal.Domain.Packets.Realization.v1
 {
@@ -13,13 +14,13 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
             return CreateRequest(Packet.Types.connRequest, BitConverter.GetBytes(number).Take(1).ToArray());
         }
 
-        public byte[] CreateAngleRequest(int a, int b, int c, int d)
+        public byte[] CreateAngleRequest(BladeAngles angles)
         {
             return CreateRequest(Packet.Types.angleRequest, new byte[] {
-                Convert.ToByte(a),
-                Convert.ToByte(b),
-                Convert.ToByte(c),
-                Convert.ToByte(d)
+                Convert.ToByte(angles.A),
+                Convert.ToByte(angles.B),
+                Convert.ToByte(angles.C),
+                Convert.ToByte(angles.D)
                 });
         }
 

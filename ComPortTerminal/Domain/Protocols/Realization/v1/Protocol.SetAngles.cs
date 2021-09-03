@@ -12,12 +12,14 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
     {
+        private BladeAngles _angles = new BladeAngles();
+
         public async Task<Response> SetAnglesAsync(int a, int b, int c, int d)
         {
-            _a = a;
-            _b = b;
-            _c = c;
-            _d = d;
+            _angles.A = a;
+            _angles.B = b;
+            _angles.C = c;
+            _angles.D = d;
 
             //If button was pushed more than one time
             if (Status == Statuses.waitingSetAngleResponse)
@@ -50,7 +52,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         isCanceled = false
                     };
                 }
-                _conn.Write(_packet.CreateAngleRequest(_a, _b, _c, _d));
+                _conn.Write(_packet.CreateAngleRequest(_angles));
                 await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }
             _connectionNum = 0;

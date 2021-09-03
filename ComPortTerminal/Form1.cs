@@ -130,7 +130,7 @@ namespace ComPortTerminal
         {
             Status.ForeColor = Color.Black;
             Status.Text = "Sending angle values...";
-            var response = await _controller.SetAngles(new Angles
+            var response = await _controller.SetAngles(new BladeAngles
             {
                 A = leftTopTrackBar.Value,
                 B = rightTopTrackBar.Value,

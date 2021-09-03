@@ -148,7 +148,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
         {
             return new Parameters
             {
-                angles = new Angles
+                angles = new BladeAngles
                 {
                     A = Convert.ToInt32(Data[0]),
                     B = Convert.ToInt32(Data[1]),

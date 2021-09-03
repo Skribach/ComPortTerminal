@@ -34,17 +34,8 @@ namespace ComPortTerminal.Controllers
 
         private void _recievedParametersHandler(Parameters param)
         {
-            _logger.Log(new Data
-            {
-                angleA = _angles.LTAngle,
-                angleB = _angles.RTAngle,
-                angleC = _angles.LBAngle,
-                angleD = _angles.RBAngle,
-                RPM = parameters.rpm,
-                X = parameters.x,
-                Y = parameters.y,
-                Z = parameters.z
-            });
+            //var resp = _protocol.
+            _logger.Log(parameters);
         }
 
         /// <summary>
@@ -90,14 +81,14 @@ namespace ComPortTerminal.Controllers
         {
             _angles = ang;
             var resp = await _protocol.SetAnglesAsync(
-                ang.LTAngle, ang.RTAngle,
-                ang.LBAngle, ang.RBAngle);
+                ang.A, ang.B,
+                ang.C, ang.D);
             if (!resp.isError)
             {
-                _angles.LBAngle = ang.LBAngle;
-                _angles.RBAngle = ang.RBAngle;
-                _angles.LTAngle = ang.LTAngle;
-                _angles.RTAngle = ang.RTAngle;
+                _angles.C = ang.C;
+                _angles.D = ang.D;
+                _angles.A = ang.A;
+                _angles.B = ang.B;
             }
             return resp;
         }

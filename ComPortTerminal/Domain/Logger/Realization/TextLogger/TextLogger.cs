@@ -40,14 +40,27 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
             };
         }
 
-        public void Log(Data data)
+        public void Log(Parameters param)
         {
             if (_stopwatch.IsRunning)
             {
                 throw new Exception("Logger doesn't run");
             }
-            data.time = _stopwatch.Elapsed;
-            _data.Add(data);
+            _data.Add(new Data
+            {
+                time = _stopwatch.Elapsed,
+
+                angleA = param.angles.A,
+                angleB = param.angles.B,
+                angleC = param.angles.C,
+                angleD = param.angles.D,
+
+                X = param.gyro.x,
+                Y = param.gyro.z,
+                Z = param.gyro.z,
+
+                RPM = param.rpm,
+            });
         }
 
         public void Stop(string path)
@@ -83,6 +96,6 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
         public double Y { get; set; }
         public double Z { get; set; }
 
-        
+
     }
 }

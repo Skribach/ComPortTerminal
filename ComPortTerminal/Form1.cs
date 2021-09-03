@@ -132,10 +132,10 @@ namespace ComPortTerminal
             Status.Text = "Sending angle values...";
             var response = await _controller.SetAngles(new Angles
             {
-                LTAngle = leftTopTrackBar.Value,
-                RTAngle = rightTopTrackBar.Value,
-                LBAngle = leftBotTrackBar.Value,
-                RBAngle = rightBotTrackBar.Value
+                A = leftTopTrackBar.Value,
+                B = rightTopTrackBar.Value,
+                C = leftBotTrackBar.Value,
+                D = rightBotTrackBar.Value
             });
             if (!response.isCanceled)
             {
@@ -237,9 +237,9 @@ namespace ComPortTerminal
         private void displayTimer_Tick(object sender, EventArgs e)
         {
             rpmTextBox.Text = _controller.parameters.rpm.ToString();
-            xTextBox.Text = _controller.parameters.x.ToString();
-            yTextBox.Text = _controller.parameters.y.ToString();
-            zTextBox.Text = _controller.parameters.z.ToString();
+            xTextBox.Text = _controller.parameters.gyro.x.ToString();
+            yTextBox.Text = _controller.parameters.gyro.y.ToString();
+            zTextBox.Text = _controller.parameters.gyro.z.ToString();
         }
     }
 }

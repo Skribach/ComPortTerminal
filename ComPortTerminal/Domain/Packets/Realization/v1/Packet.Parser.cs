@@ -51,7 +51,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
                     _pointer++;
                     return false;
             }
-            
+
             //Type checking
             if (_pointer == 3)
             {
@@ -146,16 +146,22 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
 
         public Parameters ParseParams()
         {
-
-            return new Parameters {
-                a = Convert.ToInt32(Data[0]),
-                b = Convert.ToInt32(Data[1]),
-                c = Convert.ToInt32(Data[2]),
-                d = Convert.ToInt32(Data[3]),
+            return new Parameters
+            {
+                angles = new Angles
+                {
+                    A = Convert.ToInt32(Data[0]),
+                    B = Convert.ToInt32(Data[1]),
+                    C = Convert.ToInt32(Data[2]),
+                    D = Convert.ToInt32(Data[3]),
+                },
                 rpm = (int)BitConverter.ToInt16(Data, 4),
-                x = (double)BitConverter.ToInt16(Data, 6),
-                y = (double)BitConverter.ToInt16(Data, 8),
-                z = (double)BitConverter.ToInt16(Data, 10)
+                gyro = new Gyro
+                {
+                    x = (double)BitConverter.ToInt16(Data, 6),
+                    y = (double)BitConverter.ToInt16(Data, 8),
+                    z = (double)BitConverter.ToInt16(Data, 10)
+                }
             };
         }
     }

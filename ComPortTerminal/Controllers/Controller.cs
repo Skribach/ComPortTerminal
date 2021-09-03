@@ -12,7 +12,7 @@ using static ComPortTerminal.Global;
 namespace ComPortTerminal.Controllers
 {
     public class Controller
-    {        
+    {
         private Connection _conn;
         private Protocol _protocol;
         private TextLogger _logger;
@@ -22,28 +22,29 @@ namespace ComPortTerminal.Controllers
 
         public Controller()
         {
-            
+
             _conn = new Connection();
+
             _protocol = new Protocol(_conn);
             _protocol.SetRecievedParametersHandler(_recievedParametersHandler);
+
+            _logger = new TextLogger();
             parameters = new Parameters();
         }
 
         private void _recievedParametersHandler(Parameters param)
         {
-            parameters = param;
-            /*_logger.Log(new Data
+            _logger.Log(new Data
             {
-                angleA = _angles.LBAngle,
-                angleB = _angles.RBAngle,
-                angleC = _angles.LTAngle,
-                angleD = _angles.RTAngle,
-
-                angleX = parameters.x,
-                angleY = parameters.y,
-                angleZ = parameters.z,
-                rpm = parameters.rpm
-            });*/
+                angleA = _angles.LTAngle,
+                angleB = _angles.RTAngle,
+                angleC = _angles.LBAngle,
+                angleD = _angles.RBAngle,
+                RPM = parameters.rpm,
+                X = parameters.x,
+                Y = parameters.y,
+                Z = parameters.z
+            });
         }
 
         /// <summary>
@@ -91,7 +92,7 @@ namespace ComPortTerminal.Controllers
             var resp = await _protocol.SetAnglesAsync(
                 ang.LTAngle, ang.RTAngle,
                 ang.LBAngle, ang.RBAngle);
-            if(!resp.isError)
+            if (!resp.isError)
             {
                 _angles.LBAngle = ang.LBAngle;
                 _angles.RBAngle = ang.RBAngle;
@@ -100,17 +101,6 @@ namespace ComPortTerminal.Controllers
             }
             return resp;
         }
-                        
-        /// <summary>
-        /// Sets ParametersHandler when data recieved
-        /// </summary>
-        /// <param name="handler"></param>
-        /// <returns></returns>        
-
-        public void SelectLogPath(string path)
-        {
-            _logger = new TextLogger(path);
-        }
 
         /// <summary>
         /// Starts log
@@ -118,31 +108,28 @@ namespace ComPortTerminal.Controllers
         /// <param name="path">Path where log will be save</param>
         /// <returns>Response</returns>
         public Response StartLog()
-        {            
+        {
             return _logger.Start();
         }
 
         public void Log(int rpm, double x, double y, double z)
         {
-            _logger.Log(new Data
-            {
-                angleA = _angles.LTAngle,
-                angleB = _angles.RTAngle,
-                angleC = _angles.LBAngle,
-                angleD = _angles.RBAngle,
-                angleX = x,
-                angleY = y,
-                angleZ = z
-            });
+            
         }
 
         /// <summary>
         /// Stop Log parameters in format "time, 
         /// </summary>
         /// <returns></returns>
-        public Response StopLog()
+        public Response StopLog(string path)
         {
-            return new Response { };
+            _logger.Stop(path);
+            return new Response
+            {
+                Message = "Log file was saved",
+                isCanceled = false,
+                isError = false,
+            };
         }
 
         public class ResponseAvailableConnections : Response

@@ -47,7 +47,6 @@ namespace ComPortTerminal
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.Status = new System.Windows.Forms.ToolStripStatusLabel();
             this.onlineCheckBox = new System.Windows.Forms.CheckBox();
-            this.selectLogFolderbutton = new System.Windows.Forms.Button();
             this.startLogButton = new System.Windows.Forms.Button();
             this.startLogCheckBox = new System.Windows.Forms.CheckBox();
             this.yTextBox = new System.Windows.Forms.TextBox();
@@ -63,9 +62,8 @@ namespace ComPortTerminal
             this.RBNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.helpButton = new System.Windows.Forms.Button();
-            this.logFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.displayTimer = new System.Windows.Forms.Timer(this.components);
+            this.logFileDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.leftTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftBotTrackBar)).BeginInit();
@@ -81,7 +79,7 @@ namespace ComPortTerminal
             // zLabel
             // 
             this.zLabel.AutoSize = true;
-            this.zLabel.Location = new System.Drawing.Point(547, 283);
+            this.zLabel.Location = new System.Drawing.Point(529, 280);
             this.zLabel.Name = "zLabel";
             this.zLabel.Size = new System.Drawing.Size(17, 13);
             this.zLabel.TabIndex = 0;
@@ -90,9 +88,9 @@ namespace ComPortTerminal
             // setAnglesButton
             // 
             this.setAnglesButton.Enabled = false;
-            this.setAnglesButton.Location = new System.Drawing.Point(223, 248);
+            this.setAnglesButton.Location = new System.Drawing.Point(223, 242);
             this.setAnglesButton.Name = "setAnglesButton";
-            this.setAnglesButton.Size = new System.Drawing.Size(135, 23);
+            this.setAnglesButton.Size = new System.Drawing.Size(97, 23);
             this.setAnglesButton.TabIndex = 7;
             this.setAnglesButton.Text = "Set Angles";
             this.setAnglesButton.UseVisualStyleBackColor = true;
@@ -129,7 +127,7 @@ namespace ComPortTerminal
             // leftBotTrackBar
             // 
             this.leftBotTrackBar.LargeChange = 60;
-            this.leftBotTrackBar.Location = new System.Drawing.Point(16, 148);
+            this.leftBotTrackBar.Location = new System.Drawing.Point(16, 157);
             this.leftBotTrackBar.Maximum = 180;
             this.leftBotTrackBar.Name = "leftBotTrackBar";
             this.leftBotTrackBar.Size = new System.Drawing.Size(201, 45);
@@ -143,7 +141,7 @@ namespace ComPortTerminal
             // rightBotTrackBar
             // 
             this.rightBotTrackBar.LargeChange = 60;
-            this.rightBotTrackBar.Location = new System.Drawing.Point(428, 148);
+            this.rightBotTrackBar.Location = new System.Drawing.Point(428, 157);
             this.rightBotTrackBar.Maximum = 180;
             this.rightBotTrackBar.Name = "rightBotTrackBar";
             this.rightBotTrackBar.Size = new System.Drawing.Size(201, 45);
@@ -157,7 +155,7 @@ namespace ComPortTerminal
             // connectButton
             // 
             this.connectButton.Enabled = false;
-            this.connectButton.Location = new System.Drawing.Point(148, 248);
+            this.connectButton.Location = new System.Drawing.Point(148, 242);
             this.connectButton.Name = "connectButton";
             this.connectButton.Size = new System.Drawing.Size(69, 23);
             this.connectButton.TabIndex = 6;
@@ -168,7 +166,7 @@ namespace ComPortTerminal
             // portsComboBox
             // 
             this.portsComboBox.FormattingEnabled = true;
-            this.portsComboBox.Location = new System.Drawing.Point(15, 249);
+            this.portsComboBox.Location = new System.Drawing.Point(15, 243);
             this.portsComboBox.Name = "portsComboBox";
             this.portsComboBox.Size = new System.Drawing.Size(127, 21);
             this.portsComboBox.TabIndex = 5;
@@ -188,7 +186,7 @@ namespace ComPortTerminal
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(108, 201);
+            this.label5.Location = new System.Drawing.Point(108, 210);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(34, 13);
             this.label5.TabIndex = 18;
@@ -208,7 +206,7 @@ namespace ComPortTerminal
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Status});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 316);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 315);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(642, 22);
             this.statusStrip1.TabIndex = 24;
@@ -223,7 +221,7 @@ namespace ComPortTerminal
             // onlineCheckBox
             // 
             this.onlineCheckBox.AutoSize = true;
-            this.onlineCheckBox.Location = new System.Drawing.Point(364, 252);
+            this.onlineCheckBox.Location = new System.Drawing.Point(429, 245);
             this.onlineCheckBox.Name = "onlineCheckBox";
             this.onlineCheckBox.Size = new System.Drawing.Size(56, 17);
             this.onlineCheckBox.TabIndex = 8;
@@ -231,23 +229,13 @@ namespace ComPortTerminal
             this.onlineCheckBox.UseVisualStyleBackColor = true;
             this.onlineCheckBox.CheckedChanged += new System.EventHandler(this.onlineCheckBox_CheckedChanged);
             // 
-            // selectLogFolderbutton
-            // 
-            this.selectLogFolderbutton.Location = new System.Drawing.Point(111, 277);
-            this.selectLogFolderbutton.Name = "selectLogFolderbutton";
-            this.selectLogFolderbutton.Size = new System.Drawing.Size(106, 23);
-            this.selectLogFolderbutton.TabIndex = 9;
-            this.selectLogFolderbutton.Text = "Select Log Folder";
-            this.selectLogFolderbutton.UseVisualStyleBackColor = true;
-            this.selectLogFolderbutton.Click += new System.EventHandler(this.selectLogFolderbutton_Click);
-            // 
             // startLogButton
             // 
             this.startLogButton.Cursor = System.Windows.Forms.Cursors.Cross;
             this.startLogButton.Enabled = false;
-            this.startLogButton.Location = new System.Drawing.Point(223, 277);
+            this.startLogButton.Location = new System.Drawing.Point(325, 242);
             this.startLogButton.Name = "startLogButton";
-            this.startLogButton.Size = new System.Drawing.Size(69, 23);
+            this.startLogButton.Size = new System.Drawing.Size(97, 23);
             this.startLogButton.TabIndex = 10;
             this.startLogButton.Text = "Start Log";
             this.startLogButton.UseVisualStyleBackColor = true;
@@ -256,8 +244,7 @@ namespace ComPortTerminal
             // startLogCheckBox
             // 
             this.startLogCheckBox.AutoSize = true;
-            this.startLogCheckBox.Enabled = false;
-            this.startLogCheckBox.Location = new System.Drawing.Point(298, 282);
+            this.startLogCheckBox.Location = new System.Drawing.Point(494, 245);
             this.startLogCheckBox.Name = "startLogCheckBox";
             this.startLogCheckBox.Size = new System.Drawing.Size(136, 17);
             this.startLogCheckBox.TabIndex = 12;
@@ -268,9 +255,9 @@ namespace ComPortTerminal
             // yTextBox
             // 
             this.yTextBox.Enabled = false;
-            this.yTextBox.Location = new System.Drawing.Point(469, 280);
+            this.yTextBox.Location = new System.Drawing.Point(446, 277);
             this.yTextBox.Name = "yTextBox";
-            this.yTextBox.Size = new System.Drawing.Size(59, 20);
+            this.yTextBox.Size = new System.Drawing.Size(80, 20);
             this.yTextBox.TabIndex = 30;
             this.yTextBox.TabStop = false;
             this.yTextBox.Text = "123";
@@ -278,7 +265,7 @@ namespace ComPortTerminal
             // yLabel
             // 
             this.yLabel.AutoSize = true;
-            this.yLabel.Location = new System.Drawing.Point(446, 284);
+            this.yLabel.Location = new System.Drawing.Point(428, 280);
             this.yLabel.Name = "yLabel";
             this.yLabel.Size = new System.Drawing.Size(17, 13);
             this.yLabel.TabIndex = 29;
@@ -287,9 +274,9 @@ namespace ComPortTerminal
             // rpmTextBox
             // 
             this.rpmTextBox.Enabled = false;
-            this.rpmTextBox.Location = new System.Drawing.Point(470, 249);
+            this.rpmTextBox.Location = new System.Drawing.Point(135, 277);
             this.rpmTextBox.Name = "rpmTextBox";
-            this.rpmTextBox.Size = new System.Drawing.Size(59, 20);
+            this.rpmTextBox.Size = new System.Drawing.Size(80, 20);
             this.rpmTextBox.TabIndex = 34;
             this.rpmTextBox.TabStop = false;
             this.rpmTextBox.Text = "123";
@@ -297,7 +284,7 @@ namespace ComPortTerminal
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(430, 253);
+            this.label6.Location = new System.Drawing.Point(95, 280);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(34, 13);
             this.label6.TabIndex = 33;
@@ -306,7 +293,7 @@ namespace ComPortTerminal
             // xLabel
             // 
             this.xLabel.AutoSize = true;
-            this.xLabel.Location = new System.Drawing.Point(548, 252);
+            this.xLabel.Location = new System.Drawing.Point(322, 280);
             this.xLabel.Name = "xLabel";
             this.xLabel.Size = new System.Drawing.Size(17, 13);
             this.xLabel.TabIndex = 31;
@@ -315,9 +302,9 @@ namespace ComPortTerminal
             // xTextBox
             // 
             this.xTextBox.Enabled = false;
-            this.xTextBox.Location = new System.Drawing.Point(571, 248);
+            this.xTextBox.Location = new System.Drawing.Point(342, 277);
             this.xTextBox.Name = "xTextBox";
-            this.xTextBox.Size = new System.Drawing.Size(59, 20);
+            this.xTextBox.Size = new System.Drawing.Size(80, 20);
             this.xTextBox.TabIndex = 36;
             this.xTextBox.TabStop = false;
             this.xTextBox.Text = "123";
@@ -325,9 +312,9 @@ namespace ComPortTerminal
             // zTextBox
             // 
             this.zTextBox.Enabled = false;
-            this.zTextBox.Location = new System.Drawing.Point(570, 279);
+            this.zTextBox.Location = new System.Drawing.Point(547, 277);
             this.zTextBox.Name = "zTextBox";
-            this.zTextBox.Size = new System.Drawing.Size(59, 20);
+            this.zTextBox.Size = new System.Drawing.Size(80, 20);
             this.zTextBox.TabIndex = 35;
             this.zTextBox.TabStop = false;
             this.zTextBox.Text = "123";
@@ -370,7 +357,7 @@ namespace ComPortTerminal
             // 
             // LBNumericUpDown
             // 
-            this.LBNumericUpDown.Location = new System.Drawing.Point(148, 198);
+            this.LBNumericUpDown.Location = new System.Drawing.Point(148, 207);
             this.LBNumericUpDown.Maximum = new decimal(new int[] {
             180,
             0,
@@ -388,7 +375,7 @@ namespace ComPortTerminal
             // 
             // RBNumericUpDown
             // 
-            this.RBNumericUpDown.Location = new System.Drawing.Point(428, 199);
+            this.RBNumericUpDown.Location = new System.Drawing.Point(428, 208);
             this.RBNumericUpDown.Maximum = new decimal(new int[] {
             180,
             0,
@@ -407,7 +394,7 @@ namespace ComPortTerminal
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(502, 201);
+            this.label1.Location = new System.Drawing.Point(502, 210);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(34, 13);
             this.label1.TabIndex = 42;
@@ -422,15 +409,6 @@ namespace ComPortTerminal
             this.label3.TabIndex = 41;
             this.label3.Text = "Angle";
             // 
-            // helpButton
-            // 
-            this.helpButton.Location = new System.Drawing.Point(15, 278);
-            this.helpButton.Name = "helpButton";
-            this.helpButton.Size = new System.Drawing.Size(90, 23);
-            this.helpButton.TabIndex = 11;
-            this.helpButton.Text = "Help";
-            this.helpButton.UseVisualStyleBackColor = true;
-            // 
             // displayTimer
             // 
             this.displayTimer.Enabled = true;
@@ -441,7 +419,7 @@ namespace ComPortTerminal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(642, 338);
+            this.ClientSize = new System.Drawing.Size(642, 337);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.RBNumericUpDown);
@@ -457,10 +435,8 @@ namespace ComPortTerminal
             this.Controls.Add(this.yLabel);
             this.Controls.Add(this.startLogCheckBox);
             this.Controls.Add(this.startLogButton);
-            this.Controls.Add(this.selectLogFolderbutton);
             this.Controls.Add(this.onlineCheckBox);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.helpButton);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.portsComboBox);
@@ -506,7 +482,6 @@ namespace ComPortTerminal
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel Status;
         private System.Windows.Forms.CheckBox onlineCheckBox;
-        private System.Windows.Forms.Button selectLogFolderbutton;
         private System.Windows.Forms.Button startLogButton;
         private System.Windows.Forms.CheckBox startLogCheckBox;
         private System.Windows.Forms.TextBox yTextBox;
@@ -522,9 +497,8 @@ namespace ComPortTerminal
         private System.Windows.Forms.NumericUpDown RBNumericUpDown;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button helpButton;
-        private System.Windows.Forms.FolderBrowserDialog logFolderBrowserDialog;
         private System.Windows.Forms.Timer displayTimer;
+        private System.Windows.Forms.SaveFileDialog logFileDialog;
     }
 }
 

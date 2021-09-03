@@ -13,16 +13,12 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
 {
     public class TextLogger
     {
-        private string _folderPath;
         private DateTime _start;
         private Stopwatch _stopwatch;
         private List<Data> _data;
 
-        public TextLogger(string folderPath)
+        public TextLogger()
         {
-            _data = new List<Data>();
-            _folderPath = folderPath;
-
             _start = new DateTime();
             _stopwatch = new Stopwatch();
         }
@@ -31,14 +27,9 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
         {
             if (_stopwatch.IsRunning)
             {
-                return new Response
-                {
-                    Message = "Textlogger is Already runing",
-                    isError = false,
-                    isCanceled = true
-                };
+                throw new Exception("Trying start logger: Logger already runs");
             }
-
+            _data = new List<Data>();
             _start = DateTime.Now;
             _stopwatch.Start();
             return new Response
@@ -59,14 +50,13 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
             _data.Add(data);
         }
 
-        public void Stop()
+        public void Stop(string path)
         {
             if (!_stopwatch.IsRunning)
             {
                 throw new Exception("Logger doesn't run");
             }
-            string filePath = _folderPath + @"\" + _start.ToString().Replace(":", "-") + ".csv";
-            using (var writer = new StreamWriter(filePath))
+            using (var writer = new StreamWriter(path))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
                 csv.WriteRecords(_data);
@@ -87,10 +77,12 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
         public int angleC { get; set; }
         public int angleD { get; set; }
 
-        public double angleX { get; set; }
-        public double angleY { get; set; }
-        public double angleZ { get; set; }
 
-        public double rpm { get; set; }
+        public double RPM { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Z { get; set; }
+
+        
     }
 }

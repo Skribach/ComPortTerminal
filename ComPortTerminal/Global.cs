@@ -25,6 +25,10 @@ namespace ComPortTerminal
 
         public class Parameters
         {
+            public int a = 0;
+            public int b = 0;
+            public int c = 0;
+            public int d = 0;
             public int rpm = 0;
             public double x = 0;
             public double y = 0;

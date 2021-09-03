@@ -23,9 +23,6 @@ namespace ComPortTerminal
         private Controller _controller;
         private string _connName;
 
-        private bool _isLogPathSelected = false;
-        private bool _isLogging = false;
-
         public Form1()
         {
             _controller = new Controller();            
@@ -56,7 +53,7 @@ namespace ComPortTerminal
             LTNumericUpDown.Value = leftTopTrackBar.Value;
             if (onlineCheckBox.Checked)
             {
-                await displayStatusAndSendAnglesAsync();
+                await SendAnglesAsync();
             }
         }
         private async void LTNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -64,7 +61,7 @@ namespace ComPortTerminal
             leftTopTrackBar.Value = (int)LTNumericUpDown.Value;
             if (onlineCheckBox.Checked)
             {
-                await displayStatusAndSendAnglesAsync();
+                await SendAnglesAsync();
             }
         }
 
@@ -74,7 +71,7 @@ namespace ComPortTerminal
             RTNumericUpDown.Value = rightTopTrackBar.Value;
             if (onlineCheckBox.Checked)
             {
-                await displayStatusAndSendAnglesAsync();
+                await SendAnglesAsync();
             }
         }
         private async void RTNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -82,7 +79,7 @@ namespace ComPortTerminal
             rightTopTrackBar.Value = (int)RTNumericUpDown.Value;
             if (onlineCheckBox.Checked)
             {
-                await displayStatusAndSendAnglesAsync();
+                await SendAnglesAsync();
             }
         }
 
@@ -92,7 +89,7 @@ namespace ComPortTerminal
             LBNumericUpDown.Value = leftBotTrackBar.Value;
             if (onlineCheckBox.Checked)
             {
-                await displayStatusAndSendAnglesAsync();
+                await SendAnglesAsync();
             }
         }
         private async void LBNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -100,7 +97,7 @@ namespace ComPortTerminal
             leftBotTrackBar.Value = (int)LBNumericUpDown.Value;
             if (onlineCheckBox.Checked)
             {
-                await displayStatusAndSendAnglesAsync();
+                await SendAnglesAsync();
             }
         }
 
@@ -110,7 +107,7 @@ namespace ComPortTerminal
             RBNumericUpDown.Value = rightBotTrackBar.Value;
             if (onlineCheckBox.Checked)
             {
-                await displayStatusAndSendAnglesAsync();
+                await SendAnglesAsync();
             }
         }
         private async void RBNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -118,18 +115,18 @@ namespace ComPortTerminal
             rightBotTrackBar.Value = (int)RBNumericUpDown.Value;
             if (onlineCheckBox.Checked)
             {
-                await displayStatusAndSendAnglesAsync();
+                await SendAnglesAsync();
             }
         }
 
         //Button "Set angles"
         private async void setAnglesButton_Click(object sender, EventArgs e)
         {
-            await displayStatusAndSendAnglesAsync();
+            await SendAnglesAsync();
         }
 
         #region Supporting methods
-        private async Task displayStatusAndSendAnglesAsync()
+        private async Task SendAnglesAsync()
         {
             Status.ForeColor = Color.Black;
             Status.Text = "Sending angle values...";
@@ -166,11 +163,8 @@ namespace ComPortTerminal
             {
                 ShowResponse(response);
                 setAnglesButton.Enabled = !response.isError;
-            }
-            if(_isLogPathSelected)
-            {
-                startLogButton.Enabled = true;
-            }
+                startLogButton.Enabled = !response.isError;
+            }            
         }
 
         private async void onlineCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -178,7 +172,7 @@ namespace ComPortTerminal
             if (onlineCheckBox.CheckState == CheckState.Checked)
             {
                 setAnglesButton.Enabled = false;
-                await displayStatusAndSendAnglesAsync();
+                await SendAnglesAsync();
             }
             else
             {
@@ -194,29 +188,39 @@ namespace ComPortTerminal
             else
                 startLogButton.Enabled = true;
         }
-
-        private void selectLogFolderbutton_Click(object sender, EventArgs e)
+                
+        private void startLogButton_Click(object sender, EventArgs e)
         {
-            using (FolderBrowserDialog dialog = logFolderBrowserDialog)
+            if (startLogButton.Text == "Start Log")
             {
-                if (dialog.ShowDialog() == DialogResult.OK)
+                var resp = _controller.StartLog();
+                startLogButton.Text = "Stop Log";
+                ShowResponse(resp);
+            }
+            else if(startLogButton.Text == "Stop Log")
+            {
+                string path = "";
+                using (SaveFileDialog dialog = logFileDialog)
                 {
-                    _controller.SelectLogPath(dialog.SelectedPath);
-                    _isLogPathSelected = true;
-                    if (setAnglesButton.Enabled)
+                    dialog.Title = "Save Log file to...";
+                    dialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+                    dialog.DefaultExt = "csv";
+                    dialog.FileName = DateTime.Now.ToString().Replace(':', '-').Replace(' ', '(') + ')';
+                    if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        startLogButton.Enabled = true;
+                        path = dialog.FileName;                       
                     }
-                }
+                }                
+                var resp = _controller.StopLog(path);              
+                ShowResponse(resp);
+                startLogButton.Text = "Start Log";
             }
         }
 
-        private void startLogButton_Click(object sender, EventArgs e)
-        {
-            var resp = _controller.StartLog();
-            ShowResponse(resp);            
-        }
-
+        /// <summary>
+        /// Method to show response message in Status-bar with/without errors
+        /// </summary>
+        /// <param name="resp">Response, must contains Message and isError</param>
         private void ShowResponse(Global.Response resp)
         {
             if (resp.isError)

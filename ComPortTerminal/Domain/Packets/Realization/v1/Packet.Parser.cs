@@ -145,13 +145,17 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
         }
 
         public Parameters ParseParams()
-        {            
+        {
 
             return new Parameters {
-                rpm = (int)BitConverter.ToInt16(Data, 0),
-                x = (double)BitConverter.ToInt16(Data, 2),
-                y = (double)BitConverter.ToInt16(Data, 4),
-                z = (double)BitConverter.ToInt16(Data, 6)
+                a = Convert.ToInt32(Data[0]),
+                b = Convert.ToInt32(Data[1]),
+                c = Convert.ToInt32(Data[2]),
+                d = Convert.ToInt32(Data[3]),
+                rpm = (int)BitConverter.ToInt16(Data, 4),
+                x = (double)BitConverter.ToInt16(Data, 6),
+                y = (double)BitConverter.ToInt16(Data, 8),
+                z = (double)BitConverter.ToInt16(Data, 10)
             };
         }
     }

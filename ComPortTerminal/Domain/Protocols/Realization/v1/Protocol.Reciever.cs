@@ -1,8 +1,10 @@
 ﻿using ComPortTerminal.Domain.Packets.Realization.v1;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static ComPortTerminal.Global;
 
@@ -10,9 +12,10 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
     {
+        private Stopwatch _packeDelay;
+
         public void RecieveHandler(byte input)
         {
-            Random r = new Random();
             //If packet arrived
             if (_packet.TryParse(input))
             {
@@ -25,15 +28,17 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                             Status = Statuses.connected;
                         }
                         Console.WriteLine("Connection response arrived");
+                        _packeDelay.Start();
                         break;
                     case (Packet.Types.angleResponse):
                         Status = Statuses.connected;
                         Console.WriteLine("Angle response arrived");
                         break;
-                    case (Packet.Types.parameters):
+                    case (Packet.Types.parameters):                        
                         Console.WriteLine("Parameters arrived");
                         Parameters param = _packet.ParseParams();
                         _recievedParametersHandler(param);
+                        _packeDelay.Restart();
                         break;
                 }
             }
@@ -44,6 +49,19 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         public void SetRecievedParametersHandler(RecievedParametersHandler handler)
         {
             _recievedParametersHandler += handler;
+        }
+
+        public static void ConnectionCheck(object x)
+        {
+            var timer = (Stopwatch)x;
+            while(true)
+            {
+                Thread.Sleep(1000);
+                if(timer > new TimeSpan)
+                {
+                    Status
+                }
+            }
         }
     }
 }

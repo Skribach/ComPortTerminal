@@ -20,8 +20,6 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         public Statuses Status { get; private set; }
 
         private int _connectionNum;
-        //thread to check connection
-        private Thread _connectionChecking;
 
         //Maximum delay in H,M,S between parameter packets. If Delay > maxDelay, Status will be not connected.
         private TimeSpan maxDelay = new TimeSpan(0, 0, 1);
@@ -33,10 +31,6 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             _conn = conn;            
             Status = Statuses.notConnected;
             _connectionNum = 0;
-            _packeDelay = new Stopwatch();
-
-            _connectionChecking = new Thread(new ParameterizedThreadStart(ConnectionCheck));
-            _connectionChecking.Start(_packeDelay);
         }
 
         public enum Statuses

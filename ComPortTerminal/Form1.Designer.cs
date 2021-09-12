@@ -45,7 +45,7 @@ namespace ComPortTerminal
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.Status = new System.Windows.Forms.ToolStripStatusLabel();
+            this.StatusStrip = new System.Windows.Forms.ToolStripStatusLabel();
             this.onlineCheckBox = new System.Windows.Forms.CheckBox();
             this.startLogButton = new System.Windows.Forms.Button();
             this.startLogCheckBox = new System.Windows.Forms.CheckBox();
@@ -64,6 +64,7 @@ namespace ComPortTerminal
             this.label3 = new System.Windows.Forms.Label();
             this.displayTimer = new System.Windows.Forms.Timer(this.components);
             this.logFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.ConnectionStrip = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.leftTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftBotTrackBar)).BeginInit();
@@ -205,18 +206,19 @@ namespace ComPortTerminal
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Status});
+            this.StatusStrip,
+            this.ConnectionStrip});
             this.statusStrip1.Location = new System.Drawing.Point(0, 315);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(642, 22);
             this.statusStrip1.TabIndex = 24;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // Status
+            // StatusStrip
             // 
-            this.Status.Name = "Status";
-            this.Status.Size = new System.Drawing.Size(39, 17);
-            this.Status.Text = "Status";
+            this.StatusStrip.Name = "StatusStrip";
+            this.StatusStrip.Size = new System.Drawing.Size(39, 17);
+            this.StatusStrip.Text = "Status";
             // 
             // onlineCheckBox
             // 
@@ -415,6 +417,16 @@ namespace ComPortTerminal
             this.displayTimer.Interval = 200;
             this.displayTimer.Tick += new System.EventHandler(this.displayTimer_Tick);
             // 
+            // ConnectionStrip
+            // 
+            this.ConnectionStrip.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ConnectionStrip.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.ConnectionStrip.Name = "ConnectionStrip";
+            this.ConnectionStrip.Size = new System.Drawing.Size(557, 17);
+            this.ConnectionStrip.Spring = true;
+            this.ConnectionStrip.Text = "No connection";
+            this.ConnectionStrip.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -480,7 +492,7 @@ namespace ComPortTerminal
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel Status;
+        private System.Windows.Forms.ToolStripStatusLabel StatusStrip;
         private System.Windows.Forms.CheckBox onlineCheckBox;
         private System.Windows.Forms.Button startLogButton;
         private System.Windows.Forms.CheckBox startLogCheckBox;
@@ -499,6 +511,7 @@ namespace ComPortTerminal
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Timer displayTimer;
         private System.Windows.Forms.SaveFileDialog logFileDialog;
+        private System.Windows.Forms.ToolStripStatusLabel ConnectionStrip;
     }
 }
 

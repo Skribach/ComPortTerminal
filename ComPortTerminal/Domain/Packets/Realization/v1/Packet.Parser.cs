@@ -158,9 +158,9 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
                 rpm = (int)BitConverter.ToInt16(Data, 4),
                 gyro = new Gyro
                 {
-                    x = (double)BitConverter.ToInt16(Data, 6),
-                    y = (double)BitConverter.ToInt16(Data, 8),
-                    z = (double)BitConverter.ToInt16(Data, 10)
+                    x = (float)BitConverter.ToInt16(Data, 6),
+                    y = (float)BitConverter.ToInt16(Data, 8),
+                    z = (float)BitConverter.ToInt16(Data, 10)
                 }
             };
         }

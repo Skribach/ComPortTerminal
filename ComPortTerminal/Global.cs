@@ -25,9 +25,9 @@ namespace ComPortTerminal
 
         public class Gyro
         {
-            public double x = 0;
-            public double y = 0;
-            public double z = 0;
+            public float x = 0;
+            public float y = 0;
+            public float z = 0;
         }
 
         public class Parameters

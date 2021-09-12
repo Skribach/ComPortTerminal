@@ -41,8 +41,8 @@ namespace ComPortTerminal
         {
             connectButton.Enabled = true;
             _connName = _controller.DisplayAvailableConnections().Connections[portsComboBox.SelectedIndex];
-            Status.Text = _connName + " is selected to connection...";
-            Status.ForeColor = Color.Black;
+            StatusStrip.Text = _connName + " is selected to connection...";
+            StatusStrip.ForeColor = Color.Black;
         }
         #endregion
 
@@ -128,8 +128,8 @@ namespace ComPortTerminal
         #region Supporting methods
         private async Task SendAnglesAsync()
         {
-            Status.ForeColor = Color.Black;
-            Status.Text = "Sending angle values...";
+            StatusStrip.ForeColor = Color.Black;
+            StatusStrip.Text = "Sending angle values...";
             var response = await _controller.SetAngles(new BladeAngles
             {
                 A = leftTopTrackBar.Value,
@@ -141,13 +141,13 @@ namespace ComPortTerminal
             {
                 if (response.isError)
                 {
-                    Status.ForeColor = Color.Red;
+                    StatusStrip.ForeColor = Color.Red;
                 }
                 else if (!response.isError)
                 {
-                    Status.ForeColor = Color.Green;
+                    StatusStrip.ForeColor = Color.Green;
                 }
-                Status.Text = response.Message;
+                StatusStrip.Text = response.Message;
             }
         }
         #endregion
@@ -156,8 +156,8 @@ namespace ComPortTerminal
 
         private async void connectButton_Click(object sender, EventArgs e)
         {
-            Status.Text = "Connecting to quadcopter...";
-            Status.ForeColor = Color.Black;
+            StatusStrip.Text = "Connecting to quadcopter...";
+            StatusStrip.ForeColor = Color.Black;
             var response = await _controller.Connect(_connName);
             if(!response.isCanceled)
             {
@@ -225,13 +225,13 @@ namespace ComPortTerminal
         {
             if (resp.isError)
             {
-                Status.ForeColor = Color.Red;
+                StatusStrip.ForeColor = Color.Red;
             }
             else if (!resp.isError)
             {
-                Status.ForeColor = Color.Green;
+                StatusStrip.ForeColor = Color.Green;
             }
-            Status.Text = resp.Message;
+            StatusStrip.Text = resp.Message;
         }
 
         private void displayTimer_Tick(object sender, EventArgs e)

@@ -54,11 +54,6 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
             {
                 time = _stopwatch.Elapsed,
 
-                angleA = param.angles.A,
-                angleB = param.angles.B,
-                angleC = param.angles.C,
-                angleD = param.angles.D,
-
                 X = param.gyro.x,
                 Y = param.gyro.z,
                 Z = param.gyro.z,
@@ -90,11 +85,6 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
 
         }
         public TimeSpan time { get; set; }
-        public int angleA { get; set; }
-        public int angleB { get; set; }
-        public int angleC { get; set; }
-        public int angleD { get; set; }
-
 
         public double RPM { get; set; }
         public double X { get; set; }

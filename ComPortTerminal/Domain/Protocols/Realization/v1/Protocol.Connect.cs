@@ -12,14 +12,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
     {
-        /// <summary>
-        /// Time in ms between two requests
-        /// </summary>
-        private const int ReplyTimeRequest = 500;
-        /// <summary>
-        /// Number of connection requests to quadcopter
-        /// </summary>
-        private const int NumOfReply = 10000;
+                
         public async Task<Response> ConnectAsync(string connection)
         {
             //Connection to COM-port
@@ -46,8 +39,8 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         /// <returns></returns>
         private async Task<Response> CreateConnectionRequests()
         {
-            //If connect button was pushed more than one time
-            if (Status == Statuses.waitingConnectionResponse)
+            //Exit if other thread tries to connect
+            if (_status == Statuses.waitingConnectionResponse)
                 return new Response
                 {
                     Message = "Connection to quadcopter...",
@@ -55,10 +48,11 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                     isCanceled = true
                 };
 
-            Status = Statuses.waitingConnectionResponse;
+            //Begin Connection
+            _status = Statuses.waitingConnectionResponse;
             for (int i = 0; i < NumOfReply; i++)
             {
-                if (Status == Statuses.connected)
+                if (_status == Statuses.connected)
                 {
                     var resp = new Response
                     {
@@ -69,13 +63,15 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                     _connectionNum = 0;
                     return resp;
                 }
-                //_connectionNum = i;
-                _connectionNum = 0;                
-                _conn.Write(_packet.CreateConnectionRequest(_connectionNum));                
+
+                //_connectionNum = i;   //To Prod
+                _connectionNum = 0;     //To Debug
+
+                _conn.Write(_packet.CreateConnectionRequest(_connectionNum));
                 await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }
             _connectionNum = 0;
-            Status = Statuses.notConnected;
+            _status = Statuses.notConnected;
             return new Response
             {
                 Message = "ERROR: Qadcopter connection fail",

@@ -25,10 +25,10 @@ namespace ComPortTerminal
 
         public Form1()
         {
-            _controller = new Controller();            
-            
+            _controller = new Controller();
+
             InitializeComponent();
-        }       
+        }
 
         #region Dropdown list with available links
         private void portsComboBox_MouseDown(object sender, MouseEventArgs e)
@@ -159,12 +159,12 @@ namespace ComPortTerminal
             StatusStrip.Text = "Connecting to quadcopter...";
             StatusStrip.ForeColor = Color.Black;
             var response = await _controller.Connect(_connName);
-            if(!response.isCanceled)
+            if (!response.isCanceled)
             {
                 ShowResponse(response);
                 setAnglesButton.Enabled = !response.isError;
                 startLogButton.Enabled = !response.isError;
-            }            
+            }
         }
 
         private async void onlineCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -178,7 +178,6 @@ namespace ComPortTerminal
             {
                 setAnglesButton.Enabled = true;
             }
-
         }
 
         private void startLogCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -188,7 +187,7 @@ namespace ComPortTerminal
             else
                 startLogButton.Enabled = true;
         }
-                
+
         private void startLogButton_Click(object sender, EventArgs e)
         {
             if (startLogButton.Text == "Start Log")
@@ -197,7 +196,7 @@ namespace ComPortTerminal
                 startLogButton.Text = "Stop Log";
                 ShowResponse(resp);
             }
-            else if(startLogButton.Text == "Stop Log")
+            else if (startLogButton.Text == "Stop Log")
             {
                 string path = "";
                 using (SaveFileDialog dialog = logFileDialog)
@@ -208,10 +207,10 @@ namespace ComPortTerminal
                     dialog.FileName = DateTime.Now.ToString().Replace(':', '-').Replace(' ', '(') + ')';
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        path = dialog.FileName;                       
+                        path = dialog.FileName;
                     }
-                }                
-                var resp = _controller.StopLog(path);              
+                }
+                var resp = _controller.StopLog(path);
                 ShowResponse(resp);
                 startLogButton.Text = "Start Log";
             }
@@ -236,6 +235,18 @@ namespace ComPortTerminal
 
         private void displayTimer_Tick(object sender, EventArgs e)
         {
+            var status = _controller.GetStatus();
+            if (status == Statuses.connected)
+            {
+                ConnectionStrip.Text = "Connected";
+                ConnectionStrip.ForeColor = Color.Green;
+            }
+            else if (status == Statuses.notConnected)
+            {
+                ConnectionStrip.Text = "Not connected";
+                ConnectionStrip.ForeColor = Color.Red;
+            }
+
             rpmTextBox.Text = _controller.parameters.rpm.ToString();
             xTextBox.Text = _controller.parameters.gyro.x.ToString();
             yTextBox.Text = _controller.parameters.gyro.y.ToString();

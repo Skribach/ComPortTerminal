@@ -15,9 +15,6 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
         private Types _tempType;
         private byte[] _tempData;
 
-        const int AngleRange = 1000;
-
-
         /// <summary>
         /// Parses byte-sequence. If packet is found, return true and rewrite itself Type, Data vars
         /// </summary>
@@ -132,19 +129,13 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
         {
             return new Parameters
             {
-                angles = new BladeAngles
-                {
-                    A = Convert.ToInt32(Data[0]),
-                    B = Convert.ToInt32(Data[1]),
-                    C = Convert.ToInt32(Data[2]),
-                    D = Convert.ToInt32(Data[3]),
-                },
-                rpm = (int)BitConverter.ToInt16(Data, 4),
+                num = (int)Data[0],
+                rpm = (int)BitConverter.ToUInt16(Data, 1),
                 gyro = new Gyro
                 {
-                    x = (float)BitConverter.ToInt16(Data, 6),
-                    y = (float)BitConverter.ToInt16(Data, 8),
-                    z = (float)BitConverter.ToInt16(Data, 10)
+                    x = BitConverter.ToSingle(Data, 3),
+                    y = BitConverter.ToSingle(Data, 5),
+                    z = BitConverter.ToSingle(Data, 7)
                 }
             };
         }

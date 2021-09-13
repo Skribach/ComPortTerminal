@@ -11,7 +11,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
     {
         public byte[] CreateConnectionRequest(int num)
         {
-            return CreateRequest(Packet.Types.connRequest, BitConverter.GetBytes(num).Take(1).ToArray(), num);
+            return CreateRequest(Packet.Types.connRequest, new byte[] { }, num);
         }
 
         public byte[] CreateAngleRequest(BladeAngles angles, int num)
@@ -29,7 +29,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
             int count =
                 ByteDelimiters[Delimiters.start].Length +
                 1 +             //Length
-                1 +             //Packet Number !!!
+                1 +             //Packet Number
                 1 +             //Type command
                 data.Length +
                 1;             //CRC

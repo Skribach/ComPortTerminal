@@ -22,7 +22,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             _angles.D = d;
 
             //If button was pushed more than one time
-            if (Status == Statuses.waitingSetAngleResponse)
+            if (_status == Statuses.waitingSetAngleResponse)
                 return new Response
                 {
                     Message = "Setting angle in progress...",
@@ -31,7 +31,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                 };
 
             //If no established connection
-            else if (Status != Statuses.connected)
+            else if (_status != Statuses.connected)
                 return new Response
                 {
                     Message = "ERROR: No established connection. Please connect to link",
@@ -39,10 +39,10 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                     isCanceled = false
                 };
 
-            Status = Statuses.waitingSetAngleResponse;
+            _status = Statuses.waitingSetAngleResponse;
             for (int i = 0; i < NumOfReply; i++)
             {
-                if (Status == Statuses.connected)
+                if (_status == Statuses.connected)
                 {
                     _connectionNum = 0;
                     return new Response
@@ -56,7 +56,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                 await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }
             _connectionNum = 0;
-            Status = Statuses.notConnected;
+            _status = Statuses.notConnected;
             return new Response
             {
                 Message = "ERROR: Connection fail",

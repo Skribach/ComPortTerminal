@@ -20,15 +20,15 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                 switch (_packet.Type)
                 {
                     case (Packet.Types.connResponse):
-                        if(Status == Statuses.waitingConnectionResponse)
+                        if(_status == Statuses.waitingConnectionResponse)
                         {
-                            if(_packet.Data[0] == (byte)_connectionNum)
-                            Status = Statuses.connected;
+                            if(_packet.Number == _connectionNum)
+                            _status = Statuses.connected;
                         }
                         Console.WriteLine("Connection response arrived");
                         break;
                     case (Packet.Types.angleResponse):
-                        Status = Statuses.connected;
+                        _status = Statuses.connected;
                         Console.WriteLine("Angle response arrived");
                         break;
                     case (Packet.Types.parameters):                        

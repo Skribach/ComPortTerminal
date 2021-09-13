@@ -19,18 +19,20 @@ namespace ComPortTerminal.Controllers
         private BladeAngles _angles;
 
         public Parameters parameters;
+        public Statuses Status { get; private set; }
 
         public Controller()
         {
-
             _conn = new Connection();
-
             _protocol = new Protocol(_conn);
             _protocol.SetRecievedParametersHandler(_recievedParametersHandler);
+
 
             _logger = new TextLogger();
             parameters = new Parameters();
         }
+
+        public Statuses GetStatus() => _protocol.GetStatus();
 
         private void _recievedParametersHandler(Parameters param)
         {

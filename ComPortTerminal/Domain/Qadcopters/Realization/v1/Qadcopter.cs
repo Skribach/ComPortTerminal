@@ -25,7 +25,7 @@ namespace ComPortTerminal.Domain.Qadcopters.Realization.v1
             MinValue = minValue;
             MaxValue = maxValue;
             _conn = conn;
-            _protocol = new Protocol(_conn);
+            //_protocol = new Protocol(_conn);
         }
         public int LeftTop { get; private set; }
         public int RightTop { get; private set; }

@@ -17,7 +17,13 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         private Packet _packet;
         //Class to work with connection
         private Connection _conn;
-        public Statuses Status { get; private set; }
+        private Statuses _status;
+
+        public Statuses GetStatus()
+        {
+            return _status;
+        }
+
 
         private int _connectionNum;
 
@@ -28,9 +34,9 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         {
             //Initial
             _packet = new Packet();
-            _conn = conn;            
-            Status = Statuses.notConnected;
+            _conn = conn;
             _connectionNum = 0;
+            _status = Statuses.notConnected;
         }
 
         public enum Statuses
@@ -39,6 +45,6 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             notConnected,
             waitingConnectionResponse,
             waitingSetAngleResponse
-        }
+        };
     }
 }

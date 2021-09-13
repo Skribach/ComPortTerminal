@@ -11,7 +11,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
     {
         private int _pointer = 0;
         private byte[] _crcData;
-        private byte[] _crcPack = new byte[2];
+        private byte _crcPack;
         private Types _tempType;
         private byte[] _tempData;
 
@@ -47,24 +47,35 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
                         return false;
                     }
                 case (2):
-                    _length = (int)input;
-                    _pointer++;
-                    return false;
+                    {
+                        _length = (int)input;
+                        _crcData = new byte[_length - 1];
+                        _crcData[0] = ByteDelimiters[Delimiters.start][0];
+                        _crcData[1] = ByteDelimiters[Delimiters.start][1];
+                        _crcData[2] = input;
+                        _pointer++;
+                        return false;
+                    }
+                case (3):
+                    {
+                        Number = (int)input;
+                        _crcData[3] = input;
+                        _pointer++;
+                        return false;
+                    }
             }
 
             //Type checking
-            if (_pointer == 3)
+            if (_pointer == 4)
             {
                 _tempType = Types.unknown;
-                _crcData = new byte[_length - 6];
+
                 foreach (KeyValuePair<Types, Byte> keyValue in ByteTypes)
                 {
                     if (keyValue.Value == input)
                     {
                         _tempType = keyValue.Key;
-
-                        _crcData[_pointer - 3] = (byte)_length;
-                        _crcData[_pointer - 2] = input;
+                        _crcData[_pointer] = input;
                         _pointer++;
                         break;
                     }
@@ -72,61 +83,31 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
                 if (_tempType == Types.unknown)
                 {
                     _pointer = 0;
-                    return false;
                 }
                 return false;
             }
 
             //Data reading
-            else if ((_pointer >= 4) && (_pointer < _length - 4))
+            else if ((_pointer >= 5) && (_pointer <= _length - 2))
             {
-                if (_pointer == 4)
-                    _tempData = new byte[_length - 8];
+                if (_pointer == 5)
+                    _tempData = new byte[_length - 6];
 
-                _tempData[_pointer - 4] = input;
-                _crcData[_pointer - 2] = input;
+                _tempData[_pointer - 5] = input;
+                _crcData[_pointer] = input;
                 _pointer++;
                 return false;
             }
 
             //CRC checking            
-            else if (_pointer == _length - 4)
+            else if (_pointer == _length - 1)
             {
-                _crcPack[0] = input;
+                _crcPack = input;
                 _pointer++;
-                return false;
-            }
-            else if (_pointer == _length - 3)
-            {
-                _crcPack[1] = input;
 
                 var _crcCalc = _hash.ComputeChecksumBytes(_crcData);
 
-                if ((_crcCalc[0] == _crcPack[0]) && (_crcCalc[1] == _crcPack[1]))
-                {
-                    _pointer++;
-                    return false;
-                }
-                else
-                {
-                    _pointer = 0;
-                    return false;
-                }
-            }
-            //End delimiters validations
-            else if (_pointer == _length - 2)
-            {
-                if (input == ByteDelimiters[Delimiters.end][0])
-                {
-                    _pointer++;
-                    return false;
-                }
-                _pointer = 0;
-                return false;
-            }
-            else if (_pointer == _length - 1)
-            {
-                if (input == ByteDelimiters[Delimiters.end][1])
+                if (_crcCalc == _crcPack)
                 {
                     //Reset pointer
                     _pointer = 0;
@@ -136,11 +117,14 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
                     Data = _tempData;
 
                     return true;
+
                 }
-                _pointer = 0;
-                return false;
+                else
+                {
+                    _pointer++;
+                    return false;
+                }
             }
-            _pointer = 0;
             return false;
         }
 

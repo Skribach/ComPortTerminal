@@ -52,7 +52,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         isCanceled = false
                     };
                 }
-                _conn.Write(_packet.CreateAngleRequest(_angles));
+                _conn.Write(_packet.CreateAngleRequest(_angles, 1));
                 await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }
             _connectionNum = 0;

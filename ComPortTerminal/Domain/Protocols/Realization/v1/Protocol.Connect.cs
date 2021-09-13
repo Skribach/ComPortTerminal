@@ -11,8 +11,7 @@ using static ComPortTerminal.Global;
 namespace ComPortTerminal.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
-    {
-                
+    { 
         public async Task<Response> ConnectAsync(string connection)
         {
             //Connection to COM-port

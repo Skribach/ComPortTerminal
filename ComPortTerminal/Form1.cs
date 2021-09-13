@@ -243,7 +243,7 @@ namespace ComPortTerminal
             }
             else if (status == Statuses.notConnected)
             {
-                ConnectionStrip.Text = "Not connected";
+                ConnectionStrip.Text = "Disconnected";
                 ConnectionStrip.ForeColor = Color.Red;
             }
 

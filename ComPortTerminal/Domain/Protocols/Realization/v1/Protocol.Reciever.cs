@@ -14,16 +14,22 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
     {
         public void RecieveHandler(byte input)
         {
+            Stopwatch lastPacket = new Stopwatch();
+
             //If packet arrived
             if (_packet.TryParse(input))
             {
                 switch (_packet.Type)
                 {
                     case (Packet.Types.connResponse):
-                        if(_status == Statuses.waitingConnectionResponse)
+                        if (_status == Statuses.waitingConnectionResponse)
                         {
-                            if(_packet.Number == _connectionNum)
-                            _status = Statuses.connected;
+                            if (_packet.Number == _connectionNum)
+                            {
+                                _status = Statuses.connected;
+                                _connectionChecking.Start(this);
+                                //ThreadPool.QueueUserWorkItem(_connectionChecking(this));
+                            }
                         }
                         Console.WriteLine("Connection response arrived");
                         break;
@@ -31,7 +37,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         _status = Statuses.connected;
                         Console.WriteLine("Angle response arrived");
                         break;
-                    case (Packet.Types.parameters):                        
+                    case (Packet.Types.parameters):
                         Console.WriteLine("Parameters arrived");
                         Parameters param = _packet.ParseParams();
                         _recievedParametersHandler(param);

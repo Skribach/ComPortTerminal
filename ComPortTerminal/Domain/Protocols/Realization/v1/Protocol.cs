@@ -36,7 +36,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             _packet = new Packet();
             _conn = conn;
             _connectionNum = 0;
-            _status = Statuses.notConnected;
+            _status = Statuses.notConnected;            
         }
 
         public enum Statuses

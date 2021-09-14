@@ -22,110 +22,110 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
         /// <returns></returns>
         public bool TryParse(byte input)
         {
-            //Start delimiter Checking, read length
-            switch (_pointer)
+            try
             {
-                case (0):
-                    if (input == ByteDelimiters[Delimiters.start][0])
+                //Start delimiter Checking, read length
+                switch (_pointer)
+                {
+                    case (0):
+                        if (input == ByteDelimiters[Delimiters.start][0])
+                        {
+                            _pointer++;
+                            return false;
+                        }
+                        break;
+                    case (1):
+                        if (input == ByteDelimiters[Delimiters.start][1])
+                        {
+                            _pointer++;
+                            return false;
+                        }
+                        else
+                        {
+                            _pointer = 0;
+                            return false;
+                        }
+                    case (2):
+                        {
+                            _length = (int)input;
+                            _crcData = new byte[_length - 1];
+                            _crcData[0] = ByteDelimiters[Delimiters.start][0];
+                            _crcData[1] = ByteDelimiters[Delimiters.start][1];
+                            _crcData[2] = input;
+                            _pointer++;
+                            return false;
+                        }
+                }
+
+                //Type checking
+                if (_pointer == 3)
+                {
+                    _tempType = Types.unknown;
+
+                    foreach (KeyValuePair<Types, Byte> keyValue in ByteTypes)
                     {
-                        _pointer++;
-                        return false;
+                        if (keyValue.Value == input)
+                        {
+                            _tempType = keyValue.Key;
+                            _crcData[_pointer] = input;
+                            _pointer++;
+                            break;
+                        }
                     }
-                    break;
-                case (1):
-                    if (input == ByteDelimiters[Delimiters.start][1])
-                    {
-                        _pointer++;
-                        return false;
-                    }
-                    else
+                    if (_tempType == Types.unknown)
                     {
                         _pointer = 0;
-                        return false;
                     }
-                case (2):
-                    {
-                        _length = (int)input;
-                        _crcData = new byte[_length - 1];
-                        _crcData[0] = ByteDelimiters[Delimiters.start][0];
-                        _crcData[1] = ByteDelimiters[Delimiters.start][1];
-                        _crcData[2] = input;
-                        _pointer++;
-                        return false;
-                    }
-                case (3):
-                    {
-                        Number = (int)input;
-                        _crcData[3] = input;
-                        _pointer++;
-                        return false;
-                    }
-            }
-
-            //Type checking
-            if (_pointer == 4)
-            {
-                _tempType = Types.unknown;
-
-                foreach (KeyValuePair<Types, Byte> keyValue in ByteTypes)
-                {
-                    if (keyValue.Value == input)
-                    {
-                        _tempType = keyValue.Key;
-                        _crcData[_pointer] = input;
-                        _pointer++;
-                        break;
-                    }
+                    return false;
                 }
-                if (_tempType == Types.unknown)
+
+                //Data reading
+                else if ((_pointer >= 4) && (_pointer <= _length - 2))
                 {
-                    _pointer = 0;
-                }
-                return false;
-            }
+                    if (_pointer == 4)
+                        _tempData = new byte[_length - 5];
 
-            //Data reading
-            else if ((_pointer >= 5) && (_pointer <= _length - 2))
-            {
-                if (_pointer == 5)
-                    _tempData = new byte[_length - 6];
-
-                _tempData[_pointer - 5] = input;
-                _crcData[_pointer] = input;
-                _pointer++;
-                return false;
-            }
-
-            //CRC checking            
-            else if (_pointer == _length - 1)
-            {
-                _crcPack = input;
-                _pointer++;
-
-                var _crcCalc = _hash.ComputeChecksumBytes(_crcData);
-
-                if (_crcCalc == _crcPack)
-                {
-                    //Reset pointer
-                    _pointer = 0;
-
-                    //Write data from new packet
-                    Type = _tempType;
-                    Data = _tempData;
-
-                    return true;
-
-                }
-                else
-                {
+                    _tempData[_pointer - 4] = input;
+                    _crcData[_pointer] = input;
                     _pointer++;
                     return false;
                 }
+
+                //CRC checking            
+                else if (_pointer == _length - 1)
+                {
+                    _crcPack = input;
+                    _pointer++;
+
+                    var _crcCalc = _hash.ComputeChecksumBytes(_crcData);
+
+                    if (_crcCalc == _crcPack)
+                    {
+                        //Reset pointer
+                        _pointer = 0;
+
+                        //Write data from new packet
+                        Type = _tempType;
+                        Data = _tempData;
+
+                        return true;
+                    }
+                    else
+                    {
+                        _pointer++;
+                        return false;
+                    }
+                }
+                return false;
             }
-            return false;
+            catch
+            {
+                _pointer = 0;
+                return false;
+            }
         }
 
-        public Parameters ParseParams()
+        public Parameters GetParams()
         {
             return new Parameters
             {

@@ -10,12 +10,11 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
     {
         public Packet()
         {
-            
+
         }
 
         public Types Type { get; private set; }
         public byte[] Data { get; private set; }
-        public int Number { get; private set; }
 
         private int _length;
         private Crc8 _hash = new Crc8();
@@ -23,9 +22,9 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
         //Command of Packet
         public enum Types
         {
-            connRequest, connResponse,
-            angleRequest, angleResponse,
-            parameters, unknown
+            getParameters,
+            setParameters,
+            unknown
         }
 
         //Start/stop types
@@ -52,11 +51,8 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
         //Commands/Data types            
         public static Dictionary<Types, byte> ByteTypes = new Dictionary<Packet.Types, byte>()
         {
-            [Types.connRequest] = (byte)'a',
-            [Types.connResponse] = (byte)'b',
-            [Types.angleRequest] = (byte)'c',
-            [Types.angleResponse] = (byte)'d',
-            [Types.parameters] = (byte)'e',
+            [Types.getParameters] = 0x22,
+            [Types.setParameters] = 0x20
         };
     }
 }

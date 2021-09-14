@@ -9,27 +9,34 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
 {
     public partial class Packet
     {
-        public byte[] CreateConnectionRequest(int num)
+        /// <summary>
+        /// Creates angle request from angles and number of packet
+        /// </summary>
+        /// <param name="angles"></param>
+        /// <param name="num"></param>
+        /// <returns>bytes to transmitt by means connection</returns>
+        public byte[] SetAngle(BladeAngles angles, int num)
         {
-            return CreateRequest(Packet.Types.connRequest, new byte[] { }, num);
-        }
-
-        public byte[] CreateAngleRequest(BladeAngles angles, int num)
-        {
-            return CreateRequest(Packet.Types.angleRequest, new byte[] {
+            return CreateRequest(Packet.Types.setParameters, new byte[] {
+                Convert.ToByte(num),
                 Convert.ToByte(angles.A),
                 Convert.ToByte(angles.B),
                 Convert.ToByte(angles.C),
                 Convert.ToByte(angles.D)
-                }, num);
+                });
         }
 
-        private byte[] CreateRequest(Packet.Types type, byte[] data, int num)
+        /// <summary>
+        /// Adds CRC and translate type to byte
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private byte[] CreateRequest(Packet.Types type, byte[] data)
         {
             int count =
                 ByteDelimiters[Delimiters.start].Length +
                 1 +             //Length
-                1 +             //Packet Number
                 1 +             //Type command
                 data.Length +
                 1;             //CRC
@@ -43,21 +50,19 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
             //Length
             load[ByteDelimiters[Delimiters.start].Length] = BitConverter.GetBytes(count)[0];
 
-            //Packet number
-            load[ByteDelimiters[Delimiters.start].Length + 1] = (byte)num;
 
             //Command
-            load[ByteDelimiters[Delimiters.start].Length + 2] = ByteTypes[type];
+            load[ByteDelimiters[Delimiters.start].Length + 1] = ByteTypes[type];
 
             //Data
             for (int i = 0; i < data.Length; i++)
-                load[ByteDelimiters[Delimiters.start].Length + 3 + i] = data[i];
+                load[ByteDelimiters[Delimiters.start].Length + 2 + i] = data[i];
 
             //CRC
             var crc = _hash.ComputeChecksumBytes(load.Take(load.Length - 1).ToArray());
-            load[ByteDelimiters[Delimiters.start].Length + 3 + data.Length] = crc;
+            load[ByteDelimiters[Delimiters.start].Length + 2 + data.Length] = crc;
 
             return load;
         }
-    }    
+    }
 }

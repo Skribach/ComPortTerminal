@@ -39,13 +39,13 @@ namespace ComPortTerminal
             this.rightTopTrackBar = new System.Windows.Forms.TrackBar();
             this.leftBotTrackBar = new System.Windows.Forms.TrackBar();
             this.rightBotTrackBar = new System.Windows.Forms.TrackBar();
-            this.connectButton = new System.Windows.Forms.Button();
             this.portsComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.StatusStrip = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ConnectionStrip = new System.Windows.Forms.ToolStripStatusLabel();
             this.onlineCheckBox = new System.Windows.Forms.CheckBox();
             this.startLogButton = new System.Windows.Forms.Button();
             this.startLogCheckBox = new System.Windows.Forms.CheckBox();
@@ -64,7 +64,6 @@ namespace ComPortTerminal
             this.label3 = new System.Windows.Forms.Label();
             this.displayTimer = new System.Windows.Forms.Timer(this.components);
             this.logFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.ConnectionStrip = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.leftTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftBotTrackBar)).BeginInit();
@@ -153,23 +152,12 @@ namespace ComPortTerminal
             this.rightBotTrackBar.Value = 90;
             this.rightBotTrackBar.Scroll += new System.EventHandler(this.rightBotTrackBar_Scroll);
             // 
-            // connectButton
-            // 
-            this.connectButton.Enabled = false;
-            this.connectButton.Location = new System.Drawing.Point(148, 242);
-            this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(69, 23);
-            this.connectButton.TabIndex = 6;
-            this.connectButton.Text = "Connect";
-            this.connectButton.UseVisualStyleBackColor = true;
-            this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
-            // 
             // portsComboBox
             // 
             this.portsComboBox.FormattingEnabled = true;
             this.portsComboBox.Location = new System.Drawing.Point(15, 243);
             this.portsComboBox.Name = "portsComboBox";
-            this.portsComboBox.Size = new System.Drawing.Size(127, 21);
+            this.portsComboBox.Size = new System.Drawing.Size(200, 21);
             this.portsComboBox.TabIndex = 5;
             this.portsComboBox.Text = "Choose connection link...";
             this.portsComboBox.SelectedIndexChanged += new System.EventHandler(this.portsComboBox_SelectedIndexChanged);
@@ -219,6 +207,16 @@ namespace ComPortTerminal
             this.StatusStrip.Name = "StatusStrip";
             this.StatusStrip.Size = new System.Drawing.Size(39, 17);
             this.StatusStrip.Text = "Status";
+            // 
+            // ConnectionStrip
+            // 
+            this.ConnectionStrip.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ConnectionStrip.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.ConnectionStrip.Name = "ConnectionStrip";
+            this.ConnectionStrip.Size = new System.Drawing.Size(588, 17);
+            this.ConnectionStrip.Spring = true;
+            this.ConnectionStrip.Text = "No connection";
+            this.ConnectionStrip.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // onlineCheckBox
             // 
@@ -417,16 +415,6 @@ namespace ComPortTerminal
             this.displayTimer.Interval = 200;
             this.displayTimer.Tick += new System.EventHandler(this.displayTimer_Tick);
             // 
-            // ConnectionStrip
-            // 
-            this.ConnectionStrip.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ConnectionStrip.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.ConnectionStrip.Name = "ConnectionStrip";
-            this.ConnectionStrip.Size = new System.Drawing.Size(557, 17);
-            this.ConnectionStrip.Spring = true;
-            this.ConnectionStrip.Text = "No connection";
-            this.ConnectionStrip.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -452,7 +440,6 @@ namespace ComPortTerminal
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.portsComboBox);
-            this.Controls.Add(this.connectButton);
             this.Controls.Add(this.rightBotTrackBar);
             this.Controls.Add(this.leftBotTrackBar);
             this.Controls.Add(this.rightTopTrackBar);
@@ -486,7 +473,6 @@ namespace ComPortTerminal
         private System.Windows.Forms.TrackBar rightTopTrackBar;
         private System.Windows.Forms.TrackBar leftBotTrackBar;
         private System.Windows.Forms.TrackBar rightBotTrackBar;
-        private System.Windows.Forms.Button connectButton;
         private System.Windows.Forms.ComboBox portsComboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label5;

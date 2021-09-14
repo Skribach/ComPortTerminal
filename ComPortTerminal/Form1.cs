@@ -37,12 +37,19 @@ namespace ComPortTerminal
             foreach (string conns in _controller.DisplayAvailableConnections().Connections)
                 portsComboBox.Items.Add(conns);
         }
-        private void portsComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            connectButton.Enabled = true;
+        private async void portsComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {            
             _connName = _controller.DisplayAvailableConnections().Connections[portsComboBox.SelectedIndex];
-            StatusStrip.Text = _connName + " is selected to connection...";
+
+            StatusStrip.Text = "Connecting to quadcopter...";
             StatusStrip.ForeColor = Color.Black;
+            var response = await _controller.Connect(_connName);
+            if (!response.isCanceled)
+            {
+                ShowResponse(response);
+                setAnglesButton.Enabled = !response.isError;
+                startLogButton.Enabled = !response.isError;
+            }
         }
         #endregion
 
@@ -153,19 +160,6 @@ namespace ComPortTerminal
         #endregion
 
         #endregion
-
-        private async void connectButton_Click(object sender, EventArgs e)
-        {
-            StatusStrip.Text = "Connecting to quadcopter...";
-            StatusStrip.ForeColor = Color.Black;
-            var response = await _controller.Connect(_connName);
-            if (!response.isCanceled)
-            {
-                ShowResponse(response);
-                setAnglesButton.Enabled = !response.isError;
-                startLogButton.Enabled = !response.isError;
-            }
-        }
 
         private async void onlineCheckBox_CheckedChanged(object sender, EventArgs e)
         {

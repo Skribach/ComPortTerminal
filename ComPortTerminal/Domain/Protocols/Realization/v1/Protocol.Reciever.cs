@@ -21,7 +21,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                 {
                     case (Packet.Types.getParameters):                        
                         {
-                            _status = Statuses.connected;
+                            //_status = Statuses.connected;
                             var par = _packet.GetParams();
                             //If parameters in GUI match with parameters in quadcopter
                             if (par.id == _id)

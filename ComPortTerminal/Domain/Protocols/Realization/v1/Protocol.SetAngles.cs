@@ -12,10 +12,15 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
     {
+        //Parameters from user
+        public BladeAngles GuiAngles { get; set; }
+
+        //Previous parameters from user
+        public BladeAngles PrevAngles { get; set; }
 
         public async Task<Response> SetAnglesAsync(BladeAngles _angles)
         {
-
+            GuiAngles = _angles;
             //If no established connection
             if (_status == Statuses.disconnected)
                 return new Response
@@ -34,7 +39,8 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                     isCanceled = true
                 };
 
-            _id++;            
+            _id++;
+            _status = Statuses.updating;
             for (int i = 0; i < NumOfReply; i++)
             {
                 if (_status == Statuses.connected)
@@ -46,7 +52,16 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         isCanceled = false
                     };
                 }
-                _conn.Write(_packet.SetAngle(_angles, _id));                
+                else if(_status == Statuses.disconnected)
+                {
+                    return new Response
+                    {
+                        Message = "Connection is lost",
+                        isError = true,
+                        isCanceled = false
+                    };
+                }
+                _conn.Write(_packet.SetAngle(GuiAngles, _id));                
                 await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }
             _status = Statuses.disconnected;

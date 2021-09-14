@@ -19,10 +19,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         private Connection _conn;
 
         //Parameters that recieved from quadcopter
-        private Parameters _quadcopterParams;
-
-        //Parameters from user
-        public BladeAngles Parameters { get; set; }
+        private Parameters _quadcopterParams;       
 
         //ID for parameters from GUI
         private byte _id;

@@ -16,7 +16,7 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
                 try
                 {
                     port.PortName = connection;
-                    port.BaudRate = 9600;
+                    port.BaudRate = 2400;
                     port.DataBits = 8;
                     port.Parity = System.IO.Ports.Parity.Odd;
                     port.StopBits = System.IO.Ports.StopBits.One;

@@ -24,19 +24,17 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             return _status;
         }
 
-
-        private int _connectionNum;
-
-        //Maximum delay in H,M,S between parameter packets. If Delay > maxDelay, Status will be not connected.
-        private TimeSpan maxDelay = new TimeSpan(0, 0, 1);
+        private int _number;
 
         public Protocol(Connection conn)
         {
             //Initial
             _packet = new Packet();
             _conn = conn;
-            _connectionNum = 0;
-            _status = Statuses.notConnected;            
+            _number = 0;
+            _status = Statuses.notConnected;
+            //Thread to check delay between packets
+            _connectionChecking.Start(this);
         }
 
         public enum Statuses

@@ -55,21 +55,21 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                 {
                     var resp = new Response
                     {
-                        Message = "Quadcopter connection successfull on " + _connectionNum + " packet",
+                        Message = "Quadcopter connection successfull on " + _number + " packet",
                         isError = false,
                         isCanceled = false
                     };
-                    _connectionNum = 0;
+                    _number = 0;
                     return resp;
                 }
 
                 //_connectionNum = i;   //To Prod
-                _connectionNum = 0;     //To Debug
+                _number = 0;     //To Debug
 
-                _conn.Write(_packet.CreateConnectionRequest(_connectionNum));
+                _conn.Write(_packet.CreateConnectionRequest(_number));
                 await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }
-            _connectionNum = 0;
+            _number = 0;
             _status = Statuses.notConnected;
             return new Response
             {

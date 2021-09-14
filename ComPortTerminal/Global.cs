@@ -51,6 +51,6 @@ namespace ComPortTerminal
         /// <summary>
         /// Maximum time in ms between packeges to be connected.
         /// </summary>
-        public const int AbuseTime = 1000;
+        public const int AbuseTime = 2000;
     }
 }

@@ -244,7 +244,10 @@ namespace ComPortTerminal
             else if (status == Statuses.notConnected)
             {
                 ConnectionStrip.Text = "Disconnected";
-                ConnectionStrip.ForeColor = Color.Red;
+                ConnectionStrip.ForeColor = Color.DarkOrange;
+                setAnglesButton.Enabled = false;
+                startLogButton.Enabled = false;
+
             }
 
             rpmTextBox.Text = _controller.parameters.rpm.ToString();

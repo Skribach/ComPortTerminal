@@ -44,7 +44,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             {
                 if (_status == Statuses.connected)
                 {
-                    _connectionNum = 0;
+                    _number = 0;
                     return new Response
                     {
                         Message = "Angles successfully installed",
@@ -52,10 +52,11 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         isCanceled = false
                     };
                 }
-                _conn.Write(_packet.CreateAngleRequest(_angles, 1));
+                _number++;
+                _conn.Write(_packet.CreateAngleRequest(_angles, _number));
                 await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }
-            _connectionNum = 0;
+            _number = 0;
             _status = Statuses.notConnected;
             return new Response
             {

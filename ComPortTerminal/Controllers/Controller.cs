@@ -19,8 +19,6 @@ namespace ComPortTerminal.Controllers
         private BladeAngles _angles;
 
         public Parameters parameters;
-        public Statuses Status { get; private set; }
-
         public Controller()
         {
             _conn = new Connection();

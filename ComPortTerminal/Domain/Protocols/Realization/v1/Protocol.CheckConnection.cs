@@ -12,27 +12,19 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
     public partial class Protocol
     {
         private Thread _connectionChecking = new Thread(new ParameterizedThreadStart(Check));
-        
+        Stopwatch _delay = new Stopwatch();
 
         private static void Check(object x)
         {
-            var _protocol = (Protocol)x;
-            Stopwatch lastPacket = new Stopwatch();
-            lastPacket.Start();
+            var p = (Protocol)x;
             while (true)
             {
                 Thread.Sleep(200);
-                if (lastPacket.ElapsedMilliseconds > AbuseTime)
+                if (p._delay.ElapsedMilliseconds > AbuseTime)
                 {
-                    _protocol._status = Statuses.notConnected;
-                    
-                    break;
+                    p._delay.Reset();
+                    p._status = Statuses.notConnected;
                 }
-                else
-                {
-                    Console.WriteLine(lastPacket.ElapsedMilliseconds);
-                    //lastPacket.Restart();                    
-                }                
             }
         }
     }

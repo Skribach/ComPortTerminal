@@ -12,26 +12,12 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
     {
-        private BladeAngles _angles = new BladeAngles();
 
-        public async Task<Response> SetAnglesAsync(int a, int b, int c, int d)
+        public async Task<Response> SetAnglesAsync(BladeAngles _angles)
         {
-            _angles.A = a;
-            _angles.B = b;
-            _angles.C = c;
-            _angles.D = d;
-
-            //If button was pushed more than one time
-            if (_status == Statuses.waitingSetAngleResponse)
-                return new Response
-                {
-                    Message = "Setting angle in progress...",
-                    isError = false,
-                    isCanceled = true
-                };
 
             //If no established connection
-            else if (_status != Statuses.connected)
+            if (_status == Statuses.disconnected)
                 return new Response
                 {
                     Message = "ERROR: No established connection. Please connect to link",
@@ -39,12 +25,20 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                     isCanceled = false
                 };
 
-            _status = Statuses.waitingSetAngleResponse;
+            //If angles already pushes
+            if(_status == Statuses.updating)
+                return new Response
+                {
+                    Message = "Angles installation allready",
+                    isError = false,
+                    isCanceled = true
+                };
+
+            _id++;            
             for (int i = 0; i < NumOfReply; i++)
             {
                 if (_status == Statuses.connected)
                 {
-                    _number = 0;
                     return new Response
                     {
                         Message = "Angles successfully installed",
@@ -52,12 +46,10 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         isCanceled = false
                     };
                 }
-                _number++;
-                _conn.Write(_packet.CreateAngleRequest(_angles, _number));
+                _conn.Write(_packet.SetAngle(_angles, _id));                
                 await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }
-            _number = 0;
-            _status = Statuses.notConnected;
+            _status = Statuses.disconnected;
             return new Response
             {
                 Message = "ERROR: Connection fail",

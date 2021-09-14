@@ -17,32 +17,42 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         private Packet _packet;
         //Class to work with connection
         private Connection _conn;
+
+        //Parameters that recieved from quadcopter
+        private Parameters _quadcopterParams;
+
+        //Parameters from user
+        public BladeAngles Parameters { get; set; }
+
+        //ID for parameters from GUI
+        private byte _id;
+
         private Statuses _status;
 
         public Statuses GetStatus()
         {
             return _status;
-        }
-
-        private int _number;
+        }        
 
         public Protocol(Connection conn)
         {
             //Initial
             _packet = new Packet();
             _conn = conn;
-            _number = 0;
-            _status = Statuses.notConnected;
+            _id = 0;
+            _status = Statuses.disconnected;
             //Thread to check delay between packets
             _connectionChecking.Start(this);
         }
 
         public enum Statuses
         {
+            //parameters from GUI matches with quadcopter params
             connected,
-            notConnected,
-            waitingConnectionResponse,
-            waitingSetAngleResponse
+            //parameters from GUI doesn't match with quadcopter params
+            updating,
+            //quadcopter doesn't found
+            disconnected
         };
     }
 }

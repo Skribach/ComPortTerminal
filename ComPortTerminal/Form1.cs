@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 using ComPortTerminal.Domain.Connections.Realization.Com;
-using ComPortTerminal.Domain.Qadcopters.Realization.v1;
 using ComPortTerminal.Controllers;
 using static ComPortTerminal.Domain.Protocols.Realization.v1.Protocol;
 using static ComPortTerminal.Global;
@@ -37,13 +36,13 @@ namespace ComPortTerminal
             foreach (string conns in _controller.DisplayAvailableConnections().Connections)
                 portsComboBox.Items.Add(conns);
         }
-        private async void portsComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void portsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {            
             _connName = _controller.DisplayAvailableConnections().Connections[portsComboBox.SelectedIndex];
 
             StatusStrip.Text = "Connecting to quadcopter...";
             StatusStrip.ForeColor = Color.Black;
-            var response = await _controller.Connect(_connName);
+            var response = _controller.Connect(_connName);
             if (!response.isCanceled)
             {
                 ShowResponse(response);
@@ -230,12 +229,17 @@ namespace ComPortTerminal
         private void displayTimer_Tick(object sender, EventArgs e)
         {
             var status = _controller.GetStatus();
-            if (status == Statuses.connected)
+            if ((status == Statuses.connected)||(status == Statuses.updating))
             {
                 ConnectionStrip.Text = "Connected";
                 ConnectionStrip.ForeColor = Color.Green;
+
+                if(!onlineCheckBox.Checked)
+                    setAnglesButton.Enabled = true;
+                if(!startLogCheckBox.Checked)
+                    startLogButton.Enabled = true;
             }
-            else if (status == Statuses.notConnected)
+            else if (status == Statuses.disconnected)
             {
                 ConnectionStrip.Text = "Disconnected";
                 ConnectionStrip.ForeColor = Color.DarkOrange;

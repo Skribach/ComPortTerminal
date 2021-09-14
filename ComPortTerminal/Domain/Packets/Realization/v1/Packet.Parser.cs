@@ -116,7 +116,9 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
                         return false;
                     }
                 }
+                _pointer = 0;
                 return false;
+
             }
             catch
             {
@@ -129,7 +131,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
         {
             return new Parameters
             {
-                num = (int)Data[0],
+                id = (int)Data[0],
                 rpm = (int)BitConverter.ToUInt16(Data, 1),
                 gyro = new Gyro
                 {

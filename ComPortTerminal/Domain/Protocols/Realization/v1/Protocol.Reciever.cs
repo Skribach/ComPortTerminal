@@ -19,31 +19,20 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             {
                 switch (_packet.Type)
                 {
-                    case (Packet.Types.connResponse):
-                        if (_status == Statuses.waitingConnectionResponse)
+                    case (Packet.Types.getParameters):                        
                         {
-                            if (_packet.Number == _number)
-                            {
+                            _status = Statuses.connected;
+                            var par = _packet.GetParams();
+                            //If parameters in GUI match with parameters in quadcopter
+                            if (par.id == _id)
                                 _status = Statuses.connected;
-                                _delay.Start();
-                            }
+                            else
+                                _status = Statuses.updating;
                         }
-                        Console.WriteLine("Connection response arrived");
+                        Console.WriteLine("Telemetry params arrived");
                         break;
-
-                    case (Packet.Types.angleResponse):
-                        //return to connected state;
-                        _status = Statuses.connected;                        
-                        Console.WriteLine("Angle response arrived");
-                        break;
-
-                    case (Packet.Types.parameters):
-                        Console.WriteLine("Parameters arrived");
-                        Parameters param = _packet.ParseParams();
-                        _delay.Restart();
-                        _recievedParametersHandler(param);
-                        break;
-                }
+                }                            
+                _delay.Restart();
             }
         }
 

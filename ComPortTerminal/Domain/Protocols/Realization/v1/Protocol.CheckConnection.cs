@@ -14,6 +14,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         private Thread _connectionChecking = new Thread(new ParameterizedThreadStart(Check));
         Stopwatch _delay = new Stopwatch();
 
+        
         private static void Check(object x)
         {
             var p = (Protocol)x;
@@ -23,7 +24,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                 if (p._delay.ElapsedMilliseconds > AbuseTime)
                 {
                     p._delay.Reset();
-                    p._status = Statuses.notConnected;
+                    p._status = Statuses.disconnected;
                 }
             }
         }

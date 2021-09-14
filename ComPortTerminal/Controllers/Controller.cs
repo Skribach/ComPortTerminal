@@ -46,9 +46,9 @@ namespace ComPortTerminal.Controllers
         /// </summary>
         /// <param name="connection">Link ID</param>
         /// <returns>ResponseConnect</returns>
-        public async Task<Response> Connect(string connection)
+        public Response Connect(string connection)
         {
-            return await _protocol.ConnectAsync(connection);
+            return _protocol.TryConnect(connection);
         }
 
         /// <summary>
@@ -84,15 +84,7 @@ namespace ComPortTerminal.Controllers
         {
             _angles = ang;
             var resp = await _protocol.SetAnglesAsync(
-                ang.A, ang.B,
-                ang.C, ang.D);
-            if (!resp.isError)
-            {
-                _angles.C = ang.C;
-                _angles.D = ang.D;
-                _angles.A = ang.A;
-                _angles.B = ang.B;
-            }
+                _angles);            
             return resp;
         }
 

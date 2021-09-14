@@ -32,7 +32,7 @@ namespace ComPortTerminal
 
         public class Parameters
         {
-            public int num;
+            public int id;
             public Gyro gyro = new Gyro();
             public int rpm = 0;            
         }

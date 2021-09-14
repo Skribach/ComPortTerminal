@@ -31,7 +31,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         }
                         Console.WriteLine("Telemetry params arrived");
                         break;
-                }                            
+                }
                 _delay.Restart();
             }
         }

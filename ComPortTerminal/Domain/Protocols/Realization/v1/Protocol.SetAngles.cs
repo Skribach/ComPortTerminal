@@ -11,16 +11,26 @@ using static ComPortTerminal.Global;
 namespace ComPortTerminal.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
-    {
-        //Parameters from user
-        public BladeAngles GuiAngles { get; set; }
+    {       
+        //Parameters from user GUI
+        private BladeAngles CurrentAngles { get; set; }
 
-        //Previous parameters from user
-        public BladeAngles PrevAngles { get; set; }
+        //Previous installed parameters
+        private BladeAngles PrevAngles { get; set; }
 
-        public async Task<Response> SetAnglesAsync(BladeAngles _angles)
+        private byte _prevId;
+
+        public async Task<Response> SetAnglesAsync(BladeAngles angles)
         {
-            GuiAngles = _angles;
+            if (_status == Statuses.updating)
+            {                
+                CurrentAngles = angles;
+            }
+            else if (_status == Statuses.connected)
+            {
+                PrevAngles = CurrentAngles;
+                CurrentAngles = angles;
+            }
             //If no established connection
             if (_status == Statuses.disconnected)
                 return new Response
@@ -51,6 +61,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         isError = false,
                         isCanceled = false
                     };
+
                 }
                 else if(_status == Statuses.disconnected)
                 {
@@ -61,7 +72,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         isCanceled = false
                     };
                 }
-                _conn.Write(_packet.SetAngle(GuiAngles, _id));                
+                _conn.Write(_packet.SetAngle(CurrentAngles, _id));     
                 await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }
             _status = Statuses.disconnected;

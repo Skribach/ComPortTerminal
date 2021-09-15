@@ -12,8 +12,9 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
     {
-        public Response TryConnect(string connection)
+        public Response Connect(string connection)
         {
+            _delay.Restart();
             //Connection to COM-port
             var resp = _conn.Connect(connection);
             if (resp.isError)

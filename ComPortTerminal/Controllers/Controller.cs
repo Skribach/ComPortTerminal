@@ -48,7 +48,7 @@ namespace ComPortTerminal.Controllers
         /// <returns>ResponseConnect</returns>
         public Response Connect(string connection)
         {
-            return _protocol.TryConnect(connection);
+            return _protocol.Connect(connection);
         }
 
         /// <summary>

@@ -22,8 +22,6 @@ namespace ComPortTerminal
         private Controller _controller;
         private string _connName;
 
-        private bool _isLog = false;
-
         public Form1()
         {
             _controller = new Controller();
@@ -47,9 +45,16 @@ namespace ComPortTerminal
             var response = _controller.Connect(_connName);
             if (!response.isCanceled)
             {
+                if (!response.isError)
+                {
+                    if (startLogCheckBox.Checked)
+                    {
+                        _controller.StartLog();
+                        startLogButton.Text = "Stop Log";
+                        startLogCheckBox.Enabled = false;
+                    }
+                }
                 ShowResponse(response);
-                setAnglesButton.Enabled = !response.isError;
-                startLogButton.Enabled = !response.isError;
             }
         }
         #endregion
@@ -217,7 +222,7 @@ namespace ComPortTerminal
         /// <param name="resp">Response, must contains Message and isError</param>
         private void ShowResponse(Global.Response resp)
         {
-            if (resp.isError)
+            /*if (resp.isError)
             {
                 StatusStrip.ForeColor = Color.Red;
             }
@@ -225,7 +230,8 @@ namespace ComPortTerminal
             {
                 StatusStrip.ForeColor = Color.Green;
             }
-            StatusStrip.Text = resp.Message;
+            StatusStrip.Text = resp.Message;*/
+            StatusStrip.Text = resp.isError ? "ERROR: " : "OK: " + resp.Message;
         }
 
         private void displayTimer_Tick(object sender, EventArgs e)
@@ -236,44 +242,31 @@ namespace ComPortTerminal
                 ConnectionStrip.Text = "Connected";
                 ConnectionStrip.ForeColor = Color.Green;
 
-                if(!onlineCheckBox.Checked)
-                    setAnglesButton.Enabled = true;
-                if(!startLogCheckBox.Checked)
-                    startLogButton.Enabled = true;
-
-                if (startLogCheckBox.Checked)
-                {
-                    startLogCheckBox.Enabled = false;
-                    startLogButton.Text = "Stop Log";
-                    startLogButton.Enabled = true;
-                }
-                else
-                {
-                    startLogCheckBox.Enabled = false;
-                    startLogButton.Text = "Start Log";
-                }
-
                 rpmTextBox.Text = _controller.parameters.Rpm.ToString();
                 xTextBox.Text = _controller.parameters.Gyro.x.ToString();
                 yTextBox.Text = _controller.parameters.Gyro.y.ToString();
                 zTextBox.Text = _controller.parameters.Gyro.z.ToString();
+
+                setAnglesButton.Enabled = true;
+                startLogButton.Enabled = true;
+                onlineCheckBox.Enabled = true;
+                startLogCheckBox.Enabled = false;
             }
             else if (status == Statuses.disconnected)
             {
                 ConnectionStrip.Text = "Disconnected";
                 ConnectionStrip.ForeColor = Color.DarkOrange;
-                setAnglesButton.Enabled = false;
-                startLogButton.Enabled = false;
-
-                startLogCheckBox.Enabled = true;
-                startLogButton.Text = "Start Log";
 
                 rpmTextBox.Text = '\u2014'.ToString();
                 xTextBox.Text = '\u2014'.ToString();
                 yTextBox.Text = '\u2014'.ToString();
                 zTextBox.Text = '\u2014'.ToString();
-            }
 
+                setAnglesButton.Enabled = false;
+                startLogButton.Enabled = false;
+                onlineCheckBox.Enabled = false;
+                startLogCheckBox.Enabled = true;
+            }
         }
     }
 }

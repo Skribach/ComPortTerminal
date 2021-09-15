@@ -21,7 +21,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         private int _i = 0;
 
         public async Task<Response> SetAnglesAsync(BladeAngles angles)
-        {           
+        {            
             //Reset reciever counter
             if (_status == Statuses.updating)
             {                

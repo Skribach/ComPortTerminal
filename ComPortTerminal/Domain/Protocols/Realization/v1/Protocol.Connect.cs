@@ -11,39 +11,23 @@ using static ComPortTerminal.Global;
 namespace ComPortTerminal.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
-    { 
+    {
         public Response TryConnect(string connection)
         {
             //Connection to COM-port
-            if (_status == Statuses.disconnected)
+            var resp = _conn.Connect(connection);
+            if (resp.isError)
             {
-                var resp = _conn.Connect(connection);
-                if (resp.isError)
-                {
-                    return new Response
-                    {
-                        Message = resp.Message,
-                        isError = true,
-                        isCanceled = false
-                    };
-                }
-                //When 1-byte recieved, RecieveHandler runs
-                _conn.SetRecieveHandler(RecieveHandler);
-
-                return new Response
-                {
-                    Message = resp.Message,
-                    isError = false,
-                    isCanceled = false
-                };
+                
             }
-            else
-                return new Response
-                {
-                    Message = "",
-                    isError = false,
-                    isCanceled = true
-                };
+            
+
+            return new Response
+            {
+                Message = resp.Message,
+                isError = false,
+                isCanceled = false
+            };
         }
     }
 }

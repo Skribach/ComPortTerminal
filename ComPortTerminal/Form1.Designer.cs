@@ -91,7 +91,7 @@ namespace ComPortTerminal
             this.setAnglesButton.Location = new System.Drawing.Point(223, 242);
             this.setAnglesButton.Name = "setAnglesButton";
             this.setAnglesButton.Size = new System.Drawing.Size(97, 23);
-            this.setAnglesButton.TabIndex = 7;
+            this.setAnglesButton.TabIndex = 6;
             this.setAnglesButton.Text = "Set Angles";
             this.setAnglesButton.UseVisualStyleBackColor = true;
             this.setAnglesButton.Click += new System.EventHandler(this.setAnglesButton_Click);
@@ -104,7 +104,7 @@ namespace ComPortTerminal
             this.leftTopTrackBar.Name = "leftTopTrackBar";
             this.leftTopTrackBar.Size = new System.Drawing.Size(201, 45);
             this.leftTopTrackBar.SmallChange = 10;
-            this.leftTopTrackBar.TabIndex = 2;
+            this.leftTopTrackBar.TabIndex = 10;
             this.leftTopTrackBar.TabStop = false;
             this.leftTopTrackBar.TickFrequency = 18;
             this.leftTopTrackBar.Value = 90;
@@ -118,7 +118,7 @@ namespace ComPortTerminal
             this.rightTopTrackBar.Name = "rightTopTrackBar";
             this.rightTopTrackBar.Size = new System.Drawing.Size(201, 45);
             this.rightTopTrackBar.SmallChange = 10;
-            this.rightTopTrackBar.TabIndex = 7;
+            this.rightTopTrackBar.TabIndex = 11;
             this.rightTopTrackBar.TabStop = false;
             this.rightTopTrackBar.TickFrequency = 18;
             this.rightTopTrackBar.Value = 90;
@@ -132,7 +132,7 @@ namespace ComPortTerminal
             this.leftBotTrackBar.Name = "leftBotTrackBar";
             this.leftBotTrackBar.Size = new System.Drawing.Size(201, 45);
             this.leftBotTrackBar.SmallChange = 10;
-            this.leftBotTrackBar.TabIndex = 9;
+            this.leftBotTrackBar.TabIndex = 12;
             this.leftBotTrackBar.TabStop = false;
             this.leftBotTrackBar.TickFrequency = 18;
             this.leftBotTrackBar.Value = 90;
@@ -146,7 +146,7 @@ namespace ComPortTerminal
             this.rightBotTrackBar.Name = "rightBotTrackBar";
             this.rightBotTrackBar.Size = new System.Drawing.Size(201, 45);
             this.rightBotTrackBar.SmallChange = 10;
-            this.rightBotTrackBar.TabIndex = 11;
+            this.rightBotTrackBar.TabIndex = 13;
             this.rightBotTrackBar.TabStop = false;
             this.rightBotTrackBar.TickFrequency = 18;
             this.rightBotTrackBar.Value = 90;
@@ -166,20 +166,20 @@ namespace ComPortTerminal
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(108, 76);
+            this.label2.Location = new System.Drawing.Point(99, 76);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.Size = new System.Drawing.Size(43, 13);
             this.label2.TabIndex = 16;
-            this.label2.Text = "Angle";
+            this.label2.Text = "Angle 3";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(108, 210);
+            this.label5.Location = new System.Drawing.Point(99, 210);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.Size = new System.Drawing.Size(43, 13);
             this.label5.TabIndex = 18;
-            this.label5.Text = "Angle";
+            this.label5.Text = "Angle 2";
             // 
             // pictureBox1
             // 
@@ -236,7 +236,7 @@ namespace ComPortTerminal
             this.startLogButton.Location = new System.Drawing.Point(325, 242);
             this.startLogButton.Name = "startLogButton";
             this.startLogButton.Size = new System.Drawing.Size(97, 23);
-            this.startLogButton.TabIndex = 10;
+            this.startLogButton.TabIndex = 7;
             this.startLogButton.Text = "Start Log";
             this.startLogButton.UseVisualStyleBackColor = true;
             this.startLogButton.Click += new System.EventHandler(this.startLogButton_Click);
@@ -247,7 +247,7 @@ namespace ComPortTerminal
             this.startLogCheckBox.Location = new System.Drawing.Point(494, 245);
             this.startLogCheckBox.Name = "startLogCheckBox";
             this.startLogCheckBox.Size = new System.Drawing.Size(136, 17);
-            this.startLogCheckBox.TabIndex = 12;
+            this.startLogCheckBox.TabIndex = 9;
             this.startLogCheckBox.Text = "Start log when connect";
             this.startLogCheckBox.UseVisualStyleBackColor = true;
             this.startLogCheckBox.CheckedChanged += new System.EventHandler(this.startLogCheckBox_CheckedChanged);
@@ -261,6 +261,7 @@ namespace ComPortTerminal
             this.yTextBox.TabIndex = 30;
             this.yTextBox.TabStop = false;
             this.yTextBox.Text = "123";
+            this.yTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // yLabel
             // 
@@ -280,6 +281,7 @@ namespace ComPortTerminal
             this.rpmTextBox.TabIndex = 34;
             this.rpmTextBox.TabStop = false;
             this.rpmTextBox.Text = "123";
+            this.rpmTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label6
             // 
@@ -308,6 +310,7 @@ namespace ComPortTerminal
             this.xTextBox.TabIndex = 36;
             this.xTextBox.TabStop = false;
             this.xTextBox.Text = "123";
+            this.xTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // zTextBox
             // 
@@ -318,6 +321,7 @@ namespace ComPortTerminal
             this.zTextBox.TabIndex = 35;
             this.zTextBox.TabStop = false;
             this.zTextBox.Text = "123";
+            this.zTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // LTNumericUpDown
             // 
@@ -396,18 +400,18 @@ namespace ComPortTerminal
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(502, 210);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(34, 13);
+            this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 42;
-            this.label1.Text = "Angle";
+            this.label1.Text = "Angle 4";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(502, 76);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 13);
+            this.label3.Size = new System.Drawing.Size(43, 13);
             this.label3.TabIndex = 41;
-            this.label3.Text = "Angle";
+            this.label3.Text = "Angle 1";
             // 
             // displayTimer
             // 

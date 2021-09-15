@@ -33,9 +33,12 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             //Initial
             _packet = new Packet();
             _conn = conn;
+            //When 1-byte recieved, RecieveHandler runs
+            _conn.SetRecieveHandler(RecieveHandler);
             _id = 0;
             _status = Statuses.disconnected;
             //Thread to check delay between packets
+            _connectionChecking.IsBackground = true;
             _connectionChecking.Start(this);
 
             _prevAngles = new BladeAngles{ A = 90, B = 90, C = 90, D = 90};

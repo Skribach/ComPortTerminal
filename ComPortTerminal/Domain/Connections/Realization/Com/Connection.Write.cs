@@ -4,6 +4,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ComPortTerminal.Global;
 
 namespace ComPortTerminal.Domain.Connections.Realization.Com
 {
@@ -21,14 +22,16 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
                 return new Response
                 {
                     Message = "Connect request was transmitt",
-                    isError = false
+                    isError = false,
+                    isCanceled = false
                 };
             }
             else
                 return new Response
                 {
                     Message = "No connected link",
-                    isError = true
+                    isError = true,
+                    isCanceled = false
                 };
         }
     }

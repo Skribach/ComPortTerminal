@@ -63,7 +63,6 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         isError = false,
                         isCanceled = false
                     };
-
                 }
                 else if(_status == Statuses.disconnected)
                 {

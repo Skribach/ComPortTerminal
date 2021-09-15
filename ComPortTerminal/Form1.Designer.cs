@@ -193,6 +193,8 @@ namespace ComPortTerminal
             // 
             // statusStrip1
             // 
+            this.statusStrip1.AllowMerge = false;
+            this.statusStrip1.AutoSize = false;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusStrip,
             this.ConnectionStrip});
@@ -213,7 +215,7 @@ namespace ComPortTerminal
             this.ConnectionStrip.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.ConnectionStrip.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ConnectionStrip.Name = "ConnectionStrip";
-            this.ConnectionStrip.Size = new System.Drawing.Size(588, 17);
+            this.ConnectionStrip.Size = new System.Drawing.Size(557, 17);
             this.ConnectionStrip.Spring = true;
             this.ConnectionStrip.Text = "No connection";
             this.ConnectionStrip.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -231,7 +233,7 @@ namespace ComPortTerminal
             // 
             // startLogButton
             // 
-            this.startLogButton.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.startLogButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.startLogButton.Enabled = false;
             this.startLogButton.Location = new System.Drawing.Point(325, 242);
             this.startLogButton.Name = "startLogButton";
@@ -451,6 +453,8 @@ namespace ComPortTerminal
             this.Controls.Add(this.setAnglesButton);
             this.Controls.Add(this.zLabel);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "SpeedTest";
             ((System.ComponentModel.ISupportInitialize)(this.leftTopTrackBar)).EndInit();

@@ -151,16 +151,8 @@ namespace ComPortTerminal
                 D = rightBotTrackBar.Value
             });
             if (!response.isCanceled)
-            {
-                if (response.isError)
-                {
-                    StatusStrip.ForeColor = Color.Red;
-                }
-                else if (!response.isError)
-                {
-                    StatusStrip.ForeColor = Color.Green;
-                }
-                StatusStrip.Text = response.Message;
+            {                
+                ShowResponse(response);
             }
         }
         #endregion
@@ -231,7 +223,7 @@ namespace ComPortTerminal
                 StatusStrip.ForeColor = Color.Green;
             }
             StatusStrip.Text = resp.Message;*/
-            StatusStrip.Text = resp.isError ? "ERROR: " : "OK: " + resp.Message;
+            StatusStrip.Text = resp.isError ? "ERROR: " : "OK: " + resp.Message + "...";
         }
 
         private void displayTimer_Tick(object sender, EventArgs e)

@@ -18,10 +18,13 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             var resp = _conn.Connect(connection);
             if (resp.isError)
             {
-                
+                return new Response
+                {
+                    Message = resp.Message,
+                    isError = true,
+                    isCanceled = false
+                };
             }
-            
-
             return new Response
             {
                 Message = resp.Message,

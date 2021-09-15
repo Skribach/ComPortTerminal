@@ -26,11 +26,13 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
                 else
                 {
                     Disconnect();
+                    reset();
                     return tryConnect(connection);
                 }
             }
             else
             {
+                reset();
                 return tryConnect(connection);
             }
 
@@ -57,7 +59,7 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
             {
                 return new Response
                 {
-                    Message = "ERROR: Can't connect to " + Name,
+                    Message = "ERROR: Can't connect to " + connection,
                     isError = true,
                     isCanceled = false
                 };

@@ -19,6 +19,13 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
         public string Name { get; set; }
         public bool IsConnected { get; private set; }
 
-        private SerialPort port;                
+        private SerialPort port;
+        
+        private void reset()
+        {
+            Name = "";
+            IsConnected = false;
+        }
+
     }
 }

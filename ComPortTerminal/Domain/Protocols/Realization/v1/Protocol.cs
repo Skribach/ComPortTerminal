@@ -35,6 +35,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             _conn = conn;
             //When 1-byte recieved, RecieveHandler runs
             _conn.SetRecieveHandler(RecieveHandler);
+
             _id = 0;
             _status = Statuses.disconnected;
             //Thread to check delay between packets

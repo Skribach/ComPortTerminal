@@ -20,11 +20,14 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
 
         private byte _prevId;
 
+        private int _i = 0;
+
         public async Task<Response> SetAnglesAsync(BladeAngles angles)
         {
             if (_status == Statuses.updating)
             {                
                 CurrentAngles = angles;
+                _i = 0;
             }
             else if (_status == Statuses.connected)
             {
@@ -51,7 +54,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
 
             _id++;
             _status = Statuses.updating;
-            for (int i = 0; i < NumOfReply; i++)
+            for (; _i < NumOfReply; _i++)
             {
                 if (_status == Statuses.connected)
                 {

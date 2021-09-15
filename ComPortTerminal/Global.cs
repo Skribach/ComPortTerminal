@@ -32,9 +32,10 @@ namespace ComPortTerminal
 
         public class Parameters
         {
-            public int id;
-            public Gyro gyro = new Gyro();
-            public int rpm = 0;            
+            public BladeAngles Angles { get; set; }
+            public int Id { get; set; }
+            public Gyro Gyro = new Gyro();
+            public int Rpm { get; set; }
         }
 
         /// <summary>

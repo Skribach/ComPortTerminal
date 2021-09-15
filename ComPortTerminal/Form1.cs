@@ -22,6 +22,8 @@ namespace ComPortTerminal
         private Controller _controller;
         private string _connName;
 
+        private bool _isLog = false;
+
         public Form1()
         {
             _controller = new Controller();
@@ -238,6 +240,23 @@ namespace ComPortTerminal
                     setAnglesButton.Enabled = true;
                 if(!startLogCheckBox.Checked)
                     startLogButton.Enabled = true;
+
+                if (startLogCheckBox.Checked)
+                {
+                    startLogCheckBox.Enabled = false;
+                    startLogButton.Text = "Stop Log";
+                    startLogButton.Enabled = true;
+                }
+                else
+                {
+                    startLogCheckBox.Enabled = false;
+                    startLogButton.Text = "Start Log";
+                }
+
+                rpmTextBox.Text = _controller.parameters.Rpm.ToString();
+                xTextBox.Text = _controller.parameters.Gyro.x.ToString();
+                yTextBox.Text = _controller.parameters.Gyro.y.ToString();
+                zTextBox.Text = _controller.parameters.Gyro.z.ToString();
             }
             else if (status == Statuses.disconnected)
             {
@@ -246,12 +265,15 @@ namespace ComPortTerminal
                 setAnglesButton.Enabled = false;
                 startLogButton.Enabled = false;
 
+                startLogCheckBox.Enabled = true;
+                startLogButton.Text = "Start Log";
+
+                rpmTextBox.Text = '\u2014'.ToString();
+                xTextBox.Text = '\u2014'.ToString();
+                yTextBox.Text = '\u2014'.ToString();
+                zTextBox.Text = '\u2014'.ToString();
             }
 
-            rpmTextBox.Text = _controller.parameters.rpm.ToString();
-            xTextBox.Text = _controller.parameters.gyro.x.ToString();
-            yTextBox.Text = _controller.parameters.gyro.y.ToString();
-            zTextBox.Text = _controller.parameters.gyro.z.ToString();
         }
     }
 }

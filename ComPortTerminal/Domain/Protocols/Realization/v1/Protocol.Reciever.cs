@@ -24,12 +24,19 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                             //_status = Statuses.connected;
                             var par = _packet.GetParams();
                             //If parameters in GUI match with parameters in quadcopter
-                            if (par.id == _id)
+                            if (par.Id == _id)
+                            {
                                 _status = Statuses.connected;
+                                par.Angles = _currentAngles;
+                            }
                             else
+                            {
                                 _status = Statuses.updating;
+                                par.Angles = _prevAngles;
+                            }
+                            _recievedParametersHandler(par);
                         }
-                        Console.WriteLine("Telemetry params arrived");
+                        Console.WriteLine("Telemetry params arrived");  //To debug
                         break;
                 }
                 _delay.Restart();

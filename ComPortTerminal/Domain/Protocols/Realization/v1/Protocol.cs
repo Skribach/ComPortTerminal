@@ -16,10 +16,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         //Class for work with packets
         private Packet _packet;
         //Class to work with connection
-        private Connection _conn;
-
-        //Parameters that recieved from quadcopter
-        private Parameters _quadcopterParams;       
+        private Connection _conn; 
 
         //ID for parameters from GUI
         private byte _id;
@@ -40,6 +37,9 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             _status = Statuses.disconnected;
             //Thread to check delay between packets
             _connectionChecking.Start(this);
+
+            _prevAngles = new BladeAngles{ A = 90, B = 90, C = 90, D = 90};
+            _currentAngles = new BladeAngles { A = 90, B = 90, C = 90, D = 90 };
         }
 
         public enum Statuses

@@ -131,9 +131,9 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
         {
             return new Parameters
             {
-                id = (int)Data[0],
-                rpm = (int)BitConverter.ToUInt16(Data, 1),
-                gyro = new Gyro
+                Id = (int)Data[0],
+                Rpm = (int)BitConverter.ToUInt16(Data, 1),
+                Gyro = new Gyro
                 {
                     x = BitConverter.ToSingle(Data, 3),
                     y = BitConverter.ToSingle(Data, 5),

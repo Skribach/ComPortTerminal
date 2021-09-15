@@ -54,11 +54,16 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
             {
                 time = _stopwatch.Elapsed,
 
-                X = param.gyro.x,
-                Y = param.gyro.z,
-                Z = param.gyro.z,
+                Angle1 = param.Angles.A,
+                Angle2 = param.Angles.B,
+                Angle3 = param.Angles.C,
+                Angle4 = param.Angles.D,
 
-                RPM = param.rpm,
+                X = param.Gyro.x,
+                Y = param.Gyro.z,
+                Z = param.Gyro.z,
+
+                RPM = param.Rpm,
             });
         }
 
@@ -86,10 +91,15 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
         }
         public TimeSpan time { get; set; }
 
-        public double RPM { get; set; }
-        public double X { get; set; }
-        public double Y { get; set; }
-        public double Z { get; set; }
+        public int Angle1 { get; set; }
+        public int Angle2 { get; set; }
+        public int Angle3 { get; set; }
+        public int Angle4 { get; set; }
+
+        public float RPM { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
 
 
     }

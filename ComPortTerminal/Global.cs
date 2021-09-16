@@ -15,6 +15,11 @@ namespace ComPortTerminal
             public bool isCanceled { get; set; }
         }
 
+        public class ConnResponse : Response
+        {
+            public string ConnectionName { get; set; }
+        }
+
         public class BladeAngles
         {
             public int A = 90;

@@ -64,6 +64,7 @@ namespace ComPortTerminal
             this.label3 = new System.Windows.Forms.Label();
             this.displayTimer = new System.Windows.Forms.Timer(this.components);
             this.logFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.autoConnectButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.leftTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftBotTrackBar)).BeginInit();
@@ -127,7 +128,7 @@ namespace ComPortTerminal
             // leftBotTrackBar
             // 
             this.leftBotTrackBar.LargeChange = 60;
-            this.leftBotTrackBar.Location = new System.Drawing.Point(16, 157);
+            this.leftBotTrackBar.Location = new System.Drawing.Point(14, 136);
             this.leftBotTrackBar.Maximum = 180;
             this.leftBotTrackBar.Name = "leftBotTrackBar";
             this.leftBotTrackBar.Size = new System.Drawing.Size(201, 45);
@@ -141,7 +142,7 @@ namespace ComPortTerminal
             // rightBotTrackBar
             // 
             this.rightBotTrackBar.LargeChange = 60;
-            this.rightBotTrackBar.Location = new System.Drawing.Point(428, 157);
+            this.rightBotTrackBar.Location = new System.Drawing.Point(426, 136);
             this.rightBotTrackBar.Maximum = 180;
             this.rightBotTrackBar.Name = "rightBotTrackBar";
             this.rightBotTrackBar.Size = new System.Drawing.Size(201, 45);
@@ -157,7 +158,7 @@ namespace ComPortTerminal
             this.portsComboBox.FormattingEnabled = true;
             this.portsComboBox.Location = new System.Drawing.Point(15, 243);
             this.portsComboBox.Name = "portsComboBox";
-            this.portsComboBox.Size = new System.Drawing.Size(200, 21);
+            this.portsComboBox.Size = new System.Drawing.Size(114, 21);
             this.portsComboBox.TabIndex = 5;
             this.portsComboBox.Text = "Choose connection link...";
             this.portsComboBox.SelectedIndexChanged += new System.EventHandler(this.portsComboBox_SelectedIndexChanged);
@@ -175,7 +176,7 @@ namespace ComPortTerminal
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(99, 210);
+            this.label5.Location = new System.Drawing.Point(97, 189);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(43, 13);
             this.label5.TabIndex = 18;
@@ -215,7 +216,7 @@ namespace ComPortTerminal
             this.ConnectionStrip.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.ConnectionStrip.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ConnectionStrip.Name = "ConnectionStrip";
-            this.ConnectionStrip.Size = new System.Drawing.Size(557, 17);
+            this.ConnectionStrip.Size = new System.Drawing.Size(588, 17);
             this.ConnectionStrip.Spring = true;
             this.ConnectionStrip.Text = "No connection";
             this.ConnectionStrip.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -363,7 +364,7 @@ namespace ComPortTerminal
             // 
             // LBNumericUpDown
             // 
-            this.LBNumericUpDown.Location = new System.Drawing.Point(148, 207);
+            this.LBNumericUpDown.Location = new System.Drawing.Point(146, 186);
             this.LBNumericUpDown.Maximum = new decimal(new int[] {
             180,
             0,
@@ -381,7 +382,7 @@ namespace ComPortTerminal
             // 
             // RBNumericUpDown
             // 
-            this.RBNumericUpDown.Location = new System.Drawing.Point(428, 208);
+            this.RBNumericUpDown.Location = new System.Drawing.Point(426, 187);
             this.RBNumericUpDown.Maximum = new decimal(new int[] {
             180,
             0,
@@ -400,7 +401,7 @@ namespace ComPortTerminal
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(502, 210);
+            this.label1.Location = new System.Drawing.Point(500, 189);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 42;
@@ -421,11 +422,22 @@ namespace ComPortTerminal
             this.displayTimer.Interval = 200;
             this.displayTimer.Tick += new System.EventHandler(this.displayTimer_Tick);
             // 
+            // autoConnectButton
+            // 
+            this.autoConnectButton.Location = new System.Drawing.Point(135, 242);
+            this.autoConnectButton.Name = "autoConnectButton";
+            this.autoConnectButton.Size = new System.Drawing.Size(82, 23);
+            this.autoConnectButton.TabIndex = 43;
+            this.autoConnectButton.Text = "Auto Connect";
+            this.autoConnectButton.UseVisualStyleBackColor = true;
+            this.autoConnectButton.Click += new System.EventHandler(this.autoConnectButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(642, 337);
+            this.Controls.Add(this.autoConnectButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.RBNumericUpDown);
@@ -506,6 +518,7 @@ namespace ComPortTerminal
         private System.Windows.Forms.Timer displayTimer;
         private System.Windows.Forms.SaveFileDialog logFileDialog;
         private System.Windows.Forms.ToolStripStatusLabel ConnectionStrip;
+        private System.Windows.Forms.Button autoConnectButton;
     }
 }
 

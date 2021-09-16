@@ -69,6 +69,7 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
 
         public void Stop(string path)
         {
+            isRunning = false;
             if (!_stopwatch.IsRunning)
             {
                 throw new Exception("Logger doesn't run");
@@ -79,8 +80,7 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
                 csv.WriteRecords(_data);
                 writer.Flush();
             }
-            _stopwatch.Reset();
-            isRunning = false;
+            _stopwatch.Reset();            
         }
     }
     public class Data

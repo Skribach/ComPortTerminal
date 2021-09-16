@@ -223,7 +223,7 @@ namespace ComPortTerminal
                 StatusStrip.ForeColor = Color.Green;
             }
             StatusStrip.Text = resp.Message;*/
-            StatusStrip.Text = resp.isError ? "ERROR: " : "OK: " + resp.Message + "...";
+            StatusStrip.Text = ((resp.isError ? "ERROR: " : "OK: ") + resp.Message + "...");
         }
 
         private void displayTimer_Tick(object sender, EventArgs e)
@@ -259,6 +259,14 @@ namespace ComPortTerminal
                 onlineCheckBox.Enabled = false;
                 startLogCheckBox.Enabled = true;
             }
+        }
+
+        private async void autoConnectButton_Click(object sender, EventArgs e)
+        {
+            StatusStrip.Text = "Finding correct link...";
+            var response = await _controller.AutoConnectAsync();
+            ShowResponse(response);
+            portsComboBox.Text = response.ConnectionName;
         }
     }
 }

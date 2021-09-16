@@ -51,6 +51,11 @@ namespace ComPortTerminal.Controllers
             return _protocol.Connect(connection);
         }
 
+        public async Task<ConnResponse> AutoConnectAsync()
+        {
+            return await _protocol.AutoConnectAsync();
+        }
+
         /// <summary>
         /// Returns Available Connections
         /// </summary>
@@ -96,11 +101,6 @@ namespace ComPortTerminal.Controllers
         public Response StartLog()
         {
             return _logger.Start();
-        }
-
-        public void Log(int rpm, double x, double y, double z)
-        {
-            
         }
 
         /// <summary>

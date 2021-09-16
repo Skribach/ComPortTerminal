@@ -26,6 +26,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                     isCanceled = false
                 };
             }
+            _status = Statuses.connected;
             return new Response
             {
                 Message = resp.Message,

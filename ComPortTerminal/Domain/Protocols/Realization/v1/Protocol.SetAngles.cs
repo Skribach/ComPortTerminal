@@ -19,6 +19,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         private BladeAngles _prevAngles { get; set; }
 
         private int _i = 0;
+        private bool _isSetting = false;
 
         public async Task<Response> SetAnglesAsync(BladeAngles angles)
         {            
@@ -35,28 +36,32 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             }
             //If no established connection
             if (_status == Statuses.disconnected)
+            {
+                _isSetting = false;
                 return new Response
                 {
                     Message = "ERROR: No established connection. Please connect to link",
                     isError = true,
                     isCanceled = false
                 };
-
+            }
             //If angles already pushes
-            if(_status == Statuses.updating)
+            if((_status == Statuses.updating)&&(_isSetting))
                 return new Response
                 {
-                    Message = "Angles installation allready",
+                    Message = "Angles installation already",
                     isError = false,
                     isCanceled = true
                 };
 
             _id++;
             _status = Statuses.updating;
+            _isSetting = true;
             for (; _i < NumOfReply; _i++)
             {
                 if (_status == Statuses.connected)
                 {
+                    _isSetting = false;
                     return new Response
                     {
                         Message = "Angles successfully installed",
@@ -66,6 +71,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                 }
                 else if(_status == Statuses.disconnected)
                 {
+                    _isSetting = false;
                     return new Response
                     {
                         Message = "Connection is lost",

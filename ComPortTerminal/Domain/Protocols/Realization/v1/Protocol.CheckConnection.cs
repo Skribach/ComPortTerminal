@@ -15,8 +15,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         Stopwatch _delay = new Stopwatch();
         
         private static void Check(object x)
-        {
-            Statuses lastActiveStatus = Statuses.connected;
+        {            
             var p = (Protocol)x;
             while (true)
             {
@@ -25,12 +24,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                 {
                     p._delay.Reset();
                     p._status = Statuses.disconnected;
-                }
-                else
-                {
-                    lastActiveStatus = p._status;
-                }
-                p._status = lastActiveStatus;
+                }                
             }
         }
     }

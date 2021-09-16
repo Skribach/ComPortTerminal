@@ -12,6 +12,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
     {
+        private int count = 0;
         public void RecieveHandler(byte input)
         {
             //If packet arrived
@@ -20,8 +21,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                 switch (_packet.Type)
                 {
                     case (Packet.Types.getParameters):                        
-                        {
-                            //_status = Statuses.connected;
+                        {                            
                             var par = _packet.GetParams();
                             //If parameters in GUI match with parameters in quadcopter
                             if (par.Id == _id)
@@ -36,7 +36,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                             }
                             _recievedParametersHandler(par);
                         }
-                        Console.WriteLine("Telemetry params arrived");  //To debug
+                        Console.WriteLine("Telemetry params arrived" + count++);  //To debug
                         break;
                 }
                 _delay.Restart();

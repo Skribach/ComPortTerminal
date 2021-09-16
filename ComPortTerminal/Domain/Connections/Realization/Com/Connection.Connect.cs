@@ -42,13 +42,13 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
             try
             {
                 port.PortName = connection;
-                port.BaudRate = 2400;
+                port.BaudRate = 19200;
                 port.DataBits = 8;
-                port.Parity = System.IO.Ports.Parity.Odd;
+                port.Parity = System.IO.Ports.Parity.None;
                 port.StopBits = System.IO.Ports.StopBits.One;
                 port.Handshake = System.IO.Ports.Handshake.None;
-                port.ReadTimeout = 1000;
-                port.WriteTimeout = 1000;
+                port.ReadTimeout = 100;
+                port.WriteTimeout = 100;
                 port.ReceivedBytesThreshold = 1;
                 port.Open();
 

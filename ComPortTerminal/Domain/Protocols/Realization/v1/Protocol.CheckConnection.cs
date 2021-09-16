@@ -22,7 +22,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                 Thread.Sleep(200);
                 if (p._delay.ElapsedMilliseconds > AbuseTime)
                 {
-                    p._delay.Reset();
+                    p._delay.Restart();
                     p._status = Statuses.disconnected;
                 }                
             }

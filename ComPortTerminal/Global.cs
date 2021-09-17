@@ -46,7 +46,7 @@ namespace ComPortTerminal
         /// <summary>
         /// Time in ms between two requests
         /// </summary>
-        public const int ReplyTimeRequest = 500;   //To Debug
+        public const int ReplyTimeRequest = 300;   //To Debug
         //public const int ReplyTimeRequest = 300;  //To Prod
         /// <summary>
         /// Number of connection requests to quadcopter

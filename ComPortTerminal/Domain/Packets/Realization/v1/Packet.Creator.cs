@@ -17,12 +17,12 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
         /// <returns>bytes to transmitt by means connection</returns>
         public byte[] SetAngle(BladeAngles angles, int num)
         {
-            return CreateRequest(Packet.Types.setParameters, new byte[] {
-                Convert.ToByte(num),
-                Convert.ToByte(angles.A),
-                Convert.ToByte(angles.B),
-                Convert.ToByte(angles.C),
-                Convert.ToByte(angles.D)
+            return CreateRequest(Packet.Types.setParameters, new byte[] {                
+                Convert.ToByte((int)angles.A*1.417),
+                Convert.ToByte((int)angles.B*1.417),
+                Convert.ToByte((int)angles.C*1.417),
+                Convert.ToByte((int)angles.D*1.417),
+                Convert.ToByte(num)
                 });
         }
 

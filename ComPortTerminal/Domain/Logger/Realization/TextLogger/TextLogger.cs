@@ -60,7 +60,7 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
                 Angle4 = param.Angles.D,
 
                 X = param.Gyro.x,
-                Y = param.Gyro.z,
+                Y = param.Gyro.y,
                 Z = param.Gyro.z,
 
                 RPM = param.Rpm,

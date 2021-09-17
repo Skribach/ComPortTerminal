@@ -69,7 +69,10 @@ namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
 
         public void Stop(string path)
         {
+
             isRunning = false;
+            if (path == "")
+                return;
             if (!_stopwatch.IsRunning)
             {
                 throw new Exception("Logger doesn't run");

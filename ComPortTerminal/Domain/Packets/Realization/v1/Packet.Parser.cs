@@ -136,8 +136,8 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
                 Gyro = new Gyro
                 {
                     x = BitConverter.ToSingle(Data, 3),
-                    y = BitConverter.ToSingle(Data, 5),
-                    z = BitConverter.ToSingle(Data, 7)
+                    y = BitConverter.ToSingle(Data, 7),
+                    z = BitConverter.ToSingle(Data, 11)
                 }
             };
         }

@@ -40,13 +40,13 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             {
                 if(!Connect(_conn.AvailableConnections[i]).isError)
                 {
-                    for (int j = 0; j < NumOfConnReply; j++)
+                    for (int j = 0; j < NumOfAutoConnReply; j++)
                     {
                         if ((_status == Statuses.connected)||(_status == Statuses.updating))
                         {                            
                             return new ConnResponse
                             {
-                                Message = ("Connection successfull to" + _conn.AvailableConnections[i]),
+                                Message = ("Connection successfull to " + _conn.AvailableConnections[i]),
                                 ConnectionName = _conn.AvailableConnections[i],
                                 isError = false,
                                 isCanceled = false

@@ -129,10 +129,16 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
 
         public Parameters GetParams()
         {
+            int Rpm;
+            var rpm = (int)BitConverter.ToUInt16(Data, 1);
+            if (rpm == 0)
+                Rpm = 20000;
+            else
+                Rpm = 20000 / rpm;
             return new Parameters
             {
                 Id = (int)Data[0],
-                Rpm = 20000/(int)BitConverter.ToUInt16(Data, 1),
+                Rpm = Rpm,
                 Gyro = new Gyro
                 {
                     x = BitConverter.ToSingle(Data, 3),

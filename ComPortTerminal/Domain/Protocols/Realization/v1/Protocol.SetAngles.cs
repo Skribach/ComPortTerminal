@@ -79,13 +79,14 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
                         isCanceled = false
                     };
                 }
-                _conn.Write(_packet.SetAngle(_currentAngles, _id));     
+                _conn.Write(_packet.SetAngle(_currentAngles, _id));
+                _isSetting = false;
                 await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }
             _status = Statuses.disconnected;
             return new Response
             {
-                Message = "Connection fail",
+                Message = "Angles don't send",
                 isError = true
             };
         }

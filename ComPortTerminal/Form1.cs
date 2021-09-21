@@ -231,7 +231,7 @@ namespace ComPortTerminal
             var status = _controller.GetStatus();
             if ((status == Statuses.connected)||(status == Statuses.updating))
             {
-                ConnectionStrip.Text = "Connected";
+                ConnectionStrip.Text = '\u25CF' + "Connected";
                 ConnectionStrip.ForeColor = Color.Green;
 
                 rpmTextBox.Text = _controller.parameters.Rpm.ToString();
@@ -246,13 +246,14 @@ namespace ComPortTerminal
             }
             else if (status == Statuses.disconnected)
             {
-                ConnectionStrip.Text = "Disconnected";
+                ConnectionStrip.Text = '\u25CF' + " Disconnected";
                 ConnectionStrip.ForeColor = Color.DarkOrange;
 
                 rpmTextBox.Text = '\u2014'.ToString();
                 xTextBox.Text = '\u2014'.ToString();
                 yTextBox.Text = '\u2014'.ToString();
                 zTextBox.Text = '\u2014'.ToString();
+
 
                 setAnglesButton.Enabled = false;
                 startLogButton.Enabled = false;

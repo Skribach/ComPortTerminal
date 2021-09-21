@@ -35,7 +35,17 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
         }
                 
         public async Task<ConnResponse> AutoConnectAsync()
-        {            
+        {
+            if((_status == Statuses.connected) || (_status == Statuses.updating))
+            {
+                return new ConnResponse
+                {
+                    Message = ("Connection allready established to " + _conn.Name),
+                    ConnectionName = _conn.Name,
+                    isError = false,
+                    isCanceled = true
+                };
+            }
             for(int i = 0; i < _conn.AvailableConnections.Length; i++ )
             {
                 if(!Connect(_conn.AvailableConnections[i]).isError)

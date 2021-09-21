@@ -40,9 +40,9 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             {
                 if(!Connect(_conn.AvailableConnections[i]).isError)
                 {
-                    for (int j = 0; j < 5; j++)
+                    for (int j = 0; j < NumOfConnReply; j++)
                     {
-                        if (_status == Statuses.connected)
+                        if ((_status == Statuses.connected)||(_status == Statuses.updating))
                         {                            
                             return new ConnResponse
                             {

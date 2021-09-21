@@ -46,14 +46,16 @@ namespace ComPortTerminal
         /// <summary>
         /// Time in ms between two requests
         /// </summary>
-        public const int ReplyTimeRequest = 300;   //To Debug
-        //public const int ReplyTimeRequest = 300;  //To Prod
+        public const int ReplyTimeRequest = 200;   //To Debug
         /// <summary>
         /// Number of connection requests to quadcopter
         /// Can be in range 1...255
         /// </summary>
-        public const int NumOfReply = 200;          //To Debug
-        //public const int NumOfReply = 8;          //To Prod
+        public const int NumOfReply = 8;
+        /// <summary>
+        /// Numbers of replying 
+        /// </summary>
+        public const int NumOfConnReply = 4;
         /// <summary>
         /// Maximum time in ms between packeges to be connected.
         /// </summary>

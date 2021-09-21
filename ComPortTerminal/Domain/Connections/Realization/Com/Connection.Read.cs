@@ -25,7 +25,6 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
             SerialPort sp = (SerialPort)sender;
             while (sp.BytesToRead != 0)
             {
-                Console.WriteLine(sp.BytesToRead);
                 _recieverHandler((byte)sp.ReadByte());
             }
         }

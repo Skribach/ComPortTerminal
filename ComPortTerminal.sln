@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComPortTerminal", "ComPortTerminal\ComPortTerminal.csproj", "{19818E7B-E0CF-46FB-9AD3-91D28C797DDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadcopterConfigurator", "ComPortTerminal\QuadcopterConfigurator.csproj", "{19818E7B-E0CF-46FB-9AD3-91D28C797DDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ComPortTerminal.Domain.Connections.Realization.Com
+namespace QuadcopterConfigurator.Domain.Connections.Realization.Com
 {
     public partial class Connection
     {

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static ComPortTerminal.Global;
+using static QuadcopterConfigurator.Global;
 
-namespace ComPortTerminal.Domain.Protocols.Realization.v1
+namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
     {

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ComPortTerminal.Domain.Connections.Realization.Com;
-using ComPortTerminal.Domain.Packets.Realization.v1;
-using static ComPortTerminal.Global;
+using QuadcopterConfigurator.Domain.Connections.Realization.Com;
+using QuadcopterConfigurator.Domain.Packets.Realization.v1;
+using static QuadcopterConfigurator.Global;
 
-namespace ComPortTerminal.Domain.Protocols.Realization.v1
+namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
     {

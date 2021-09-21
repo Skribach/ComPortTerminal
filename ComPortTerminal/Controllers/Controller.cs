@@ -1,15 +1,12 @@
-﻿using ComPortTerminal.Domain.Connections.Realization.Com;
-using ComPortTerminal.Domain.Logger.Realization.TextLogger;
-using ComPortTerminal.Domain.Protocols.Realization.v1;
+﻿using QuadcopterConfigurator.Domain.Connections.Realization.Com;
+using QuadcopterConfigurator.Domain.Logger.Realization.TextLogger;
+using QuadcopterConfigurator.Domain.Protocols.Realization.v1;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using static ComPortTerminal.Domain.Protocols.Realization.v1.Protocol;
-using static ComPortTerminal.Global;
+using static QuadcopterConfigurator.Domain.Protocols.Realization.v1.Protocol;
+using static QuadcopterConfigurator.Global;
 
-namespace ComPortTerminal.Controllers
+namespace QuadcopterConfigurator.Controllers
 {
     public class Controller
     {

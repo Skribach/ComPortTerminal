@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 
-namespace ComPortTerminal
+namespace QuadcopterConfigurator
 {
     static class Program
     {

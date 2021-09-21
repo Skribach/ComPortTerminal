@@ -9,13 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
-using ComPortTerminal.Domain.Connections.Realization.Com;
-using ComPortTerminal.Controllers;
-using static ComPortTerminal.Domain.Protocols.Realization.v1.Protocol;
-using static ComPortTerminal.Global;
+using QuadcopterConfigurator.Domain.Connections.Realization.Com;
+using QuadcopterConfigurator.Controllers;
+using static QuadcopterConfigurator.Domain.Protocols.Realization.v1.Protocol;
+using static QuadcopterConfigurator.Global;
 #endregion
 
-namespace ComPortTerminal
+namespace QuadcopterConfigurator
 {
     public partial class Form1 : Form
     {

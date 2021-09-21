@@ -1,7 +1,5 @@
 ﻿
-using System.IO.Ports;
-
-namespace ComPortTerminal
+namespace QuadcopterConfigurator
 {
     partial class Form1
     {

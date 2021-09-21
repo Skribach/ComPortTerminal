@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static ComPortTerminal.Global;
+using static QuadcopterConfigurator.Global;
 
-namespace ComPortTerminal.Domain.Packets.Realization.v1
+namespace QuadcopterConfigurator.Domain.Packets.Realization.v1
 {
     public partial class Packet
     {

@@ -4,9 +4,9 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static ComPortTerminal.Global;
+using static QuadcopterConfigurator.Global;
 
-namespace ComPortTerminal.Domain.Connections.Realization.Com
+namespace QuadcopterConfigurator.Domain.Connections.Realization.Com
 {
     public partial class Connection
     {
@@ -76,7 +76,6 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
 
         public void UpdateAvailableConnections()
         {
-            //TODO i want to return response with isError
             AvailableConnections = SerialPort.GetPortNames();
         }
     }

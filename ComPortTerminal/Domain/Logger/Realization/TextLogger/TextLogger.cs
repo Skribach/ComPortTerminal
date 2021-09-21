@@ -7,9 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static ComPortTerminal.Global;
+using static QuadcopterConfigurator.Global;
 
-namespace ComPortTerminal.Domain.Logger.Realization.TextLogger
+namespace QuadcopterConfigurator.Domain.Logger.Realization.TextLogger
 {
     public class TextLogger
     {

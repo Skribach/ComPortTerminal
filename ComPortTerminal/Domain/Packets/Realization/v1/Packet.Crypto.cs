@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ComPortTerminal.Domain.Packets.Realization.v1
+namespace QuadcopterConfigurator.Domain.Packets.Realization.v1
 {
     public partial class Packet
     {

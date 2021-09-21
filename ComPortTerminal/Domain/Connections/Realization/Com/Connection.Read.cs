@@ -23,7 +23,11 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
         void InternalReciever(object sender, SerialDataReceivedEventArgs e)
         {            
             SerialPort sp = (SerialPort)sender;
-            _recieverHandler((byte)sp.ReadByte());
+            while (sp.BytesToRead != 0)
+            {
+                Console.WriteLine(sp.BytesToRead);
+                _recieverHandler((byte)sp.ReadByte());
+            }
         }
     }
 }

@@ -469,7 +469,7 @@ namespace ComPortTerminal
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "QuadcopterTest";
+            this.Text = "Quadcopter Configurator";
             ((System.ComponentModel.ISupportInitialize)(this.leftTopTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightTopTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftBotTrackBar)).EndInit();

@@ -85,7 +85,7 @@ namespace ComPortTerminal.Domain.Protocols.Realization.v1
             _status = Statuses.disconnected;
             return new Response
             {
-                Message = "ERROR: Connection fail",
+                Message = "Connection fail",
                 isError = true
             };
         }

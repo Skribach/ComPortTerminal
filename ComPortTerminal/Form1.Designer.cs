@@ -92,7 +92,7 @@ namespace ComPortTerminal
             this.setAnglesButton.Location = new System.Drawing.Point(223, 242);
             this.setAnglesButton.Name = "setAnglesButton";
             this.setAnglesButton.Size = new System.Drawing.Size(97, 23);
-            this.setAnglesButton.TabIndex = 6;
+            this.setAnglesButton.TabIndex = 7;
             this.setAnglesButton.Text = "Set Angles";
             this.setAnglesButton.UseVisualStyleBackColor = true;
             this.setAnglesButton.Click += new System.EventHandler(this.setAnglesButton_Click);
@@ -105,7 +105,7 @@ namespace ComPortTerminal
             this.leftTopTrackBar.Name = "leftTopTrackBar";
             this.leftTopTrackBar.Size = new System.Drawing.Size(201, 45);
             this.leftTopTrackBar.SmallChange = 10;
-            this.leftTopTrackBar.TabIndex = 10;
+            this.leftTopTrackBar.TabIndex = 11;
             this.leftTopTrackBar.TabStop = false;
             this.leftTopTrackBar.TickFrequency = 18;
             this.leftTopTrackBar.Value = 90;
@@ -119,7 +119,7 @@ namespace ComPortTerminal
             this.rightTopTrackBar.Name = "rightTopTrackBar";
             this.rightTopTrackBar.Size = new System.Drawing.Size(201, 45);
             this.rightTopTrackBar.SmallChange = 10;
-            this.rightTopTrackBar.TabIndex = 11;
+            this.rightTopTrackBar.TabIndex = 12;
             this.rightTopTrackBar.TabStop = false;
             this.rightTopTrackBar.TickFrequency = 18;
             this.rightTopTrackBar.Value = 90;
@@ -133,7 +133,7 @@ namespace ComPortTerminal
             this.leftBotTrackBar.Name = "leftBotTrackBar";
             this.leftBotTrackBar.Size = new System.Drawing.Size(201, 45);
             this.leftBotTrackBar.SmallChange = 10;
-            this.leftBotTrackBar.TabIndex = 12;
+            this.leftBotTrackBar.TabIndex = 13;
             this.leftBotTrackBar.TabStop = false;
             this.leftBotTrackBar.TickFrequency = 18;
             this.leftBotTrackBar.Value = 90;
@@ -147,7 +147,7 @@ namespace ComPortTerminal
             this.rightBotTrackBar.Name = "rightBotTrackBar";
             this.rightBotTrackBar.Size = new System.Drawing.Size(201, 45);
             this.rightBotTrackBar.SmallChange = 10;
-            this.rightBotTrackBar.TabIndex = 13;
+            this.rightBotTrackBar.TabIndex = 14;
             this.rightBotTrackBar.TabStop = false;
             this.rightBotTrackBar.TickFrequency = 18;
             this.rightBotTrackBar.Value = 90;
@@ -227,7 +227,7 @@ namespace ComPortTerminal
             this.onlineCheckBox.Location = new System.Drawing.Point(429, 245);
             this.onlineCheckBox.Name = "onlineCheckBox";
             this.onlineCheckBox.Size = new System.Drawing.Size(56, 17);
-            this.onlineCheckBox.TabIndex = 8;
+            this.onlineCheckBox.TabIndex = 9;
             this.onlineCheckBox.Text = "Online";
             this.onlineCheckBox.UseVisualStyleBackColor = true;
             this.onlineCheckBox.CheckedChanged += new System.EventHandler(this.onlineCheckBox_CheckedChanged);
@@ -239,7 +239,7 @@ namespace ComPortTerminal
             this.startLogButton.Location = new System.Drawing.Point(325, 242);
             this.startLogButton.Name = "startLogButton";
             this.startLogButton.Size = new System.Drawing.Size(97, 23);
-            this.startLogButton.TabIndex = 7;
+            this.startLogButton.TabIndex = 8;
             this.startLogButton.Text = "Start Log";
             this.startLogButton.UseVisualStyleBackColor = true;
             this.startLogButton.Click += new System.EventHandler(this.startLogButton_Click);
@@ -250,7 +250,7 @@ namespace ComPortTerminal
             this.startLogCheckBox.Location = new System.Drawing.Point(494, 245);
             this.startLogCheckBox.Name = "startLogCheckBox";
             this.startLogCheckBox.Size = new System.Drawing.Size(136, 17);
-            this.startLogCheckBox.TabIndex = 9;
+            this.startLogCheckBox.TabIndex = 10;
             this.startLogCheckBox.Text = "Start log when connect";
             this.startLogCheckBox.UseVisualStyleBackColor = true;
             this.startLogCheckBox.CheckedChanged += new System.EventHandler(this.startLogCheckBox_CheckedChanged);
@@ -427,7 +427,7 @@ namespace ComPortTerminal
             this.autoConnectButton.Location = new System.Drawing.Point(135, 242);
             this.autoConnectButton.Name = "autoConnectButton";
             this.autoConnectButton.Size = new System.Drawing.Size(82, 23);
-            this.autoConnectButton.TabIndex = 43;
+            this.autoConnectButton.TabIndex = 6;
             this.autoConnectButton.Text = "Auto Connect";
             this.autoConnectButton.UseVisualStyleBackColor = true;
             this.autoConnectButton.Click += new System.EventHandler(this.autoConnectButton_Click);
@@ -466,9 +466,10 @@ namespace ComPortTerminal
             this.Controls.Add(this.zLabel);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "SpeedTest";
+            this.Text = "QuadcopterTest";
             ((System.ComponentModel.ISupportInitialize)(this.leftTopTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightTopTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftBotTrackBar)).EndInit();

@@ -132,7 +132,7 @@ namespace ComPortTerminal.Domain.Packets.Realization.v1
             return new Parameters
             {
                 Id = (int)Data[0],
-                Rpm = (int)BitConverter.ToUInt16(Data, 1),
+                Rpm = 20000/(int)BitConverter.ToUInt16(Data, 1),
                 Gyro = new Gyro
                 {
                     x = BitConverter.ToSingle(Data, 3),

@@ -42,7 +42,7 @@ namespace ComPortTerminal.Domain.Connections.Realization.Com
             try
             {
                 port.PortName = connection;
-                port.BaudRate = 9600;
+                port.BaudRate = 19200;
                 port.DataBits = 8;
                 port.Parity = System.IO.Ports.Parity.None;
                 port.StopBits = System.IO.Ports.StopBits.One;

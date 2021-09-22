@@ -69,14 +69,10 @@ namespace QuadcopterConfigurator.Domain.Logger.Realization.TextLogger
 
         public void Stop(string path)
         {
-
             isRunning = false;
+            _stopwatch.Reset();
             if (path == "")
-                return;
-            if (!_stopwatch.IsRunning)
-            {
-                throw new Exception("Logger doesn't run");
-            }
+                return;            
             using (var writer = new StreamWriter(path))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {

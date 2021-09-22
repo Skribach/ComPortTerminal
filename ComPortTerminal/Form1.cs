@@ -145,9 +145,9 @@ namespace QuadcopterConfigurator
             StatusStrip.Text = "Sending angle values...";
             var response = await _controller.SetAngles(new BladeAngles
             {
-                A = leftTopTrackBar.Value,
-                B = rightTopTrackBar.Value,
-                C = leftBotTrackBar.Value,
+                A = rightTopTrackBar.Value,
+                B = leftBotTrackBar.Value,
+                C = leftTopTrackBar.Value,
                 D = rightBotTrackBar.Value
             });
             if (!response.isCanceled)

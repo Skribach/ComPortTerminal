@@ -83,6 +83,7 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
                 _isSetting = false;
                 await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }
+            _isSetting = false;
             _status = Statuses.disconnected;
             return new Response
             {

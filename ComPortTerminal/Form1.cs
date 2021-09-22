@@ -275,12 +275,19 @@ namespace QuadcopterConfigurator
 
         private async void startTest_Click(object sender, EventArgs e)
         {
+            bool a = await SetAnglesAsync();
+        }
+
+        private async Task<bool> SetAnglesAsync()
+        {
             if (isTesting)
-                return;
+                return false;
 
             isTesting = true;
+
             bool y = true;
             int x = 0;
+
             while (true)
             {
                 LTNumericUpDown.Value = x;
@@ -293,7 +300,7 @@ namespace QuadcopterConfigurator
                 leftBotTrackBar.Value = x;
                 rightBotTrackBar.Value = x;
 
-                var resp = await SetAnglesAsync(new BladeAngles { A = x, B = x, C = x, D = x });
+                var resp = await _controller.SetAngles(new BladeAngles { A = x, B = x, C = x, D = x });
                 ShowResponse(resp);
                 if (x >= 180)
                     y = false;
@@ -305,13 +312,9 @@ namespace QuadcopterConfigurator
                     x -= 10;
                 Thread.Sleep(100);
                 if (!isTesting)
-                    return;
+                    return true;
             }
-        }
-
-        private async Task<Response> SetAnglesAsync(BladeAngles angles)
-        {
-            return await _controller.SetAngles(angles);
+            
         }
 
         private void stopTest_Click(object sender, EventArgs e)

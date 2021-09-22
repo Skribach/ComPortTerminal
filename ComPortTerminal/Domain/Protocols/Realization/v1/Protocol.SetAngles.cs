@@ -40,7 +40,7 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
                 _isSetting = false;
                 return new Response
                 {
-                    Message = "ERROR: No established connection. Please connect to link",
+                    Message = "No established connection. Please connect to link",
                     isError = true,
                     isCanceled = false
                 };
@@ -62,6 +62,7 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
                 if (_status == Statuses.connected)
                 {
                     _isSetting = false;
+                    _i = 0;
                     return new Response
                     {
                         Message = "Angles successfully installed",

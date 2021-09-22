@@ -63,6 +63,8 @@ namespace QuadcopterConfigurator
             this.displayTimer = new System.Windows.Forms.Timer(this.components);
             this.logFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.autoConnectButton = new System.Windows.Forms.Button();
+            this.startTest = new System.Windows.Forms.Button();
+            this.stopTest = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.leftTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftBotTrackBar)).BeginInit();
@@ -430,11 +432,34 @@ namespace QuadcopterConfigurator
             this.autoConnectButton.UseVisualStyleBackColor = true;
             this.autoConnectButton.Click += new System.EventHandler(this.autoConnectButton_Click);
             // 
+            // startTest
+            // 
+            this.startTest.Location = new System.Drawing.Point(223, 275);
+            this.startTest.Name = "startTest";
+            this.startTest.Size = new System.Drawing.Size(46, 23);
+            this.startTest.TabIndex = 43;
+            this.startTest.Text = "Start";
+            this.startTest.UseVisualStyleBackColor = true;
+            this.startTest.Click += new System.EventHandler(this.startTest_Click);
+            // 
+            // stopTest
+            // 
+            this.stopTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.stopTest.Location = new System.Drawing.Point(275, 275);
+            this.stopTest.Name = "stopTest";
+            this.stopTest.Size = new System.Drawing.Size(46, 23);
+            this.stopTest.TabIndex = 44;
+            this.stopTest.Text = "Stop";
+            this.stopTest.UseVisualStyleBackColor = true;
+            this.stopTest.Click += new System.EventHandler(this.stopTest_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(642, 337);
+            this.Controls.Add(this.stopTest);
+            this.Controls.Add(this.startTest);
             this.Controls.Add(this.autoConnectButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
@@ -518,6 +543,8 @@ namespace QuadcopterConfigurator
         private System.Windows.Forms.SaveFileDialog logFileDialog;
         private System.Windows.Forms.ToolStripStatusLabel ConnectionStrip;
         private System.Windows.Forms.Button autoConnectButton;
+        private System.Windows.Forms.Button startTest;
+        private System.Windows.Forms.Button stopTest;
     }
 }
 

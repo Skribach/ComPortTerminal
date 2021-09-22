@@ -13,6 +13,7 @@ using QuadcopterConfigurator.Domain.Connections.Realization.Com;
 using QuadcopterConfigurator.Controllers;
 using static QuadcopterConfigurator.Domain.Protocols.Realization.v1.Protocol;
 using static QuadcopterConfigurator.Global;
+using System.Threading;
 #endregion
 
 namespace QuadcopterConfigurator
@@ -268,6 +269,54 @@ namespace QuadcopterConfigurator
             var response = await _controller.AutoConnectAsync();
             ShowResponse(response);
             portsComboBox.Text = response.ConnectionName;
+        }
+
+        private bool isTesting = false;
+
+        private async void startTest_Click(object sender, EventArgs e)
+        {
+            if (isTesting)
+                return;
+
+            isTesting = true;
+            bool y = true;
+            int x = 0;
+            while (true)
+            {
+                LTNumericUpDown.Value = x;
+                RTNumericUpDown.Value = x;
+                LBNumericUpDown.Value = x;
+                RBNumericUpDown.Value = x;
+
+                leftTopTrackBar.Value = x;
+                rightTopTrackBar.Value = x;
+                leftBotTrackBar.Value = x;
+                rightBotTrackBar.Value = x;
+
+                var resp = await SetAnglesAsync(new BladeAngles { A = x, B = x, C = x, D = x });
+                ShowResponse(resp);
+                if (x >= 180)
+                    y = false;
+                if (x <= 0)
+                    y = true;
+                if (y == true)
+                    x += 10;
+                else
+                    x -= 10;
+                Thread.Sleep(100);
+                if (!isTesting)
+                    return;
+            }
+        }
+
+        private async Task<Response> SetAnglesAsync(BladeAngles angles)
+        {
+            return await _controller.SetAngles(angles);
+        }
+
+        private void stopTest_Click(object sender, EventArgs e)
+        {
+            isTesting = false;
         }
     }
 }

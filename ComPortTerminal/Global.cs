@@ -46,7 +46,7 @@ namespace QuadcopterConfigurator
         /// Number of connection requests to quadcopter
         /// Can be in range 1...255
         /// </summary>
-        public const int NumOfReply = 1024;
+        public const int NumOfReply = 8;
         /// <summary>
         /// Numbers of replying 
         /// </summary>

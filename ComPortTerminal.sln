@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadcopterConfigurator", "ComPortTerminal\QuadcopterConfigurator.csproj", "{19818E7B-E0CF-46FB-9AD3-91D28C797DDA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "crc_check", "crc_check\crc_check.csproj", "{980B74E3-4BA8-4BCD-A7B2-CE2533D945BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{19818E7B-E0CF-46FB-9AD3-91D28C797DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19818E7B-E0CF-46FB-9AD3-91D28C797DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19818E7B-E0CF-46FB-9AD3-91D28C797DDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{980B74E3-4BA8-4BCD-A7B2-CE2533D945BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{980B74E3-4BA8-4BCD-A7B2-CE2533D945BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{980B74E3-4BA8-4BCD-A7B2-CE2533D945BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{980B74E3-4BA8-4BCD-A7B2-CE2533D945BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -61,6 +61,7 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
             {
                 if (_status == Statuses.connected)
                 {
+                    _i = 0;
                     _isSetting = false;
                     return new Response
                     {
@@ -80,7 +81,7 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
                     };
                 }
                 _conn.Write(_packet.SetAngle(_currentAngles, _id));
-                _isSetting = false;
+                _isSetting = false;                
                 await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }
             _isSetting = false;

@@ -63,6 +63,7 @@ namespace QuadcopterConfigurator
             this.displayTimer = new System.Windows.Forms.Timer(this.components);
             this.logFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.autoConnectButton = new System.Windows.Forms.Button();
+            this.slowTuning = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.leftTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftBotTrackBar)).BeginInit();
@@ -430,11 +431,22 @@ namespace QuadcopterConfigurator
             this.autoConnectButton.UseVisualStyleBackColor = true;
             this.autoConnectButton.Click += new System.EventHandler(this.autoConnectButton_Click);
             // 
+            // slowTuning
+            // 
+            this.slowTuning.Location = new System.Drawing.Point(223, 275);
+            this.slowTuning.Name = "slowTuning";
+            this.slowTuning.Size = new System.Drawing.Size(97, 23);
+            this.slowTuning.TabIndex = 43;
+            this.slowTuning.Text = "Slowly Tuning";
+            this.slowTuning.UseVisualStyleBackColor = true;
+            this.slowTuning.Click += new System.EventHandler(this.slowTuning_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(642, 337);
+            this.Controls.Add(this.slowTuning);
             this.Controls.Add(this.autoConnectButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
@@ -518,6 +530,7 @@ namespace QuadcopterConfigurator
         private System.Windows.Forms.SaveFileDialog logFileDialog;
         private System.Windows.Forms.ToolStripStatusLabel ConnectionStrip;
         private System.Windows.Forms.Button autoConnectButton;
+        private System.Windows.Forms.Button slowTuning;
     }
 }
 

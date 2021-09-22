@@ -115,6 +115,12 @@ namespace QuadcopterConfigurator.Controllers
             };
         }
 
+        public async Task<Response> SlowSetAnglesAsync()
+        {
+            var resp = await _protocol.SlowSetAnglesAsync();
+            return new Response();
+        }
+
         public class ResponseAvailableConnections : Response
         {
             public string[] Connections { get; set; }

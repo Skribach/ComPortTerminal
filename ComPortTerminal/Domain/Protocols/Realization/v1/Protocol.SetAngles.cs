@@ -11,84 +11,33 @@ using static QuadcopterConfigurator.Global;
 namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
-    {       
-        //Parameters from user GUI
-        private BladeAngles _currentAngles { get; set; }        
-
-        //Previous installed parameters
-        private BladeAngles _prevAngles { get; set; }
-
-        private int _i = 0;
-        private bool _isSetting = false;
-
-        public async Task<Response> SetAnglesAsync(BladeAngles angles)
-        {            
-            //Reset reciever counter
-            if (_status == Statuses.updating)
-            {                
-                _currentAngles = angles;
-                _i = 0;
-            }
-            else if (_status == Statuses.connected)
+    {     
+        public async Task<Response> SlowSetAnglesAsync()
+        {
+            bool y = true;
+            int x = 0;
+            while (true)
             {
-                _prevAngles = _currentAngles;
-                _currentAngles = angles;
-            }
-            //If no established connection
-            if (_status == Statuses.disconnected)
-            {
-                _isSetting = false;
-                return new Response
+                if(x >= 180)
                 {
-                    Message = "ERROR: No established connection. Please connect to link",
-                    isError = true,
-                    isCanceled = false
-                };
-            }
-            //If angles already pushes
-            if((_status == Statuses.updating)&&(_isSetting))
-                return new Response
-                {
-                    Message = "Angles installation already",
-                    isError = false,
-                    isCanceled = true
-                };
-
-            _id++;
-            _status = Statuses.updating;
-            _isSetting = true;
-            for (; _i < NumOfReply; _i++)
-            {
-                if (_status == Statuses.connected)
-                {
-                    _isSetting = false;
-                    return new Response
-                    {
-                        Message = "Angles successfully installed",
-                        isError = false,
-                        isCanceled = false
-                    };
+                    y = false;
                 }
-                else if(_status == Statuses.disconnected)
+                if (x <= 0)
                 {
-                    _isSetting = false;
-                    return new Response
-                    {
-                        Message = "Connection is lost",
-                        isError = true,
-                        isCanceled = false
-                    };
+                    y = true;
                 }
-                _conn.Write(_packet.SetAngle(_currentAngles, _id));
-                _isSetting = false;
-                await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
+                if(y == true)
+                {
+                    x+=20;
+                }
+                else
+                {
+                    x-=20;
+                }
+                var resp = await SetAnglesAsync(new BladeAngles { A = x, B = x, C = x, D = x });
+                Thread.Sleep(200);
             }
-            _status = Statuses.disconnected;
-            return new Response
-            {
-                Message = "Angles don't send",
-                isError = true
-            };
+            return new Response();
         }
     }
 }

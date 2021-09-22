@@ -269,5 +269,10 @@ namespace QuadcopterConfigurator
             ShowResponse(response);
             portsComboBox.Text = response.ConnectionName;
         }
+
+        private async void slowTuning_Click(object sender, EventArgs e)
+        {
+            var response = await _controller.SlowSetAnglesAsync();
+        }
     }
 }

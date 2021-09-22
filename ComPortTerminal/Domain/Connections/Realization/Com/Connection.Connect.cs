@@ -59,7 +59,7 @@ namespace QuadcopterConfigurator.Domain.Connections.Realization.Com
             {
                 return new Response
                 {
-                    Message = "ERROR: Can't connect to " + connection,
+                    Message = "Can't connect to " + connection,
                     isError = true,
                     isCanceled = false
                 };

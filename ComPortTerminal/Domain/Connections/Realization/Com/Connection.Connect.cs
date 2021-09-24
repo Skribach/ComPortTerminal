@@ -49,7 +49,7 @@ namespace QuadcopterConfigurator.Domain.Connections.Realization.Com
                 port.Handshake = System.IO.Ports.Handshake.None;
                 port.ReadTimeout = 100;
                 port.WriteTimeout = 100;
-                port.ReceivedBytesThreshold = 16;
+                port.ReceivedBytesThreshold = 1;
                 port.Open();
 
                 IsConnected = port.IsOpen;

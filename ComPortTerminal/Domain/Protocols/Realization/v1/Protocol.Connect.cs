@@ -46,9 +46,10 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
                     isCanceled = true
                 };
             }
-            for(int i = 0; i < _conn.AvailableConnections.Length; i++ )
+            var availableConn = _conn.GetAvailableConnections();
+            for(int i = 0; i < availableConn.Length; i++ )
             {
-                if(!Connect(_conn.AvailableConnections[i]).isError)
+                if(!Connect(availableConn[i]).isError)
                 {
                     for (int j = 0; j < NumOfAutoConnReply; j++)
                     {
@@ -56,8 +57,8 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
                         {                            
                             return new ConnResponse
                             {
-                                Message = ("Connection successfull to " + _conn.AvailableConnections[i]),
-                                ConnectionName = _conn.AvailableConnections[i],
+                                Message = ("Connection successfull to " + availableConn[i]),
+                                ConnectionName = availableConn[i],
                                 isError = false,
                                 isCanceled = false
                             };

@@ -58,11 +58,10 @@ namespace QuadcopterConfigurator.Controllers
         /// </summary>
         /// <returns>ResponseAvailableConnections</returns>
         public ResponseAvailableConnections DisplayAvailableConnections()
-        {
-            _conn.UpdateAvailableConnections();
+        {            
             return new ResponseAvailableConnections
             {
-                Connections = _conn.AvailableConnections,
+                Connections = _conn.GetAvailableConnections(),
                 isError = false,
                 Message = null
             };

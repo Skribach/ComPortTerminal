@@ -12,10 +12,8 @@ namespace QuadcopterConfigurator.Domain.Connections.Realization.Com
         public Connection()
         {
             port = new SerialPort();
-            AvailableConnections = SerialPort.GetPortNames();
         }
 
-        public string[] AvailableConnections { get; private set; }
         public string Name { get; set; }
         public bool IsConnected { get; private set; }
 
@@ -25,6 +23,11 @@ namespace QuadcopterConfigurator.Domain.Connections.Realization.Com
         {
             Name = "";
             IsConnected = false;
+        }
+
+        public string[] GetAvailableConnections()
+        {
+            return SerialPort.GetPortNames();
         }
 
     }

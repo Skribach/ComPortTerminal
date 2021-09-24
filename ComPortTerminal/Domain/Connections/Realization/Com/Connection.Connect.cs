@@ -73,10 +73,5 @@ namespace QuadcopterConfigurator.Domain.Connections.Realization.Com
         }
 
         public void Disconnect() => port.Close();
-
-        public void UpdateAvailableConnections()
-        {
-            AvailableConnections = SerialPort.GetPortNames();
-        }
     }
 }

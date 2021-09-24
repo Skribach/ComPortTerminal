@@ -37,7 +37,9 @@ namespace QuadcopterConfigurator
                 portsComboBox.Items.Add(conns);
         }
         private void portsComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {            
+        {
+            if (portsComboBox.SelectedIndex == -1)
+                return;
             _connName = _controller.DisplayAvailableConnections().Connections[portsComboBox.SelectedIndex];
 
             StatusStrip.Text = "Connecting to quadcopter...";

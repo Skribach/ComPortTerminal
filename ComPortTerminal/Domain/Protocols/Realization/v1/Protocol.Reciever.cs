@@ -20,7 +20,7 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
             {
                 switch (_packet.Type)
                 {
-                    case (Packet.Types.getParameters):                        
+                    case (Packet.Types.getParameters):
                         {                            
                             var par = _packet.GetParams();
                             //If parameters in GUI match with parameters in quadcopter
@@ -36,7 +36,7 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
                             }
                             _recievedParametersHandler(par);
                         }
-                        Console.WriteLine("Telemetry params arrived" + count++);  //To debug
+                        //Console.WriteLine("Telemetry params arrived" + count++);  //To debug
                         break;
                 }
                 _delay.Restart();

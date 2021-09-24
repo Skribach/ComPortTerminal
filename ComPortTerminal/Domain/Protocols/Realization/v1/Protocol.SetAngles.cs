@@ -81,6 +81,10 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
                     };
                 }
                 _conn.Write(_packet.SetAngle(_currentAngles, _id));
+                var p = _packet.SetAngle(_currentAngles, _id);
+                Console.WriteLine();
+                foreach(byte a in p)
+                    Console.Write("0x{0:X}", a);
                 _isSetting = false;
                 await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
             }

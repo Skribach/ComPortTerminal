@@ -18,6 +18,10 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
             //If packet arrived
             if (_packet.TryParse(input))
             {
+                if (_status == Statuses.updating)
+                {
+                    _conn.Write(_packet.SetAngle(_currentAngles, _id));
+                }
                 switch (_packet.Type)
                 {
                     case (Packet.Types.getParameters):

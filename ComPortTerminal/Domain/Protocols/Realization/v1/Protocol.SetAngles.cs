@@ -11,9 +11,9 @@ using static QuadcopterConfigurator.Global;
 namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
 {
     public partial class Protocol
-    {       
+    {
         //Parameters from user GUI
-        private BladeAngles _currentAngles { get; set; }        
+        private BladeAngles _currentAngles { get; set; }
 
         //Previous installed parameters
         private BladeAngles _prevAngles { get; set; }
@@ -22,12 +22,11 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
         private bool _isSetting = false;
 
         public async Task<Response> SetAnglesAsync(BladeAngles angles)
-        {            
+        {
             //Reset reciever counter
             if (_status == Statuses.updating)
-            {                
+            {
                 _currentAngles = angles;
-                _i = 0;
             }
             else if (_status == Statuses.connected)
             {
@@ -46,7 +45,7 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
                 };
             }
             //If angles already pushes
-            if((_status == Statuses.updating)&&(_isSetting))
+            if ((_status == Statuses.updating) && (_isSetting))
                 return new Response
                 {
                     Message = "Angles installation already",
@@ -54,15 +53,16 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
                     isCanceled = true
                 };
 
+            //If status was connected
             _id++;
             _status = Statuses.updating;
             _isSetting = true;
-            for (; _i < NumOfReply; _i++)
+
+            while (true)
             {
                 if (_status == Statuses.connected)
                 {
                     _isSetting = false;
-                    _i = 0;
                     return new Response
                     {
                         Message = "Angles successfully installed",
@@ -70,7 +70,7 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
                         isCanceled = false
                     };
                 }
-                else if(_status == Statuses.disconnected)
+                else if (_status == Statuses.disconnected)
                 {
                     _isSetting = false;
                     return new Response
@@ -79,22 +79,9 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
                         isError = true,
                         isCanceled = false
                     };
-                }
-                _conn.Write(_packet.SetAngle(_currentAngles, _id));
-                var p = _packet.SetAngle(_currentAngles, _id);
-                Console.WriteLine();
-                foreach(byte a in p)
-                    Console.Write("0x{0:X}", a);
-                _isSetting = false;
-                await Task.Run(() => Thread.Sleep(ReplyTimeRequest));
-            }
-            _isSetting = false;
-            _status = Statuses.disconnected;
-            return new Response
-            {
-                Message = "Angles don't send",
-                isError = true
-            };
+                }                
+                await Task.Run(() => Thread.Sleep(100));
+            }            
         }
     }
 }

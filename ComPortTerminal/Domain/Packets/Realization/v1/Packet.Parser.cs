@@ -134,11 +134,12 @@ namespace QuadcopterConfigurator.Domain.Packets.Realization.v1
             if (rpm == 0)
                 Rpm = 20000;
             else
-                Rpm = 20000 / rpm;
+                Rpm = (20000 / rpm) * 60;
             return new Parameters
             {
                 Id = (int)Data[0],
                 Rpm = Rpm,
+                //Rpm = rpm*50,
                 Gyro = new Gyro
                 {
                     x = BitConverter.ToSingle(Data, 3),

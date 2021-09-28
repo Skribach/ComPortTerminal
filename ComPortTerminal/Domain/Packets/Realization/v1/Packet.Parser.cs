@@ -134,7 +134,11 @@ namespace QuadcopterConfigurator.Domain.Packets.Realization.v1
             if (rpm == 0)
                 Rpm = 20000;
             else
+            {
                 Rpm = (20000 / rpm) * 60;
+                if (Rpm == 120)
+                    Rpm = 0;
+            }
             return new Parameters
             {
                 Id = (int)Data[0],

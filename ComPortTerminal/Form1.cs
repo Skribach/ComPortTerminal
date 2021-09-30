@@ -198,7 +198,7 @@ namespace QuadcopterConfigurator
                     dialog.Title = "Save Log file to...";
                     dialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
                     dialog.DefaultExt = "csv";
-                    dialog.FileName = DateTime.Now.ToString().Replace(':', '-').Replace(' ', '(') + ')';
+                    dialog.FileName = DateTime.Now.ToString("dd_MM_yyyy(H-mm-ss)");
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         path = dialog.FileName;

@@ -50,9 +50,10 @@ namespace QuadcopterConfigurator.Domain.Logger.Realization.TextLogger
             {
                 throw new Exception("Logger doesn't run");
             }
+            //CAN BE ACCELERATED!!!!
             _data.Add(new Data
             {
-                time = _stopwatch.Elapsed,
+                time = _stopwatch.Elapsed.ToString(@"ss\.fffffff"),
 
                 Angle1 = param.Angles.A,
                 Angle2 = param.Angles.B,
@@ -88,7 +89,7 @@ namespace QuadcopterConfigurator.Domain.Logger.Realization.TextLogger
         {
 
         }
-        public TimeSpan time { get; set; }
+        public string time { get; set; }
 
         public int Angle1 { get; set; }
         public int Angle2 { get; set; }

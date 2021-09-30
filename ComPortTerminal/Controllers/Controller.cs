@@ -102,10 +102,27 @@ namespace QuadcopterConfigurator.Controllers
         public async Task<Response> SetAngles(BladeAngles ang, AliasAngles alias)
         {
             _aliasAngles = alias;
+
             ang.A += _aliasAngles.A;
+            if (ang.A > 180)
+                ang.A = 180;
+            else if (ang.A < 0)
+                ang.A = 0;
             ang.B += _aliasAngles.B;
+            if (ang.B > 180)
+                ang.B = 180;
+            else if (ang.B < 0)
+                ang.B = 0;
             ang.C += _aliasAngles.C;
+            if (ang.C > 180)
+                ang.C = 180;
+            else if (ang.C < 0)
+                ang.C = 0;
             ang.D += _aliasAngles.D;
+            if (ang.D > 180)
+                ang.D = 180;
+            else if (ang.D < 0)
+                ang.D = 0;
 
             var resp = await _protocol.SetAnglesAsync(
                 ang);            

@@ -295,7 +295,7 @@ namespace QuadcopterConfigurator
 
         private void Alias1_ValueChanged(object sender, EventArgs e)
         {
-
+                        
         }
         private void Alias2_ValueChanged(object sender, EventArgs e)
         {

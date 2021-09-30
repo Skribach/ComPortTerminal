@@ -63,6 +63,14 @@ namespace QuadcopterConfigurator
             this.displayTimer = new System.Windows.Forms.Timer(this.components);
             this.logFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.autoConnectButton = new System.Windows.Forms.Button();
+            this.Alias3 = new System.Windows.Forms.NumericUpDown();
+            this.Alias1 = new System.Windows.Forms.NumericUpDown();
+            this.Alias2 = new System.Windows.Forms.NumericUpDown();
+            this.Alias4 = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.leftTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightTopTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftBotTrackBar)).BeginInit();
@@ -73,12 +81,16 @@ namespace QuadcopterConfigurator
             ((System.ComponentModel.ISupportInitialize)(this.RTNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LBNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RBNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Alias3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Alias1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Alias2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Alias4)).BeginInit();
             this.SuspendLayout();
             // 
             // zLabel
             // 
             this.zLabel.AutoSize = true;
-            this.zLabel.Location = new System.Drawing.Point(529, 280);
+            this.zLabel.Location = new System.Drawing.Point(529, 288);
             this.zLabel.Name = "zLabel";
             this.zLabel.Size = new System.Drawing.Size(17, 13);
             this.zLabel.TabIndex = 0;
@@ -87,7 +99,7 @@ namespace QuadcopterConfigurator
             // setAnglesButton
             // 
             this.setAnglesButton.Enabled = false;
-            this.setAnglesButton.Location = new System.Drawing.Point(223, 242);
+            this.setAnglesButton.Location = new System.Drawing.Point(223, 250);
             this.setAnglesButton.Name = "setAnglesButton";
             this.setAnglesButton.Size = new System.Drawing.Size(97, 23);
             this.setAnglesButton.TabIndex = 7;
@@ -154,7 +166,7 @@ namespace QuadcopterConfigurator
             // portsComboBox
             // 
             this.portsComboBox.FormattingEnabled = true;
-            this.portsComboBox.Location = new System.Drawing.Point(15, 243);
+            this.portsComboBox.Location = new System.Drawing.Point(15, 251);
             this.portsComboBox.Name = "portsComboBox";
             this.portsComboBox.Size = new System.Drawing.Size(114, 21);
             this.portsComboBox.TabIndex = 5;
@@ -174,7 +186,7 @@ namespace QuadcopterConfigurator
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(97, 189);
+            this.label5.Location = new System.Drawing.Point(100, 179);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(43, 13);
             this.label5.TabIndex = 18;
@@ -197,7 +209,7 @@ namespace QuadcopterConfigurator
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusStrip,
             this.ConnectionStrip});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 315);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 318);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(642, 22);
             this.statusStrip1.TabIndex = 24;
@@ -222,7 +234,7 @@ namespace QuadcopterConfigurator
             // onlineCheckBox
             // 
             this.onlineCheckBox.AutoSize = true;
-            this.onlineCheckBox.Location = new System.Drawing.Point(429, 245);
+            this.onlineCheckBox.Location = new System.Drawing.Point(429, 253);
             this.onlineCheckBox.Name = "onlineCheckBox";
             this.onlineCheckBox.Size = new System.Drawing.Size(56, 17);
             this.onlineCheckBox.TabIndex = 9;
@@ -234,7 +246,7 @@ namespace QuadcopterConfigurator
             // 
             this.startLogButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.startLogButton.Enabled = false;
-            this.startLogButton.Location = new System.Drawing.Point(325, 242);
+            this.startLogButton.Location = new System.Drawing.Point(325, 250);
             this.startLogButton.Name = "startLogButton";
             this.startLogButton.Size = new System.Drawing.Size(97, 23);
             this.startLogButton.TabIndex = 8;
@@ -245,7 +257,7 @@ namespace QuadcopterConfigurator
             // startLogCheckBox
             // 
             this.startLogCheckBox.AutoSize = true;
-            this.startLogCheckBox.Location = new System.Drawing.Point(494, 245);
+            this.startLogCheckBox.Location = new System.Drawing.Point(494, 253);
             this.startLogCheckBox.Name = "startLogCheckBox";
             this.startLogCheckBox.Size = new System.Drawing.Size(136, 17);
             this.startLogCheckBox.TabIndex = 10;
@@ -256,7 +268,7 @@ namespace QuadcopterConfigurator
             // yTextBox
             // 
             this.yTextBox.Enabled = false;
-            this.yTextBox.Location = new System.Drawing.Point(446, 277);
+            this.yTextBox.Location = new System.Drawing.Point(446, 285);
             this.yTextBox.Name = "yTextBox";
             this.yTextBox.Size = new System.Drawing.Size(80, 20);
             this.yTextBox.TabIndex = 30;
@@ -267,7 +279,7 @@ namespace QuadcopterConfigurator
             // yLabel
             // 
             this.yLabel.AutoSize = true;
-            this.yLabel.Location = new System.Drawing.Point(428, 280);
+            this.yLabel.Location = new System.Drawing.Point(428, 288);
             this.yLabel.Name = "yLabel";
             this.yLabel.Size = new System.Drawing.Size(17, 13);
             this.yLabel.TabIndex = 29;
@@ -276,7 +288,7 @@ namespace QuadcopterConfigurator
             // rpmTextBox
             // 
             this.rpmTextBox.Enabled = false;
-            this.rpmTextBox.Location = new System.Drawing.Point(135, 277);
+            this.rpmTextBox.Location = new System.Drawing.Point(135, 285);
             this.rpmTextBox.Name = "rpmTextBox";
             this.rpmTextBox.Size = new System.Drawing.Size(80, 20);
             this.rpmTextBox.TabIndex = 34;
@@ -287,7 +299,7 @@ namespace QuadcopterConfigurator
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(95, 280);
+            this.label6.Location = new System.Drawing.Point(95, 288);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(34, 13);
             this.label6.TabIndex = 33;
@@ -296,7 +308,7 @@ namespace QuadcopterConfigurator
             // xLabel
             // 
             this.xLabel.AutoSize = true;
-            this.xLabel.Location = new System.Drawing.Point(322, 280);
+            this.xLabel.Location = new System.Drawing.Point(322, 288);
             this.xLabel.Name = "xLabel";
             this.xLabel.Size = new System.Drawing.Size(17, 13);
             this.xLabel.TabIndex = 31;
@@ -305,7 +317,7 @@ namespace QuadcopterConfigurator
             // xTextBox
             // 
             this.xTextBox.Enabled = false;
-            this.xTextBox.Location = new System.Drawing.Point(342, 277);
+            this.xTextBox.Location = new System.Drawing.Point(342, 285);
             this.xTextBox.Name = "xTextBox";
             this.xTextBox.Size = new System.Drawing.Size(80, 20);
             this.xTextBox.TabIndex = 36;
@@ -316,7 +328,7 @@ namespace QuadcopterConfigurator
             // zTextBox
             // 
             this.zTextBox.Enabled = false;
-            this.zTextBox.Location = new System.Drawing.Point(547, 277);
+            this.zTextBox.Location = new System.Drawing.Point(547, 285);
             this.zTextBox.Name = "zTextBox";
             this.zTextBox.Size = new System.Drawing.Size(80, 20);
             this.zTextBox.TabIndex = 35;
@@ -326,7 +338,7 @@ namespace QuadcopterConfigurator
             // 
             // LTNumericUpDown
             // 
-            this.LTNumericUpDown.Location = new System.Drawing.Point(148, 74);
+            this.LTNumericUpDown.Location = new System.Drawing.Point(146, 74);
             this.LTNumericUpDown.Maximum = new decimal(new int[] {
             180,
             0,
@@ -344,7 +356,7 @@ namespace QuadcopterConfigurator
             // 
             // RTNumericUpDown
             // 
-            this.RTNumericUpDown.Location = new System.Drawing.Point(428, 74);
+            this.RTNumericUpDown.Location = new System.Drawing.Point(431, 74);
             this.RTNumericUpDown.Maximum = new decimal(new int[] {
             180,
             0,
@@ -362,7 +374,7 @@ namespace QuadcopterConfigurator
             // 
             // LBNumericUpDown
             // 
-            this.LBNumericUpDown.Location = new System.Drawing.Point(146, 186);
+            this.LBNumericUpDown.Location = new System.Drawing.Point(146, 176);
             this.LBNumericUpDown.Maximum = new decimal(new int[] {
             180,
             0,
@@ -380,7 +392,7 @@ namespace QuadcopterConfigurator
             // 
             // RBNumericUpDown
             // 
-            this.RBNumericUpDown.Location = new System.Drawing.Point(426, 187);
+            this.RBNumericUpDown.Location = new System.Drawing.Point(431, 176);
             this.RBNumericUpDown.Maximum = new decimal(new int[] {
             180,
             0,
@@ -399,7 +411,7 @@ namespace QuadcopterConfigurator
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(500, 189);
+            this.label1.Location = new System.Drawing.Point(501, 179);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 42;
@@ -422,7 +434,7 @@ namespace QuadcopterConfigurator
             // 
             // autoConnectButton
             // 
-            this.autoConnectButton.Location = new System.Drawing.Point(135, 242);
+            this.autoConnectButton.Location = new System.Drawing.Point(135, 250);
             this.autoConnectButton.Name = "autoConnectButton";
             this.autoConnectButton.Size = new System.Drawing.Size(82, 23);
             this.autoConnectButton.TabIndex = 6;
@@ -430,11 +442,127 @@ namespace QuadcopterConfigurator
             this.autoConnectButton.UseVisualStyleBackColor = true;
             this.autoConnectButton.Click += new System.EventHandler(this.autoConnectButton_Click);
             // 
+            // Alias3
+            // 
+            this.Alias3.Location = new System.Drawing.Point(146, 100);
+            this.Alias3.Maximum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+            this.Alias3.Minimum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            -2147483648});
+            this.Alias3.Name = "Alias3";
+            this.Alias3.Size = new System.Drawing.Size(68, 20);
+            this.Alias3.TabIndex = 43;
+            this.Alias3.ValueChanged += new System.EventHandler(this.Alias3_ValueChanged);
+            // 
+            // Alias1
+            // 
+            this.Alias1.Location = new System.Drawing.Point(431, 100);
+            this.Alias1.Maximum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+            this.Alias1.Minimum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            -2147483648});
+            this.Alias1.Name = "Alias1";
+            this.Alias1.Size = new System.Drawing.Size(68, 20);
+            this.Alias1.TabIndex = 44;
+            this.Alias1.ValueChanged += new System.EventHandler(this.Alias1_ValueChanged);
+            // 
+            // Alias2
+            // 
+            this.Alias2.Location = new System.Drawing.Point(147, 201);
+            this.Alias2.Maximum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+            this.Alias2.Minimum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            -2147483648});
+            this.Alias2.Name = "Alias2";
+            this.Alias2.Size = new System.Drawing.Size(68, 20);
+            this.Alias2.TabIndex = 45;
+            this.Alias2.ValueChanged += new System.EventHandler(this.Alias2_ValueChanged);
+            // 
+            // Alias4
+            // 
+            this.Alias4.Location = new System.Drawing.Point(431, 207);
+            this.Alias4.Maximum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+            this.Alias4.Minimum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            -2147483648});
+            this.Alias4.Name = "Alias4";
+            this.Alias4.Size = new System.Drawing.Size(68, 20);
+            this.Alias4.TabIndex = 46;
+            this.Alias4.ValueChanged += new System.EventHandler(this.Alias4_ValueChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(104, 102);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(38, 13);
+            this.label7.TabIndex = 48;
+            this.label7.Text = "Alias 3";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(502, 102);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(38, 13);
+            this.label8.TabIndex = 49;
+            this.label8.Text = "Alias 1";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(503, 210);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(38, 13);
+            this.label9.TabIndex = 51;
+            this.label9.Text = "Alias 4";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(106, 204);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(38, 13);
+            this.label10.TabIndex = 50;
+            this.label10.Text = "Alias 2";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(642, 337);
+            this.ClientSize = new System.Drawing.Size(642, 340);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.Alias4);
+            this.Controls.Add(this.Alias2);
+            this.Controls.Add(this.Alias1);
+            this.Controls.Add(this.Alias3);
             this.Controls.Add(this.autoConnectButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
@@ -479,6 +607,10 @@ namespace QuadcopterConfigurator
             ((System.ComponentModel.ISupportInitialize)(this.RTNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LBNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RBNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Alias3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Alias1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Alias2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Alias4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -518,6 +650,14 @@ namespace QuadcopterConfigurator
         private System.Windows.Forms.SaveFileDialog logFileDialog;
         private System.Windows.Forms.ToolStripStatusLabel ConnectionStrip;
         private System.Windows.Forms.Button autoConnectButton;
+        private System.Windows.Forms.NumericUpDown Alias3;
+        private System.Windows.Forms.NumericUpDown Alias1;
+        private System.Windows.Forms.NumericUpDown Alias2;
+        private System.Windows.Forms.NumericUpDown Alias4;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
     }
 }
 

@@ -18,11 +18,11 @@ namespace QuadcopterConfigurator.Domain.Protocols.Realization.v1
         //Previous installed parameters
         private BladeAngles _prevAngles { get; set; }
 
-        private int _i = 0;
         private bool _isSetting = false;
 
         public async Task<Response> SetAnglesAsync(BladeAngles angles)
         {
+
             //Reset reciever counter
             if (_status == Statuses.updating)
             {

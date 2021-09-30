@@ -22,10 +22,13 @@ namespace QuadcopterConfigurator
         private Controller _controller;
         private string _connName;
 
+        private AngleRange _angleRange;
+
+
         public Form1()
         {
             _controller = new Controller();
-
+            _angleRange = new AngleRange();
             InitializeComponent();
         }
 
@@ -151,6 +154,14 @@ namespace QuadcopterConfigurator
                 B = leftBotTrackBar.Value,
                 C = leftTopTrackBar.Value,
                 D = rightBotTrackBar.Value
+                
+            },
+            new AliasAngles
+            {
+                A = (int)Alias1.Value,
+                B = (int)Alias2.Value,
+                C = (int)Alias3.Value,
+                D = (int)Alias4.Value
             });
             if (!response.isCanceled)
             {                
@@ -186,6 +197,11 @@ namespace QuadcopterConfigurator
         {
             if (startLogButton.Text == "Start Log")
             {
+                Alias1.Enabled = false;
+                Alias2.Enabled = false;
+                Alias3.Enabled = false;
+                Alias4.Enabled = false;
+
                 var resp = _controller.StartLog();
                 startLogButton.Text = "Stop Log";
                 ShowResponse(resp);
@@ -207,6 +223,11 @@ namespace QuadcopterConfigurator
                 var resp = _controller.StopLog(path);
                 ShowResponse(resp);
                 startLogButton.Text = "Start Log";
+
+                Alias1.Enabled = true;
+                Alias2.Enabled = true;
+                Alias3.Enabled = true;
+                Alias4.Enabled = true;
             }
         }
 
@@ -270,6 +291,24 @@ namespace QuadcopterConfigurator
             var response = await _controller.AutoConnectAsync();
             ShowResponse(response);
             portsComboBox.Text = response.ConnectionName;
+        }
+
+        private void Alias1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void Alias2_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Alias3_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void Alias4_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -23,6 +23,29 @@ namespace QuadcopterConfigurator
             public int D = 90;
         }
 
+        public class AliasAngles
+        {
+            public int A = 0;
+            public int B = 0;
+            public int C = 0;
+            public int D = 0;
+        }
+
+        public class AngleRange
+        {
+            public int Amin = 0;
+            public int Amax = 180;
+
+            public int Bmin = 0;
+            public int Bmax = 180;
+
+            public int Cmin = 0;
+            public int Cmax = 180;
+
+            public int Dmin = 0;
+            public int Dmax = 180;
+        }
+
         public class Gyro
         {
             public float x = 0;

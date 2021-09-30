@@ -13,25 +13,43 @@ namespace QuadcopterConfigurator.Controllers
         private Connection _conn;
         private Protocol _protocol;
         private TextLogger _logger;
-        private BladeAngles _angles;
+        private AliasAngles _aliasAngles;
 
         public Parameters parameters;
         public Controller()
         {
             _conn = new Connection();
             _protocol = new Protocol(_conn);
-            _protocol.SetRecievedParametersHandler(_recievedParametersHandler);
-
+            _protocol.SetRecievedParametersHandler(_recievedParametersHandler);            
 
             _logger = new TextLogger();
             parameters = new Parameters();
+            _aliasAngles = new AliasAngles();
         }
 
         public Statuses GetStatus() => _protocol.GetStatus();
 
         private void _recievedParametersHandler(Parameters param)
         {
-            parameters = param;
+            parameters = new Parameters
+            {
+                Angles = new BladeAngles
+                {
+                    A = param.Angles.A - _aliasAngles.A,
+                    B = param.Angles.B - _aliasAngles.B,
+                    C = param.Angles.C - _aliasAngles.C,
+                    D = param.Angles.D - _aliasAngles.D,
+                },
+                Id = param.Id,
+                Gyro = new Gyro
+                {
+                    x = param.Gyro.x,
+                    y = param.Gyro.y,
+                    z = param.Gyro.z
+                },
+                Rpm = param.Rpm
+            };
+
             if (_logger.isRunning)
             {
                 _logger.Log(parameters);
@@ -81,11 +99,16 @@ namespace QuadcopterConfigurator.Controllers
         /// </summary>
         /// <param name="ang">RequestSetAngles</param>
         /// <returns></returns>
-        public async Task<Response> SetAngles(BladeAngles ang)
+        public async Task<Response> SetAngles(BladeAngles ang, AliasAngles alias)
         {
-            _angles = ang;
+            _aliasAngles = alias;
+            ang.A += _aliasAngles.A;
+            ang.B += _aliasAngles.B;
+            ang.C += _aliasAngles.C;
+            ang.D += _aliasAngles.D;
+
             var resp = await _protocol.SetAnglesAsync(
-                _angles);            
+                ang);            
             return resp;
         }
 
